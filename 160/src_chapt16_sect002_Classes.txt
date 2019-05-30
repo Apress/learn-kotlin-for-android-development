@@ -1,0 +1,11 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 16: 
+////      The Collectionsnewline API
+//// Section: 2. Classes
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+  var l:MutableList<String> = ArrayList()
+  // ... = ArrayList<String>() is unnecessary, since 
+  // Kotlin can infer the type.

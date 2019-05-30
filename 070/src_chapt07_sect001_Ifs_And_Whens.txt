@@ -1,0 +1,109 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 07: 
+////      Structuralnewline Constructs
+//// Section: 1. Ifs And Whens
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    if( [condition] ) {
+       [statements1]
+    } else if( [condition2] ) {
+       [statements2]
+    } else if( [condition3] ) {
+       [statements3]
+    ... more "else ifs"
+    } else {
+       [statementsElse]
+    }
+
+//----#### SNIPPET #### - 2
+    if( v == 7 ) {
+       abc1()
+    } else {
+       abc2()
+    }
+
+//----#### SNIPPET #### - 3
+    if( v == 7) abc1() else abc2() 
+
+//----#### SNIPPET #### - 4
+    val x = if( [condition] ) {
+       [statements1]
+       [value1]
+    } else if( [condition2] ) {
+       [statements2]
+       [value2]
+    } else if( [condition3] ) {
+       [statements3]
+    ... more "else ifs"
+    } else {
+       [statementsElse]
+       [valueElse]
+    }
+
+//----#### SNIPPET #### - 5
+    val x = if( a > 3 ) 27 else 28
+
+//----#### SNIPPET #### - 6
+    when( [expression] ) {
+       val1 -> { ... }
+       val2 -> { ... }
+       ...
+       else -> { ... }
+    }
+
+//----#### SNIPPET #### - 7
+    val x = when( [expression] ) {
+       val1 -> { ... }
+       val2 -> { ... }
+       ...
+       else -> { ... }
+    }
+
+//----#### SNIPPET #### - 8
+    when( [expression] ) {
+       val1      -> { ... }
+       val2,val3 -> { ... }
+       ...
+       else -     > { ... }
+    }
+
+//----#### SNIPPET #### - 9
+    val x = when( [expression] ) {
+       calc(val1) + 7 -> { ... }
+       val2,val3      -> { ... }
+       ...
+       else           -> { ... }
+    }
+
+//----#### SNIPPET #### - 10
+    val l = listOf(...)
+    val x = when( [expression] ) {
+       in l         -> { ... }
+       in 27..53    -> { ... }
+       !in 100..110 -> { ... }
+       ...
+       else         -> { ... }
+    }
+
+//----#### SNIPPET #### - 11
+    val q:Any = ... // any type
+    val x = when(q) {
+       is Int       -> { ... }
+       is String    -> { ... }
+       ...
+       else         -> { ... }
+    }
+
+//----#### SNIPPET #### - 12
+    val q = ... // some Int
+    val x = when( q ){ 1 -> "Jean" 2 -> "Sam" else -> "" }
+
+//----#### SNIPPET #### - 13
+    val x = when(val q = [some value]) {
+       1 -> q * 3
+       2 -> q * 4
+       ...
+       else -> 0
+    }

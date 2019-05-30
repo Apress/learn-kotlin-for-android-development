@@ -1,0 +1,253 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 20: 
+////      XML And JSON
+//// Section: 1. XML Processing
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+<?xml version="1.0" encoding="UTF-8"?>
+<ProbeMsg>
+  <TimeStamp>2016-10-30T19:07:07Z</TimeStamp>
+  <ProbeId>1A6G</ProbeId>
+  <ProbeValue ScaleUnit="cm">37.4</ProbeValue>
+  <Meta>
+    <Generator>045</Generator>
+    <Priority>-3</Priority>
+    <Actor>P. Rosengaard</Actor>
+  </Meta>
+</ProbeMsg>
+
+//----#### SNIPPET #### - 2
+  package com.example.domext
+  
+  import org.apache.xerces.parsers.DOMParser
+  import org.w3c.dom.Document
+  import org.w3c.dom.Node
+  import org.xml.sax.InputSource
+  import java.io.StringReader
+  import java.io.StringWriter
+  import javax.xml.transform.OutputKeys
+  import javax.xml.transform.TransformerFactory
+  import javax.xml.transform.dom.DOMSource
+  import javax.xml.transform.stream.StreamResult
+
+  fun parseXmlToDOM(s:String) : Document {
+    val parser: DOMParser = DOMParser()
+    return parser.let {
+        it.parse(InputSource(StringReader(s)))
+        it.document
+    }
+  }
+
+  fun Node.fetchChildren(withText:Boolean = false) = 
+    (0..(this.childNodes.length - 1)).
+    map { this.childNodes.item(it) }.
+    filter { withText || it.nodeType != Node.TEXT_NODE }
+
+  fun Node.childCount() = fetchChildren().count()
+
+  fun Node.forEach(withText:Boolean = false, 
+                   f:(Node) -> Unit) {
+    fetchChildren(withText).forEach { f(it) }
+  }
+
+  operator fun Node.get(i:Int) = fetchChildren()[i]
+
+  operator fun Node.invoke(s:String): Node =
+    if(s.startsWith("@")) {
+        this.attributes.getNamedItem(s.substring(1))
+    }else{
+        this.childNodes.let { nl ->
+            val iter = object : Iterator<Node> {
+                var i: Int = 0
+                override fun next() = nl.item(i++)
+                override fun hasNext() = i < nl.length
+            }
+            iter.asSequence().find { it.nodeName == s }!!
+        }
+    }
+
+  operator fun Node.invoke(vararg s:String): Node = 
+      s.fold(this, { acc, s1 -> acc(s1)  })
+
+  fun Node.text() = this.firstChild.nodeValue
+  fun Node.name() = this.nodeName
+  fun Node.type() = this.nodeType
+
+//----#### SNIPPET #### - 3
+import ...
+import com.example.domext.*
+
+...
+val xml = """<?xml version="1.0" encoding="UTF-8"?>
+  <ProbeMsg>
+    <TimeStamp>2016-10-30T19:07:07Z</TimeStamp>
+    <ProbeId>1A6G</ProbeId>
+    <ProbeValue ScaleUnit="cm">37.4</ProbeValue>
+    <Meta>
+      <Generator>045</Generator>
+      <Priority>-3</Priority>
+      <Actor>P. Rosengaard</Actor>
+    </Meta>
+  </ProbeMsg>"""
+
+
+  try {
+      // Parse the complete XML document
+      val dom = parseXmlToDOM(xml)
+
+      // Access an element
+      val ts = dom("ProbeMsg")("TimeStamp").text()
+      Log.d("LOG", ts) // 2001-11-30T09:08:07Z
+
+      // Access an attribute
+      val uni = dom("ProbeMsg")("ProbeValue")("@ScaleUnit")
+      Log.d("LOG", uni.text()) // cm
+
+      // Simplified XML tree navigation
+      val uni2 = dom("ProbeMsg","ProbeValue","@ScaleUnit")
+      Log.d("LOG", uni2.text()) // cm
+
+      // Iterate through an element's children
+      dom("ProbeMsg")("Meta").forEach { n ->
+          Log.d("LOG", n.name() + ": " + n.text())
+          //    Generator: 045
+          //    Priority: -3
+          //    Actor: P. Rosengaard
+      }
+  }catch(e:Exception) {
+      Log.e("LOG", "Cannot parse XML", e)
+  }
+  ...
+
+//----#### SNIPPET #### - 4
+  fun prettyFormatXml(document:Document): String {
+    val format = OutputFormat(document).apply {
+        lineWidth = 65
+        indenting = true
+        indent = 2
+    }
+    val out = StringWriter()
+    val serializer = XMLSerializer(out, format)
+    serializer.serialize(document)
+    return out.toString()
+  }
+
+  fun prettyFormatXml(unformattedXml: String) = 
+        prettyFormatXml(parseXmlToDOM(unformattedXml))
+
+  fun Node.toXmlString():String {
+    val transformerFact = TransformerFactory.newInstance()
+    val transformer = transformerFact.newTransformer()
+    transformer.setOutputProperty(OutputKeys.INDENT, "yes")
+    val source = DOMSource(this)
+    val writer = StringWriter()
+    val result = StreamResult(writer)
+    transformer.transform(source, result)
+    return writer.toString()
+  }
+
+  operator fun Node.plusAssign(child:Node) {
+    this.appendChild(child)
+  }
+
+  fun Node.addText(s:String): Node {
+    val doc = ownerDocument
+    val txt = doc.createTextNode(s)
+    appendChild(txt)
+    return this
+  }
+
+  fun Node.removeText() {
+    if(hasChildNodes() && 
+          firstChild.nodeType == Node.TEXT_NODE)
+        removeChild(firstChild)
+  }
+
+  fun Node.updateText(s:String) : Node {
+    removeText()
+    return addText(s)
+  }
+
+  fun Node.addAttribute(name:String, value:String): Node {
+    (this as Element).setAttribute(name, value)
+    return this
+  }
+
+fun Node.removeAttribute(name:String) {
+    this.attributes.removeNamedItem(name)
+}
+
+//----#### SNIPPET #### - 5
+    val xml = """<?xml version="1.0" encoding="UTF-8"?>
+<ProbeMsg>
+  <TimeStamp>2016-10-30T19:07:07Z</TimeStamp>
+  <ProbeId>1A6G</ProbeId>
+  <ProbeValue ScaleUnit="cm">37.4</ProbeValue>
+  <Meta>
+    <Generator>045</Generator>
+    <Priority>-3</Priority>
+    <Actor>P. Rosengaard</Actor>
+  </Meta>
+</ProbeMsg>"""
+
+    try {
+        val dom = parseXmlToDOM(xml)
+
+        val msg = dom("ProbeMsg")
+        val meta = msg("Meta")
+
+        // Add a new element to "meta".
+        meta += dom.createElement("NewMeta").
+            addText("NewValue").
+            addAttribute("SomeAttr", "AttrVal")
+
+        Log.d("LOG", "\n\n" + prettyFormatXml(dom))
+
+    }catch(e:Exception) {
+        Log.e("LOG", "XML Error", e)
+    }
+
+//----#### SNIPPET #### - 6
+    val xml = """<?xml version="1.0" encoding="UTF-8"?>
+<ProbeMsg>
+  <TimeStamp>2016-10-30T19:07:07Z</TimeStamp>
+  <ProbeId>1A6G</ProbeId>
+  <ProbeValue ScaleUnit="cm">37.4</ProbeValue>
+  <Meta>
+    <Generator>045</Generator>
+    <Priority>-3</Priority>
+    <Actor>P. Rosengaard</Actor>
+  </Meta>
+</ProbeMsg>"""
+
+    try {
+        val dom = parseXmlToDOM(xml)
+
+        val msg = dom("ProbeMsg")
+        val ts = msg("TimeStamp")
+        val probeValue = msg("ProbeValue")
+
+        // Update an attribute and the text contents of
+        // an element.
+        probeValue.updateAttribute("ScaleUnit", "dm")
+        ts.updateText("1970-01-01T00:00:00Z")
+        Log.d("LOG", "\n\n" + prettyFormatXml(dom))
+
+        // Remove an attribute
+        probeValue.removeAttribute("ScaleUnit")
+        Log.d("LOG", "\n\n" + prettyFormatXml(dom))
+
+        // Removing a node means removing it from
+        // its parent node.
+        msg.removeChild(probeValue)
+        Log.d("LOG", "\n\n" + prettyFormatXml(dom))
+
+    }catch(e:Exception) {
+        Log.e("LOG", "XML Error", e)
+    }
+
+//----#### SNIPPET #### - 7
+    val doc = DocumentBuilderFactory.
+          newInstance().newDocumentBuilder().newDocument()

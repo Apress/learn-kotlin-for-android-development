@@ -1,0 +1,19 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 01: 
+////      Your First Kotlin  Application: Hello  Kotlin
+//// Section: 6. Using The Command Line
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+   cd [PATH]       #for Linux and Mac OS X and Windows
+
+//----#### SNIPPET #### - 2
+   ./gradlew app:build      #for Linux and Mac OS X
+   gradlew   app:build      #for Windows
+
+//----#### SNIPPET #### - 3
+   ./gradlew -help      #for Linux and Mac OS X
+   ./gradlew tasks      #for Linux and Mac OS X
+   gradlew -help        #for Windows
+   gradlew tasks        #for Windows

@@ -1,0 +1,19 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 04: 
+////      Classes And  Objects: Extended  Features
+//// Section: 5. Data Classes
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    data class ClassName([constructor])
+
+//----#### SNIPPET #### - 2
+    data class Point(val x:Double, val y:Double)
+
+    fun movePoint(pt:Point, dx:Double, dy:Double):Point = 
+        Point(pt.x + dx, pt.y + dy)
+
+    // somewhere in a function...
+    val pt = Point(0.0, 1.0)
+    val pt2 = movePoint(pt, 0.5, 0.5)

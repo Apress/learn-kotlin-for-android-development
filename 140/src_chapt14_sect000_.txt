@@ -1,0 +1,38 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 14: 
+////      Adding Hints: Annotations
+//// Section: 0. 
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    class Adder {
+        fun add(a:Double, b:Double) = a + b
+    }
+    class Subtractor {
+        fun subtract(a:Double, b:Double) = a - b
+    }
+
+//----#### SNIPPET #### - 2
+    val eng = CalculationEngine()
+    ...
+    eng.registerAdder(Adder::class, "add")
+    eng.registerSubtractor(Subtractor::class, "subtract")
+    ...
+
+//----#### SNIPPET #### - 3
+    /**
+     * @Operator: ADDING
+     * @Function: add
+     */
+    class Adder {
+        fun add(a:Double, b:Double) = a + b
+    }
+
+    /**
+     * @Operator: SUBTRACTING
+     * @Function: subtract
+     */
+    class Subtractor {
+        fun subtract(a:Double, b:Double) = a - b
+    }

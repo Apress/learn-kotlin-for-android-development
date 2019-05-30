@@ -1,0 +1,16 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 04: 
+////      Classes And  Objects: Extended  Features
+//// Section: 9. Functions With Tail Recursion
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    fun factorial(n:Int):Int {
+        return if(n==1) n else n * factorial(n-1)
+    }
+
+//----#### SNIPPET #### - 2
+    tailrec fun factorial(n:Int) {
+        return if(n==1) n else n * factorial(n-1)
+    }

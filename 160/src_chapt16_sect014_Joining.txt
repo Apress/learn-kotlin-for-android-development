@@ -1,0 +1,16 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 16: 
+////      The Collectionsnewline API
+//// Section: 14. Joining
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    fun <E> Iterable<E>.joinToString(
+        separator: CharSequence = ", ",
+        prefix: CharSequence = "",
+        postfix: CharSequence = "",
+        limit: Int = -1,
+        truncated: CharSequence = "...",
+        transform: (E) -> CharSequence = null
+    ): String

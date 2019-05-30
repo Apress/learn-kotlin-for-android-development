@@ -1,0 +1,15 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 09: 
+////      Data Containers
+//// Section: 5. Pairs and Triples
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    val pair = Pair<FirstType, SecondType>(
+          firstVal, secondVal)
+    val triple = Triple<FirstType, SecondType, ThirdType>(
+          firstVal, secondVal, thirdVal)
+
+//----#### SNIPPET #### - 2
+    val pair = Pair("Earth", 12800.0)

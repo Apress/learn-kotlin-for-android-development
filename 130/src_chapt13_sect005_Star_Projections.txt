@@ -1,0 +1,17 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 13: 
+////      About Type Safety: Generics
+//// Section: 5. Star Projections
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    interface Interf<in A, out B> {
+        ...
+    }
+
+    val x:Interf<*, Int> = ...
+        // ... same as Interf<in Nothing, Int>
+
+    val y:Interf<Int, *> = ...
+        // ... same as Interf<Int, out Any?>

@@ -1,0 +1,29 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 07: 
+////      Structuralnewline Constructs
+//// Section: 3. For And While Loops
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    for( i in [loop data] ) {
+        // do something with i
+    }
+
+//----#### SNIPPET #### - 2
+    while( [condition] ) {
+        // do something
+    }
+
+    do {
+        // do something
+    } while( [condition] )
+
+//----#### SNIPPET #### - 3
+    while( [condition] ) {
+        ... 
+        break // -> exit loop
+        ...
+        continue // -> next iteration
+        ...
+    }

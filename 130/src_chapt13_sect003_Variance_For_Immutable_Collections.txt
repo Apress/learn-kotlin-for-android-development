@@ -1,0 +1,10 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 13: 
+////      About Type Safety: Generics
+//// Section: 3. Variance For Immutable Collections
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    val coll1 = listOf("A", "B") // immutable
+    val coll2:List<Any> = coll1  // allowed!

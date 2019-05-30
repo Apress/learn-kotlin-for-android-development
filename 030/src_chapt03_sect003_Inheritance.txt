@@ -1,0 +1,97 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 03: 
+////      Classes at Work: Properties And Functions
+//// Section: 3. Inheritance
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    open class A { ... }
+    class B : A() {
+        [overriding assets]
+        [own assets]
+    }
+
+//----#### SNIPPET #### - 2
+    open class A([constructor parameters]) { ... }
+    class B : A([constructor parameters]) {
+        [overriding assets]
+        [own assets]
+    }
+
+//----#### SNIPPET #### - 3
+    open class A([constructor parameters]) { ... }
+    class B([own constructor parameters]) : 
+          A([constructor parameters]) 
+    {
+        [overriding assets]
+        [own assets]
+    }
+
+//----#### SNIPPET #### - 4
+    open class A([constructor parameters]) { 
+        constructor([parameters2])  { ... }
+    }
+    class B : A([parameters2]) {
+        ...
+    }
+
+//----#### SNIPPET #### - 5
+    open class A(open val a:Int) { 
+    }
+
+//----#### SNIPPET #### - 6
+    open class A(open val a:Int) { 
+    }
+    class B(override val a:Int) : A(42) {
+        ...
+    }
+
+//----#### SNIPPET #### - 7
+    open class A {
+        open fun function1() { ... }
+    }
+    class B : A() {
+        override
+        fun function1() { ... }
+    }
+
+//----#### SNIPPET #### - 8
+    super.functionName(param1, param2, ...)
+
+//----#### SNIPPET #### - 9
+    open class A {
+        open var a:Int = 0
+    }
+
+//----#### SNIPPET #### - 10
+    class B : A() {
+        override var a:Int = 0
+    }
+
+//----#### SNIPPET #### - 11
+    open class A() {
+        open var a:Int = 99
+        open fun x() {
+            Log.d("LOG", "Hey from A.x()")
+        }
+    }
+
+    class B : A() {
+        override var a:Int = 77
+        override fun x() {
+            Log.d("LOG", "Hey from A.x()")
+        }
+        fun show() {
+            Log.d("LOG", "Property: " + a)
+            Log.d("LOG", "Formerly: " + super.a)
+            Log.d("LOG", "Function: ")
+            x()
+            Log.d("LOG", "Formerly: ")
+            super.x()
+        }
+    }
+
+    // inside some activity function:
+    val b = B()
+    b.show()

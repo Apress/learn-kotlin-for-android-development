@@ -1,0 +1,89 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 17: 
+////      More APIs
+//// Section: 2. The Date-Time API, API Level 25 or Less
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    import java.util.Date
+    import java.util.GregorianCalendar
+    import java.text.SimpleDateFormat
+
+    val timeMillis:Long = System.currentTimeMillis()
+    val d = Date()
+    val cal = GregorianCalendar()
+    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+
+//----#### SNIPPET #### - 2
+    val t1 = System.currentTimeMillis()
+    ...
+    Log.d("LOG", "Calculation took " + 
+          (System.currentTimeMillis() - t1) + "ms")
+
+//----#### SNIPPET #### - 3
+    import java.util.Date
+    ...
+    val d = Date() // current time
+    Log.d("LOG", d.toString())
+    // -> s.th. like 
+    // Sun Jan 13 10:12:26 GMT+01:00 2019
+
+//----#### SNIPPET #### - 4
+    import java.util.Date
+    ...
+    val d = Date()  // current time
+    val tm = d.time // ms since 1970-01-01T00:00:00 UTC
+
+//----#### SNIPPET #### - 5
+    import java.util.Date
+    import java.util.Calendar
+    import java.util.GregorianCalendar
+    import java.util.TimeZone
+    ...
+    val cal = GregorianCalendar()  
+    // <- will hold the current time
+
+    cal.timeZone = TimeZone.getTimeZone("US/Hawaii")
+    // Note: TimeZone.getAvailableIDs().forEach { 
+    //     Log.e("LOG","!!! " + it) } 
+    // shows a list
+
+    // Set to current time
+    cal.time = Date()
+
+    // Set to 2018-02-01T13:27:44
+    cal.set(2018, Calendar.FEBRUARY,  1, 13, 27 ,44)
+
+    val month = cal.get(Calendar.MONTH)
+    val hour = cal.get(Calendar.HOUR_OF_DAY)
+
+//----#### SNIPPET #### - 6
+    import java.util.Date
+    import java.text.SimpleDateFormat
+    import java.util.Locale
+    ...
+
+    val d = Date() // now
+    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
+    Log.d("LOG", sdf.format(d)) // -> 2019-01-13 13:41
+
+    val loc = Locale("en")
+    val sdf2 = SimpleDateFormat("yyyy-MMM-dd HH:mm", loc)
+    Log.d("LOG", sdf2.format(d)) // -> 2019-Jan-13 13:41
+
+    val d2:Date = sdf.parse("2018-12-12 17:13")
+    Log.d("LOG", d2.toString()) 
+    // ->  Wed Dec 12 17:13:00 GMT+01:00 2018
+
+//----#### SNIPPET #### - 7
+    import java.text.SimpleDateFormat
+    import java.util.Date
+    import java.util.TimeZone
+    ...
+    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
+    sdf.timeZone = TimeZone.getTimeZone("US/Hawaii")
+
+    val d:Date = sdf.parse("2018-12-12 17:13")
+    Log.d("LOG", d.toString()) 
+    // ->  Thu Dec 13 04:13:00 GMT+01:00 2018

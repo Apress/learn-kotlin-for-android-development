@@ -1,0 +1,9 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 16: 
+////      The Collectionsnewline API
+//// Section: 3. Generator Functions
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    listOf(1, 5, 7, 9)

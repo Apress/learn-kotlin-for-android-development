@@ -1,0 +1,452 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 17: 
+////      More APIs
+//// Section: 3. The Date-Time API, API Level 26 or Greater
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+android {
+    ...
+    defaultConfig {
+        ...
+        minSdkVersion 26
+        ...
+    }
+    ...
+}
+
+//----#### SNIPPET #### - 2
+  import java.time.*
+
+  // current day in the default time zone
+  val ld1 : LocalDate = LocalDate.now()
+
+  // "Now" corresponds to different days in different
+  // time zones. The following allows to specify a
+  // different time zone
+  val z2 = ZoneId.of("UTC+01")
+  val ld2 : LocalDate = LocalDate.now(z2)
+
+  val ld3 = LocalDate.of(2018, Month.MARCH, 27)
+  val ld4 = LocalDate.of(2018, 3, 27) // the same
+
+  val lt1 : LocalTime = LocalTime.now()
+  val lt2 = LocalTime.now(z2) // different time zone
+  val lt3 = LocalTime.of(23, 27, 55) // 23:27:55
+
+  val ldt1 = LocalDateTime.now()
+  val ldt2 = LocalDateTime.now(z2)
+  val ldt3 = LocalDateTime.of( 
+               2018, Month.APRIL, 23,
+               23, 44, 12)
+  // <- 2018-04-23T23:44:12
+
+//----#### SNIPPET #### - 3
+    import java.time.*
+    import java.time.format.*
+
+    // Parse ISO-8601
+    val ld1 = LocalDate.parse("2019-02-13")
+
+    // Parse other formats. For the format specification, 
+    // see API documentation of class DateTimeFormatter.
+    val formatter1 = 
+          DateTimeFormatter.ofPattern("yyyy MM dd")
+    val ld2 = LocalDate.parse("2019 02 13", formatter1)
+
+
+    val lt1 = LocalTime.parse("21:17:23")
+    val lt2 = LocalTime.parse("21:17:23.3734")
+
+    val formatter2 = 
+          DateTimeFormatter.ofPattern("HH|mm|ss")
+    val lt3 = LocalTime.parse("21|17|23", formatter2)
+
+
+    val ldt1 = LocalDateTime.parse("2019-02-13T21:17:23")
+    val ldt2 = LocalDateTime.parse(
+          "2019-02-13T21:17:23.3734")
+
+    val formatter3 = DateTimeFormatter.ofPattern(
+          "yyyy.MM.dd.HH.mm.ss")
+    val ldt3 = LocalTime.parse("2019.04.23.17.45.23", 
+          formatter3)
+
+//----#### SNIPPET #### - 4
+    import android.util.Log
+    import java.time.*
+    import java.time.format.*
+
+    val s1 = LocalDate.now().format(
+        DateTimeFormatter.ofPattern("yyyy|MM|dd"))
+    Log.d("LOG","s1 = ${s1}") // -> 2019|01|14
+
+    val s2 = LocalDate.now().format(
+        DateTimeFormatter.ISO_LOCAL_DATE)
+    Log.d("LOG","s2 = ${s2}") // -> 2019-01-14
+
+
+    val s3 = LocalTime.now().format(
+        DateTimeFormatter.ofPattern("HH mm ss"))
+    Log.d("LOG","s3 = ${s3}") // -> 14 46 20
+
+    val s4 = LocalTime.now().format(
+        DateTimeFormatter.ISO_LOCAL_TIME)
+    Log.d("LOG","s4 = ${s4}") // 14:46:20.503
+
+
+    val s5 = LocalDateTime.now().format(
+        DateTimeFormatter.ofPattern(
+        "yyyy MM dd - HH mm ss"))
+    Log.d("LOG","s5 = ${s5}") // -> 2019 01 14 - 14 46 20
+
+    val s6 = LocalDateTime.now().format(
+        DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+    Log.d("LOG","s6 = ${s6}") // -> 2019-01-14T14:46:20.505
+
+//----#### SNIPPET #### - 5
+    import java.time.*
+    import java.time.temporal.*
+
+    val ld = LocalDate.now()
+    val lt = LocalTime.now()
+    val ldt = LocalDateTime.now()
+
+    val ld2 = ld.minusDays(7L)
+    val ld3 = ld.plusWeeks(2L)
+    val ld4 = ld.with(ChronoField.MONTH_OF_YEAR, 11L)
+
+    val lt2 = lt.plus(Duration.of(2L, ChronoUnit.SECONDS))
+    val lt3 = lt.plusSeconds(2L) // same
+  
+    val ldt2 = ldt.plusWeeks(2L).minusHours(2L)
+
+//----#### SNIPPET #### - 6
+    import java.time.*
+
+    val ldt : LocalDateTime = ...
+    val secs = ldt.toEpochSecond(ZoneOffset.of("+01:00"))
+
+//----#### SNIPPET #### - 7
+    import java.time.*
+
+    val inz1 = Instant.now() // default timezone
+
+    // Specify timezone
+    val inz2 = Instant.now(Clock.system(
+          ZoneId.of("America/Buenos_Aires")))
+
+    val secondsSince1970 : Long = 1_000_000_000L
+    val nanoAdjustment : Long = 300_000_000 // 300ms
+    val inz3 = Instant.ofEpochSecond(
+        secondsSince1970, nanoAdjustment)
+
+    // "Z" is UTC ("Zulu" time)
+    val inz4 = Instant.parse("2018-01-23T23:33:14.513Z")
+
+    // Uniform converter, for the ZonedDateTime class 
+    // see below 
+    val inz5 = Instant.from(
+          ZonedDateTime.parse(
+          "2019-02-13T21:17:23+01:00[Europe/Paris]"))
+
+//----#### SNIPPET #### - 8
+    import java.time.*
+    import java.time.format.DateTimeFormatter
+
+    // Get now ------------------------------------------
+
+    // System clock, default timezone
+    val ot1 = OffsetTime.now() 
+    val odt1 = OffsetDateTime.now()
+
+    // Use a different clock
+    val clock:Clock = ...
+    val ot2 = OffsetTime.now(clock)
+    val odt2 = OffsetDateTime.now(clock)
+    
+    // Use a different timezone
+    val ot3 = OffsetTime.now(
+          ZoneId.of("America/Buenos_Aires"))
+    val odt3 = OffsetDateTime.now(
+          ZoneId.of("America/Buenos_Aires"))
+
+    // From time details --------------------------------
+
+    val ot4 = OffsetTime.of(23, 17, 3, 500_000_000,
+          ZoneOffset.of("-02:00"))
+    val odt4 = OffsetDateTime.of(
+          1985, 4, 23,            // 19685-04-23
+          23, 17, 3, 500_000_000, // 23:17:03.5
+          ZoneOffset.of("+02:00"))
+
+    // Parsed -------------------------------------------
+
+    val ot5 = OffsetTime.parse("16:15:30+01:00")
+    val odt5 = OffsetDateTime.parse(
+          "2007-12-03T17:15:30-08:00")
+    val ot6 = OffsetTime.parse("16 15 +00:00",
+          DateTimeFormatter.ofPattern("HH mm XXX"))
+    val odt6 = OffsetDateTime.parse(
+          "20181115 - 231644 +02:00",
+          DateTimeFormatter.ofPattern(
+            "yyyyMMdd - HHmmss XXX"))
+
+    // From other objects -------------------------------
+
+    val lt = LocalTime.parse("16:14:27.235")
+    val ld = LocalDate.parse("2018-05-24")
+    val inz = Instant.parse("2018-01-23T23:33:14.513Z")
+    val ot7 = OffsetTime.of(lt, 
+        ZoneOffset.of("+02:00"))
+    val odt7 = OffsetDateTime.of(ld, lt, 
+        ZoneOffset.of("+02:00"))
+    val ot8 = OffsetTime.ofInstant(inz,
+          ZoneId.of("America/Buenos_Aires"))
+    val odt8 = OffsetDateTime.ofInstant(inz,
+          ZoneId.of("America/Buenos_Aires"))
+
+    val zdt = ZonedDateTime.of( // see below
+          2018, 2, 27,          // 2018-02-27
+          23, 27, 33, 0,        // 23:27:33.0
+          ZoneId.of("Pacific/Tahiti"))
+    val odt9 = zdt.toOffsetDateTime()
+
+    // uniform converter
+    val ot10 = OffsetTime.from(zdt)
+    val odt10 = OffsetDateTime.from(zdt)
+
+//----#### SNIPPET #### - 9
+    import java.time.*
+
+    val ot = OffsetTime.parse("16:15:30+01:00")
+    val lt : LocalTime = ot.toLocalTime()
+
+    val odt = OffsetDateTime.parse(
+          "2007-12-03T17:15:30-08:00")
+    val ldt : LocalDateTime = odt.toLocalDateTime()
+    val lt2 : LocalTime = odt.toLocalTime()
+    val ld2 : LocalDate = odt.toLocalDate()
+    val ot2 : OffsetTime = odt.toOffsetTime()
+
+    val zdt : ZonedDateTime = odt.toZonedDateTime()
+    // see below for class ZonedDateTime
+
+//----#### SNIPPET #### - 10
+    import java.time.*
+
+    // Get "now" using the system clock and the default 
+    // time-zone from your operating system.
+    val zdt1 = ZonedDateTime.now()
+
+    // Get "now" using a time-zone. To list all available 
+    // predefined zone IDs, try
+    //     Log.d("LOG", ZoneId.getAvailableZoneIds().
+    //                  joinToString { it + "\n" })
+    val z2 = ZoneId.of("UTC+01")
+    val zdt2 = ZonedDateTime.now(z2)
+
+    // Get "now" using an instance of Clock
+    val clock3 = Clock.systemUTC()
+    val zdt3 = ZonedDateTime.now(clock3)
+
+//----#### SNIPPET #### - 11
+    import java.time.*
+
+    val z4 = ZoneId.of("Pacific/Tahiti")
+    val zdt4 = ZonedDateTime.of(
+          2018, 2, 27,            // 2018-02-27
+          23, 27, 33, 0,          // 23:27:33.0
+          z4)
+    // The 7th par is nanoseconds, so for 
+    // 23:27:33.5 you have to enter
+    // 500_000_000 here
+
+    val localDate = LocalDate.parse("2018-02-27")
+    val localTime = LocalTime.parse("23:44:55")
+    val zdt5 = ZonedDateTime.of(localDate, localTime,
+          ZoneId.of("America/Buenos_Aires"))
+   
+    val ldt = LocalDateTime.parse("2018-02-27T23:44:55.3")
+    val zdt6 = ZonedDateTime.of(ldt,
+          ZoneId.of("America/Buenos_Aires"))
+    
+    val inz = Instant.parse("2018-01-23T23:33:14.513Z")
+    val zdt7 = ZonedDateTime.ofInstant(inz,
+          ZoneId.of("America/Buenos_Aires"))
+    
+    val zdt8 = ZonedDateTime.parse(
+          "2018-01-23T23:33:14Z[America/Buenos_Aires]")
+
+//----#### SNIPPET #### - 12
+    import java.time.*
+    import java.time.format.DateTimeFormatter
+
+    val zdt1 = ZonedDateTime.parse(
+          "2007-12-03T10:15:30+01:00[Europe/Paris]")
+
+    val formatter = DateTimeFormatter.ofPattern(
+        "HH:mm:ss.SSS")
+    // See DateTimeFormatter API docs for more options
+    val str = zdt1.format(formatter)
+
+//----#### SNIPPET #### - 13
+    import java.time.*
+
+    val ldt = LocalDateTime.parse("2018-02-27T23:44:55.3")
+    val zdt = ZonedDateTime.of(ldt,
+          ZoneId.of("America/Buenos_Aires"))
+
+    val ldt2 = zdt.toLocalTime()
+
+//----#### SNIPPET #### - 14
+    import java.time.*
+    import java.time.temporal.ChronoUnit
+
+    val ldt1 = LocalDateTime.parse("2018-01-23T17:23:00")
+    val ldt2 = LocalDateTime.parse("2018-01-24T16:13:10")
+    val ldt3 = LocalDateTime.parse("2020-01-24T16:13:10")
+
+    // Getting a duration: ------------------------------
+
+    val d1 = Duration.between(ldt1, ldt2)
+    // Note: this works also for Instant and ZonedDateTime
+    // objects 
+
+    val d2 = Duration.of(27L, ChronoUnit.HOURS) // 27hours
+
+    val d3 = Duration.ZERO.
+                 plusDays(3L).
+                 plusHours(4L).
+                 minusMinutes(78L)
+
+    val d4 = Duration.parse("P2DT3H4M")
+    // <- 2 days, 3 hrs, 4 minutes 
+    // For more specifiers, see the API documentation
+    // of Duration.parse()
+
+    // Getting a period: --------------------------------
+
+    val ld1 = LocalDate.parse("2018-04-23")
+    val ld2 = LocalDate.parse("2018-08-16")
+    
+    val p1 = Period.between(ld1, ld2)
+    // Note, end date not inclusive
+
+    val p2 = Period.of(2, 3, -1) 
+    // <- 2 years + 3 months - 1 day
+
+    val p3 = Period.parse("P1Y2M-3D")
+    // <- 1 year + 2 months - 3 days
+    // For more specifiers, see the API documentation
+    // of Period.parse()
+
+//----#### SNIPPET #### - 15
+    import java.time.*
+
+    // Duration operations: ------------------------------
+
+    val d = Duration.parse("P2DT3H4M")
+    // <- 2 days, 3 hrs, 4 minutes 
+
+    val d2 = d.plusDays(3L)
+    // also:  .minusDays(33L)
+    // or     .plusHours(2L)    or  .minusHours(1L)
+    // or     .plusMinutes(77L) or  .minusMinutes(7L)
+    // or     .plusSeconds(23L) or  .minusSeconds(5L)
+    // or     .plusMillis(11L)  or  .minusMillis(55L)
+    // or     .plusNanos(1000L) or  .minusNanos(5_000_000L)
+
+    val d3 = d.abs()          // make positive
+    val d4 = d.negated()      // swap sign
+    val d5 = d.multipliedBy(3L)   // three times a long
+    val d6 = d.dividedBy(2L)      // half as long
+
+    // Period operations: --------------------------------
+
+    val p = Period.of(2, 3, -1) 
+    // <- 2 years + 3 months - 1 day
+
+    val p2 = p.normalized()
+    // <- possibly adjusts the year to make the month lie
+    // inside [-11;+11]
+
+    val p3 = p.negated()
+
+    val p4 = p.minusYears(11L)
+    // also:  .plusYears(3L)
+    // or     .minusMonths(4L)  or  .plusMonths(2L) 
+    // or     .minusDays(40L)   or  .plusDays(5L) 
+
+    val p5 = p.multipliedBy(5)  // 5 times as long
+
+//----#### SNIPPET #### - 16
+    import java.time.*
+
+    val d = Duration.parse("P2DT3H4M")
+
+    val p = Period.of(2, 3, -1) 
+    // <- 2 years + 3 months - 1 day
+
+    val ld = LocalDate.parse("2018-04-23")
+    val lt = LocalTime.parse("17:13:12")
+    val ldt = LocalDateTime.of(ld, lt)
+    val zdt = ZonedDateTime.parse(
+          "2007-12-03T10:15:30+01:00[Europe/Paris]")
+    val inz = Instant.parse("2018-01-23T23:33:14.513Z")
+
+    // ---- Using a LocalDate
+    val ld2 = ld.plus(p)  // or .minus(p)
+    // val ld3 = ld.plus(d) // -> exception
+    // val ld4 = ld.minus(d) // -> exception
+
+    // ---- Using a LocalTime
+    val lt2 = lt.plus(d)  // or .minus(d)
+    // val lt3 = lt.minus(p) // -> exception
+    // val lt4 = lt.plus(p) // -> exception
+
+    // ---- Using a LocalDateTime
+    val ldt2 = ldt.plus(d)  // or .minus(d)
+    val ldt3 = ldt.plus(p)  // or .minus(p)
+
+    // ---- Using a ZonedDateTime
+    val zdt2 = zdt.plus(d)  // or .minus(d)
+    val zdt3 = zdt.plus(p)  // or .minus(p)
+
+    // ---- Using an Instant
+    val inz2 = inz.plus(d)  // or .minus(d)
+    // val inz3 = inz.minus(p) // -> exception
+    // val inz4 = inz.plus(p) // -> exception
+
+//----#### SNIPPET #### - 17
+    import java.time.*
+
+    val clock : Clock = ...
+    val ldt = LocalDateTime.now(clock)
+    val zdt = ZonedDateTime.now(clock)
+    val inz = Instant.now(clock)
+
+//----#### SNIPPET #### - 18
+    import java.time.*
+
+    val myClock = object : Clock() {
+        override fun withZone(zone: ZoneId?): Clock {
+            // Supposed to return a copy of this clock 
+            // with a different time zone
+            return this
+        }
+
+        override fun getZone(): ZoneId {
+            // Supposed to return the zone ID
+            return ZoneId.of("Z")
+        }
+
+        override fun instant(): Instant {
+            // This is the engine of the clock. It must 
+            // provide an Instant
+            return Instant.parse("2018-01-23T23:33:14Z")
+        }
+    }
+    
+    ... use myClock

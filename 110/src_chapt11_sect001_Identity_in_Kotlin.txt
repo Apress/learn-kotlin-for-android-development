@@ -1,0 +1,14 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 11: 
+////      Handling Equality
+//// Section: 1. Identity in Kotlin
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    data class A(val x:Double)
+    val a = A(7.0)
+    val b = A(7.0)
+    val c = a
+    val aIdenticalToC = a === c // -> true
+    val aIdenticalToB = a === b // -> false

@@ -1,0 +1,70 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 09: 
+////      Data Containers
+//// Section: 4. Sets, Lists And Maps
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    Set<MemberType>
+    List<MemberType>
+    Map<KeyType, ValueType>
+
+    MutableSet<MemberType>
+    MutableList<MemberType>
+    MutableMap<KeyType, ValueType>
+
+//----#### SNIPPET #### - 2
+    val set1:Set<String> = HashSet()
+    val set2:MutableSet<String> = HashSet()
+    
+    val set3 = setOf(4, 7, 55)
+    val set4 = setOf<Long>(4, 7, 55)
+    val set5 = mutableSetOf(4, 7, 55)
+
+//----#### SNIPPET #### - 3
+    setOf(1, 2, 3) + setOf(2, 3, 4) // -> [1, 2, 3, 4]
+    setOf(1, 2, 3, 4) + 5           // -> [1, 2, 3, 4, 5]
+    setOf(1, 2, 3) - setOf(3, 4)    // -> [1, 2]
+    setOf(1, 2, 3) - 2              // -> [1, 3]
+
+//----#### SNIPPET #### - 4
+    val list1:List<Int> = ArrayList()
+    val list2:MutableList<Int> = ArrayList()
+
+    val list3 = listOf(4, 7, 55)
+    val list4 = listOf<Long>(4, 7, 55)
+    val list5 = mutableListOf(4, 7, 55)
+
+//----#### SNIPPET #### - 5
+    val array = arrayOf(...)
+    val list = array.toList()
+
+//----#### SNIPPET #### - 6
+    listOf(1, 2, 3) + listOf(2, 3)  // -> [1, 2, 3, 2, 3]
+    listOf(1, 2, 3, 4) + 5          // -> [1, 2, 3, 4, 5]
+
+//----#### SNIPPET #### - 7
+    val map1:Map<String,Int> = ...
+    var map2:Map<Int,Double> = ...
+    val map3:MutableMap<Int,String> = ...
+
+//----#### SNIPPET #### - 8
+    val map: MutableMap<Int,String> = 
+          HashMap<Int,String>().apply {
+            this[152835937] = "Albert Einstein"
+            this[273495357] = "John Smith"
+            this[346068589] = "John Smith"
+            this[484767775] = "Barbra Streisand"              
+          }
+
+//----#### SNIPPET #### - 9
+    val map = mutableMapOf( 
+            152835937 to "Albert Einstein",
+            273495357 to "John Smith",
+            346068589 to "John Smith",
+            484767775 to "Barbra Streisand"              
+        )
+    val map2 = mapOf( 
+        152835937 to "Albert Einstein",
+        ... )

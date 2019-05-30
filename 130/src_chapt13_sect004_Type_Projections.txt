@@ -1,0 +1,37 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 13: 
+////      About Type Safety: Generics
+//// Section: 4. Type Projections
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    class Producer<T> {
+        fun getData(): Iterable<T>? = null
+    }
+    class Consumer<T> {
+        fun setData(p:Iterable<T>) { }
+    }
+
+    class A<T> {
+        fun add(p:Producer<out T>) {  }
+        fun extractTo(p:Consumer<in T>) { }
+    }
+
+//----#### SNIPPET #### - 2
+    var a = A<String>()
+    var b = A<Any>()
+
+    var inputStrings = Producer<String>()
+    var inputAny = Producer<Any>()
+    a.add(inputStrings)
+    a.add(inputAny)            // FAILS!
+    b.add(inputStrings)        // only because o "out"
+    b.add(inputAny)
+
+    var outputAny = Consumer<Any>()
+    var outputStrings = Consumer<String>()
+    a.extractTo(outputAny)     // only because of "in"
+    a.extractTo(outputStrings)
+    b.extractTo(outputAny)
+    b.extractTo(outputStrings) // FAILS!

@@ -1,0 +1,30 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 09: 
+////      Data Containers
+//// Section: 6. Loops Over Data Containers
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    val container = ... // array or set or list 
+    container.forEach { elem ->
+        // do something with elem
+    }
+
+//----#### SNIPPET #### - 2
+    val container = listOf(1, 2, 3, 4, -1) 
+    container.forEach { elem ->
+        Log.d("LOG", elem.toString())
+    }
+
+//----#### SNIPPET #### - 3
+    var index = 0 
+    container.forEach { elem ->
+        // ... do s.th. with elem
+        index++ // NOT ALLOWED!
+    }
+
+//----#### SNIPPET #### - 4
+    container.forEachIndexed { index, elem ->
+        // ... do s.th. with elem
+    }

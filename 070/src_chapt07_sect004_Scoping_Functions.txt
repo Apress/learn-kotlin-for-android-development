@@ -1,0 +1,133 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 07: 
+////      Structuralnewline Constructs
+//// Section: 4. Scoping Functions
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    object.apply {
+        ... 
+    }
+
+//----#### SNIPPET #### - 2
+    class A { var x:Int, var y:Int }
+    val instance = A()
+    instance.x = 4
+    instance.y = 5
+    instance.y *= instance.x
+
+//----#### SNIPPET #### - 3
+    class A { var x:Int, var y:Int }
+    val instance = A().apply{
+        this.x = 4
+        this.y = 5
+        this.y *= this.x
+    }
+
+//----#### SNIPPET #### - 4
+    class A { var x:Int, var y:Int }
+    val instance = A().apply{
+        x = 4
+        y = 5
+        y *= x
+    }
+
+//----#### SNIPPET #### - 5
+    var q = 37
+    class A { var x:Int, var y:Int }
+    val instance = A().apply {
+        x = 4
+        y = 5
+        q = 44 // does not exist in A, so the q from 
+               // outside gets used
+    }
+
+//----#### SNIPPET #### - 6
+    val x = SomeClass().apply {
+        // do things with the SomeClass instance
+        // while assigning it to x
+    }
+
+//----#### SNIPPET #### - 7
+    class A {
+        fun goA() { ... }
+        ...
+        val x = SomeClass().apply {
+            this.x = ...  // -> SomeClass.x
+            x = ...       // -> SomeClass.x
+            this@A.goA()  // -> A.goA()
+            ...
+        }
+    }
+
+//----#### SNIPPET #### - 8
+    object.let { o ->
+        [statements] // do s.th. with 'o'
+        [value]
+    }
+
+//----#### SNIPPET #### - 9
+    object.let {
+        [statements] // do s.th. with 'it'
+        [value]
+    }
+
+//----#### SNIPPET #### - 10
+    val s = "Hello World"
+    val s2 = s.let { it + "\n" }
+    // or    s.let { string -> string + "\n" } 
+
+//----#### SNIPPET #### - 11
+    val o = ... // some value
+    with(o){
+        // o is now "this"
+        ...
+    }
+
+//----#### SNIPPET #### - 12
+    with(object){
+        f1(37)
+        f1(12)
+        fx("Hello")
+    }
+
+//----#### SNIPPET #### - 13
+    object.f1(37)
+    object.f1(12)
+    object.fx("Hello")
+
+//----#### SNIPPET #### - 14
+    object.also { obj ->
+        // 'obj' is object
+        ...
+    }
+
+//----#### SNIPPET #### - 15
+    object.also {
+        // 'it' is object
+        ...
+    }
+
+//----#### SNIPPET #### - 16
+    val s = "Hello"
+    val x = s.run { 
+        // 'this' is 's'
+        ...
+        [value]
+    }
+    // x now has [value]
+
+//----#### SNIPPET #### - 17
+    var v:String? = ...
+    ...
+    if(v != null) {
+        ...
+    }
+
+//----#### SNIPPET #### - 18
+    var v:String? = ...
+    ...
+    v?.run {
+        ...
+    }

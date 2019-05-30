@@ -1,0 +1,34 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 04: 
+////      Classes And  Objects: Extended  Features
+//// Section: 10. Infix Operators
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    infix operator 
+    fun SomeClass1.oper(param:SomeClass2) = ...
+
+//----#### SNIPPET #### - 2
+    [expression1] oper [expression2]
+
+//----#### SNIPPET #### - 3
+    infix operator 
+    fun SomeClass1.oper(param:SomeClass2):ResultType {
+        ...
+        return [result_expression]
+    }
+
+//----#### SNIPPET #### - 4
+    infix operator fun String.TIMES(i:Int) = 
+        (1..i).map { this }.joinToString("")
+
+//----#### SNIPPET #### - 5
+    val s = "abc" TIMES 3 // -> "abcabcabc" 
+
+//----#### SNIPPET #### - 6
+    operator fun String.times(i:Int) = 
+        (1..i).map { this }.joinToString("")
+
+//----#### SNIPPET #### - 7
+    val s = "abc" * 3 // -> "abcabcabc" 

@@ -1,0 +1,53 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 13: 
+////      About Type Safety: Generics
+//// Section: 0. 
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+  class AdderInt {
+      fun add(i:Int) { 
+          ...
+      }
+  }
+
+//----#### SNIPPET #### - 2
+  class AdderString {
+      fun add(s:String) { 
+          ...
+      }
+  }
+
+//----#### SNIPPET #### - 3
+  class Adder<T> {
+      fun add(toAdd:T) { 
+          ...
+      }
+  }
+
+//----#### SNIPPET #### - 4
+  class Adder<T> {
+      fun add(toAdd:T) { 
+          ...
+      }
+  }
+  val intAdder = Adder<Int>()
+  val stringAdder = Adder<String>()
+
+//----#### SNIPPET #### - 5
+  class Adder<T> {
+      fun add(toAdd:T) { 
+          ...
+      }
+  }
+  val intAdder:Adder<Int> = Adder()
+  val stringAdder:Adder<String> = Adder()
+
+//----#### SNIPPET #### - 6
+    val p1 = Pair<String, String>("A", "B")
+    val p2 = Pair<Int,String>(1, "A")
+
+//----#### SNIPPET #### - 7
+    val l1: List<String> = listOf("A","B","C")
+    val l2: MutableList<Int> = mutableListOf(1, 2, 3)

@@ -1,0 +1,29 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 07: 
+////      Structuralnewline Constructs
+//// Section: 2. Ranges
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    val r1 = IntRange(1, 1000)
+    val r2 = LongRange(1, 10_000_000_000)
+    val r3 = CharRange('A', 'I')
+
+//----#### SNIPPET #### - 2
+    val r1 = 1..1000
+    val r2 = 1L..10_000_000_000L
+    val r3 = 'A'..'I'
+
+//----#### SNIPPET #### - 3
+    1..1000 step 5
+    (1..1000 step 5).reversed()
+
+//----#### SNIPPET #### - 4
+    1000 downTo 1 step 5 
+
+//----#### SNIPPET #### - 5
+    (1..1000 step 5).first       // -> 1
+    (1..1000 step 5).last        // -> 996
+    (1000 downTo 1 step 5).first // -> 1000 
+    (1000 downTo 1 step 5).last  // -> 5 

@@ -1,0 +1,16 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 03: 
+////      Classes at Work: Properties And Functions
+//// Section: 4. Local Variables
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    class TheClass {
+        fun function() { 
+            ...
+            var localVar1:Int = 7
+            val localVar1:Int = 8
+            ...
+        }
+    }

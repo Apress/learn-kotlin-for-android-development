@@ -1,0 +1,11 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 07: 
+////      Structuralnewline Constructs
+//// Section: 5. Conditional Execution
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    someInstance.takeIf { [boolean_expression] }?.run {
+        // do something
+    }

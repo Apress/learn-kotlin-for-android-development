@@ -1,0 +1,49 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 09: 
+////      Data Containers
+//// Section: 2. Array Instantiation
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    val byteArr:ByteArray = ByteArray(7)
+    val shortArr:ShortArray = ShortArray(7)
+    val intArr:IntArray = IntArray(7)
+    val longArr:LongArray = LongArray(7)
+    val doubleArr:DoubleArray = DoubleArray(7)
+    val floatArr:FloatArray = FloatArray(7)
+    val booleanArr:BooleanArray = BooleanArray(7)
+
+//----#### SNIPPET #### - 2
+    { i -> 
+        [ program code ]
+        [ expression ]
+    }
+
+//----#### SNIPPET #### - 3
+    { i -> (i+1) * (i+1) }
+
+//----#### SNIPPET #### - 4
+    val arr = IntArray(10, { i -> (i+1) * (i+1) })
+
+//----#### SNIPPET #### - 5
+    val objArr:Array<SomeType> = 
+          Array<SomeType>(7, { i -> ... })
+
+//----#### SNIPPET #### - 6
+    val ages = IntArray(5)
+    ages[0] = 26
+    ages[1] = 56
+    ages[2] = 12
+    ages[3] = 17
+    ages[4] = 26
+
+//----#### SNIPPET #### - 7
+    val ages = intArrayOf(26, 56, 12, 17, 26)
+
+//----#### SNIPPET #### - 8
+    val size = ...
+    val arr:Array<ElementType?> = arrayOfNulls(size)
+
+//----#### SNIPPET #### - 9
+    val arr:Array<ElementType?> = emptyArray()

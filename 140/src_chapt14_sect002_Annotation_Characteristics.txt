@@ -1,0 +1,16 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 14: 
+////      Adding Hints: Annotations
+//// Section: 2. Annotation Characteristics
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    annotation class AnnotationName
+
+//----#### SNIPPET #### - 2
+    @Target(...)     
+    @Retention(...)
+    @Repeatable
+    @MustBeDocumented
+    annotation class AnnotationName

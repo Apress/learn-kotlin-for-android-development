@@ -1,0 +1,40 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 06: 
+////      Comments in Kotlin Files
+//// Section: 3. Class Comments
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    /**
+     * The comment ...
+     * ...
+     */
+
+//----#### SNIPPET #### - 2
+/**
+ * The main activity class of the NumberGuess game app. 
+ * Extends from the 
+ * [android.support.v7.app.AppCompatActivity]
+ * class and is thus compatible with earlier 
+ * Android versions.
+ *
+ * The app shows a GUI with the following buttons:
+ * - **Start**: Starts the game
+ * - **Do Guess**: Used for guessing a number
+ *
+ * Once started, the game secretly determines a random 
+ * number the user has to guess. The user performs 
+ * guesses and gets told if the guessed number is too 
+ * low, too high, or a hit.
+ *
+ * Once hit, the game is over.
+ *
+ * @see Constants
+ *
+ * @author Peter Späth
+ * @since 1.0
+ */
+class MainActivity : AppCompatActivity() {
+    ...
+}

@@ -1,0 +1,77 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 13: 
+////      About Type Safety: Generics
+//// Section: 2. Declaration-Side Variance
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    class A<T> { ... }
+    var a = A<String>()
+    var b = A<Any>()
+
+    a = b // variance?
+    ... or ...
+    b = a // variance?
+
+//----#### SNIPPET #### - 2
+    class A<T> {
+        fun add(p:T) { ... }
+    }
+    var a = A<String>()
+    var b = A<Any>()
+
+    b = a // variance?
+    b.add(37)
+
+//----#### SNIPPET #### - 3
+    class A<T> {
+        fun extract(): T = ...
+    }
+    var a = A<String>()
+    var b = A<Any>()
+
+    a = b // variance?
+    val extracted:String = a.extract()
+
+//----#### SNIPPET #### - 4
+    class A<T> {
+        fun extract(): T = ...
+    }
+    var a = A<String>()
+    var b = A<Any>()
+
+    b = a // variance?
+    val extracted:String = b.extract()
+
+//----#### SNIPPET #### - 5
+    class A<T> {
+        fun add(p:T) { ... }
+    }
+    var a = A<String>()
+    var b = A<Any>()
+
+    a = b // variance?
+    a.add("World")
+
+//----#### SNIPPET #### - 6
+    class A<out T> {
+        fun extract(): T = ...
+    }
+    var a = A<String>()
+    var b = A<Any>()
+
+    b = a // variance? YES!
+    val extracted:String = b.extract() 
+    // OK, because we are reading!
+
+//----#### SNIPPET #### - 7
+    class A<in T> {
+        fun add(p:T) { ... }
+    }
+    var a = A<String>()
+    var b = A<Any>()
+
+    a = b // variance? YES!
+    b.add("World") 
+    // OK, because we are writing!

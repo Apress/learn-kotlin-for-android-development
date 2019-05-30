@@ -1,0 +1,71 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 11: 
+////      Handling Equality
+//// Section: 3. Equals and Hash Code
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    class A(val v:Int) {
+        override fun hashCode():Int {
+            return ...
+        }
+        override fun equals(other:Any?):Boolean {
+            return ...
+        }
+    }
+
+    val m = mapOf(A(7) to 8, A(8) to 9)
+
+//----#### SNIPPET #### - 2
+    val searchKey:A = ...
+    m[searchKey]
+
+//----#### SNIPPET #### - 3
+    class Person(val lastName:String, 
+        val firstName:String, 
+        val birthday:String, 
+        val gender:Char)
+
+//----#### SNIPPET #### - 4
+    class Person(val lastName:String, 
+          val firstName:String, 
+          val birthday:String, 
+          val gender:Char) {
+        override fun equals(other:Any?):Boolean {
+            if(other == null) return false
+            if(other !is Person) return false
+            if(lastName != other.lastName) return false
+            if(firstName != other.firstName) return false
+            if(birthday != other.birthday) return false
+            if(gender != other.gender) return false
+            return true
+        }
+    }
+
+//----#### SNIPPET #### - 5
+    class Person(val lastName:String, 
+          val firstName:String, 
+          val birthday:String, 
+          val gender:Char) {
+        override fun equals(other:Any?):Boolean {
+            if(other == null) return false
+            if(other !is Person) return false
+            if(lastName != other.lastName) return false
+            if(firstName != other.firstName) return false
+            if(birthday != other.birthday) return false
+            if(gender != other.gender) return false
+            return true
+        }
+
+        override fun hashCode(): Int {
+            return Objects.hash(super.hashCode(), 
+                lastName, firstName, birthday, gender)
+        }
+    }
+
+//----#### SNIPPET #### - 6
+    data class Person(val lastName:String, 
+          val firstName:String, 
+          val birthday:String, 
+          val gender:Char)

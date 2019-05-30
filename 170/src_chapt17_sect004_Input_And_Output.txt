@@ -1,0 +1,232 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 17: 
+////      More APIs
+//// Section: 4. Input And Output
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    println("Hello World")
+
+//----#### SNIPPET #### - 2
+    import java.io.File
+
+    // We are inside an Activity or other Context!
+    val dataDir:File = getFilesDir()
+
+//----#### SNIPPET #### - 3
+    dataDir.resolve("a.txt").takeIf{ !it.exists() }.
+        appendText("Hello World A")
+    dataDir.resolve("b.txt").takeIf{ !it.exists() }.
+        appendText("Hello World B")
+    File(dataDir,"dir1").mkdirs()
+    dataDir.resolve("dir1").resolve("a.txt").
+        takeIf{ !it.exists() }.
+        appendText("Hello World dir1-A")
+
+//----#### SNIPPET #### - 4
+    val someDir:File = ...
+    val file:File = someDir.resolve("fileName")
+
+//----#### SNIPPET #### - 5
+    dataDir.walk().maxDepth(1).forEach { file -> 
+        Log.d("LOG", file.toString()) 
+    }
+
+//----#### SNIPPET #### - 6
+    dataDir.walk().filter { it.isFile() }.forEach { 
+        file -> 
+        Log.d("LOG", file.toString()) 
+    }
+
+//----#### SNIPPET #### - 7
+    dataDir.walk().filter { it.endsWith(".txt") }.forEach { 
+        file -> 
+        Log.d("LOG", file.toString()) 
+    }
+
+//----#### SNIPPET #### - 8
+    dataDir.walk().filter { 
+          it.name.matches(".*invoice\\d\\d.*\\.txt") 
+    }.forEach { 
+        file -> 
+        Log.d("LOG", file.toString()) 
+    }
+
+//----#### SNIPPET #### - 9
+    val file = dataDir.resolve("a.txt") 
+    // or any other file
+
+    // Write to the file
+    file.writeText("In the house, there was no light")
+
+    // Append to the file
+    file.appendText("\nIn the house, there was no light")
+
+//----#### SNIPPET #### - 10
+    val file = dataDir.resolve("a.txt") 
+    val bytes = byteArrayOf(27, 34, 13, 47, 50)
+
+    // Write to the file
+    file.writeBytes(bytes)
+
+    // Append to the file
+    file.appendBytes(bytes)
+
+//----#### SNIPPET #### - 11
+    val file = dataDir.resolve("a.txt") 
+    val fileText:String = file.readText()
+
+//----#### SNIPPET #### - 12
+    val file = dataDir.resolve("a.txt") 
+    val fileText:String = file.readText(
+          Charsets.ISO_8859_1)
+
+//----#### SNIPPET #### - 13
+    val file = dataDir.resolve("a.txt") 
+    val fileBytes:ByteArray = file.readBytes()
+
+//----#### SNIPPET #### - 14
+    val file = dataDir.resolve("a.txt")
+ 
+    val allLines = file.readLines()
+    allLines.forEach { ln ->
+      // do something with the line (a String)
+    }
+
+//----#### SNIPPET #### - 15
+    val file = dataDir.resolve("a.txt")
+ 
+    // Only API level > 25
+    file.bufferedReader.use { 
+        it.lines().forEach { ln ->
+            // do something with the line (a String)
+        }
+    }
+
+//----#### SNIPPET #### - 16
+    import java.io.File
+    ...
+
+    val file = dataDir.resolve("a.txt")
+ 
+    // Buffer size implementation dependent
+    file.forEachBlock{ buffer:ByteArray, bytesRead:Int ->
+        // do something with the buffer
+    } 
+
+    // Or, if you want to prescribe the buffer size
+    file.forEachBlock(512) { buffer, bytesRead ->
+        // do something with the buffer
+    } 
+
+//----#### SNIPPET #### - 17
+    import java.io.File
+    ...
+
+    val file:File = ...
+    val wasDeleted:Boolean = file.delete()
+
+//----#### SNIPPET #### - 18
+    import java.io.File
+    ...
+
+    val file:File = ...
+    val wasDeleted:Boolean = file.deleteRecursively()
+
+//----#### SNIPPET #### - 19
+    import java.io.File
+    ...
+
+    val file:File = ...
+    file.deleteOnExit()
+
+//----#### SNIPPET #### - 20
+    import java.io.File
+    ...
+
+    val prefix = "tmpFile"
+    val suffix = ".tmp"
+    val tmpFile:File = File.createTempFile(prefix, suffix)
+    tmpFile.deleteOnExit()
+
+    ... use tmpFile
+
+//----#### SNIPPET #### - 21
+    import java.io.File
+    ...
+
+    val file1:File = ...
+    val file2:File = ...
+
+    f1.copyTo(f2)       // f2 must not exist
+    f1.copyTo(f2, true) // overwrite if necessary
+
+    // To fine-tune performance, you can tweak the
+    // buffer-size
+    f1.copyTo(f2, bufferSize = 4096)
+
+//----#### SNIPPET #### - 22
+    import java.io.File
+    ...
+
+    val dir1:File = ...
+    val dir2:File = ...
+
+    f1.copyRecursively(f2)       // f2 must not exist
+    f1.copyRecursively(f2, true) // overwrite if necessary
+
+    // To fine-tune error handling, you can add a handler. 
+    // Otherwise an IOException gets thrown.
+    f1.copyRecursively(f2, onError = { 
+        file:File, ioException:IOException ->
+        // do something.
+
+        // What to do now? Just skip this file, or 
+        // terminate the complete function?
+        OnErrorAction.SKIP // or .TERMINATE
+    })
+
+//----#### SNIPPET #### - 23
+    import java.io.File
+    ...
+
+    val file1:File = ...
+    val file2:File = ...
+
+    file1.renameTo(file2)
+
+//----#### SNIPPET #### - 24
+    import java.io.File
+    import java.util.Date
+    ...
+
+    val file = dataDir.resolve("a.txt")
+    val log = { msg:String -> Log.d("LOG", msg) }
+
+    log("Name: " + file.name)
+    log("The file exists: " + file.exists())
+    log("You can read the file: " + file.canRead())
+    log("You can write to the file: " + file.canWrite())
+    log("Is a directory: " + file.isDirectory())
+    log("Is a real file: " + file.isFile())
+    log("Last modified: " + Date(file.lastModified()))
+    log("Length: " + file.length())
+
+//----#### SNIPPET #### - 25
+    import java.net.URL
+    import kotlin.concurrent.thread
+
+    thread {
+        val contents:String = 
+          URL("http://www.example.com/something.txt").
+          readText()
+
+        val isoContents = 
+          URL("http://www.example.com/something.txt").
+          readText(Charsets.ISO_8859_1)
+
+        val img:ByteArray =
+          URL("http://www.example.com/somepic.jpg").
+          readBytes()
+    }

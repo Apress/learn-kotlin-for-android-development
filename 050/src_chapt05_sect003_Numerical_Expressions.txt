@@ -1,0 +1,21 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 05: 
+////      Expressions: Operations on Data
+//// Section: 3. Numerical Expressions
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    val l1:Long = 234567890L
+    val i1:Int = 37
+    val x = l1 / i1 // -> is a Long
+
+//----#### SNIPPET #### - 2
+    val f1:Float = 2.45f
+    val d1:Double = 37.6
+    val x = f1 / d1 // -> is a Double
+
+//----#### SNIPPET #### - 3
+    val i1:Int = 33
+    val d1:Double = 37.6
+    val x = i1 * d1 // -> is a Double

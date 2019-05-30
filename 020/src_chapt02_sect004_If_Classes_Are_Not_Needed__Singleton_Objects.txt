@@ -1,0 +1,51 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 02: 
+////      Classes And  Objects: Object  Orientation  Philosophy
+//// Section: 4. If Classes Are Not Needed: Singleton Objects
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    object ObjectName {
+        [Object-Body]
+    }
+
+//----#### SNIPPET #### - 2
+    ObjectName.propertyName
+    ObjectName.function([function-parameters])
+
+//----#### SNIPPET #### - 3
+    status.text = getString(R.string.guess_hint, 1, 7)
+    number = 1 + Math.floor(Math.random()*7).toInt()
+
+//----#### SNIPPET #### - 4
+    object Constants {
+        val LOWER_BOUND = 1
+        val UPPER_BOUND = 7
+    }
+
+//----#### SNIPPET #### - 5
+    status.text = getString(R.string.guess_hint, 
+          Constants.LOWER_BOUND, 
+          Constants.UPPER_BOUND)
+    val span = Constants.UPPER_BOUND - 
+          Constants.LOWER_BOUND + 1
+    number = Constants.LOWER_BOUND + 
+          Math.floor(Math.random()*span).toInt()
+
+//----#### SNIPPET #### - 6
+    fun start(v: View) {
+        log("Game started")
+        num.setText("")
+        started = true
+        doGuess.setEnabled(true)
+        status.text = getString(R.string.guess_hint, 
+              Constants.LOWER_BOUND, 
+              Constants.UPPER_BOUND)
+
+        val span = Constants.UPPER_BOUND - 
+              Constants.LOWER_BOUND + 1
+        number = Constants.LOWER_BOUND + 
+              Math.floor(Math.random()*span).toInt()
+        tries = 0
+    }

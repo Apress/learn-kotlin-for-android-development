@@ -1,0 +1,24 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 06: 
+////      Comments in Kotlin Files
+//// Section: 4. Function And Property Comments
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+  ...
+  class SomeClass {
+      /** 
+       * This describes property prop
+       * ...
+       */
+      val prop:Int = 7
+
+      /** 
+       * This describes function func
+       * ...
+       */
+      fun func() {
+          ...
+      }
+  }

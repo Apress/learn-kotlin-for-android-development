@@ -1,0 +1,99 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 02: 
+////      Classes And  Objects: Object  Orientation  Philosophy
+//// Section: 6. Describing a Contract: Interfaces
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    interface GraphicsObject {
+        fun numberOfCorners(): Int
+        fun coordsOf(index:Int): Pair<Double, Double>
+        fun fillColor(): String
+    }
+
+//----#### SNIPPET #### - 2
+    class Triangle : GraphicsObject {
+        override fun numberOfCorners(): Int {
+           return 3
+        }
+        override fun coordsOf(index:Int): 
+              Pair<Double,Double> {
+            return when(index) {
+                0 -> Pair(-1.0, 0.0)
+                1 -> Pair(1.0, 0.0)
+                2 -> Pair(0.0, 1.0)
+                else throw RuntimeException(
+                    "Index ${index} out of bounds")
+            }
+        }
+        override fun fillColor(): String {
+            return "red"
+        }
+    }
+
+//----#### SNIPPET #### - 3
+    class Triangle : GraphicsObject {
+        override fun numberOfCorners() = 3
+        override fun coordsOf(index:Int) = 
+            when(index) {
+                0 -> Pair(-1.0, 0.0)
+                1 -> Pair(1.0, 0.0)
+                2 -> Pair(0.0, 1.0)
+                else -> throw RuntimeException(
+                    "Index ${index} out of bounds")
+            }
+        override fun fillColor() = "red"
+    }
+
+//----#### SNIPPET #### - 4
+    class Collector {
+        ...
+        fun add(graphics:GraphicsObject) {
+            // do something with it...
+        }
+    }
+
+//----#### SNIPPET #### - 5
+    ...
+    val collector = [get hold of it]
+    val triang:GraphicsObject = Triangle()
+    collector.add(triang)
+    ...
+
+//----#### SNIPPET #### - 6
+    interface GraphicsObject {
+        fun numberOfCorners(): Int
+        fun coordsOf(index:Int): Pair<Double, Double>
+        fun fillColor(): String
+    }
+
+    object Collector {
+        fun add(graphics:GraphicsObject) {
+            println("Collector.add():")
+            println("Number of corners: " + 
+                graphics.numberOfCorners())
+            println("Color: " +
+                graphics.fillColor())
+        }
+    }
+
+//----#### SNIPPET #### - 7
+    class Triangle : GraphicsObject {
+        override fun numberOfCorners() = 3
+        override fun coordsOf(index:Int) = 
+            when(index) {
+                0 -> Pair(-1.0, 0.0)
+                1 -> Pair(1.0, 0.0)
+                2 -> Pair(0.0, 1.0)
+                else -> throw RuntimeException(
+                    "Index ${index} out of bounds")
+            }
+        override fun fillColor() = "red"
+    }
+
+    fun main(args:Array<String>) {
+        val collector = Collector
+        val triang:GraphicsObject = Triangle()
+        collector.add(triang)
+    }

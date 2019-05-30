@@ -1,0 +1,25 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 14: 
+////      Adding Hints: Annotations
+//// Section: 1. Annotations in Kotlin
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    @AnnotationName
+
+//----#### SNIPPET #### - 2
+    @AnnotationName(...)
+
+//----#### SNIPPET #### - 3
+    @Operator(ADDING)
+    class Adder {
+        @OperatorFunction
+        fun add(a:Double, b:Double) = a + b
+    }
+
+    @Operator(SUBTRACTING)
+    class Subtractor {
+        @OperatorFunction
+        fun subtract(a:Double, b:Double) = a - b
+    }

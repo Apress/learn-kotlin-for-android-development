@@ -1,0 +1,326 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 18: 
+////      Working in Parallel: Multithreading
+//// Section: 3. Kotlin Coroutines
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+        class MyActivity : AppCompatActivity(), 
+              CoroutineScope by MainScope() {
+          ...
+          override fun onDestroy() {
+            super.onDestroy()
+            cancel() // CoroutineScope.cancel
+          } 
+          ...
+        }
+
+//----#### SNIPPET #### - 2
+        withTimeout(3000L) { // milliseconds
+          ... code here
+        }
+
+//----#### SNIPPET #### - 3
+        val res = withTimeoutOrNull(3000L) {
+          ... code here
+          "Done."
+        }
+        // -> res is null if timeout happened
+
+//----#### SNIPPET #### - 4
+        runBlocking {
+          val job = launch {
+            try {
+              ... do work
+            } finally {
+              ... cleanup if canceled
+            }
+          }
+          ...
+          job.cancelAndJoin() 
+        }
+
+//----#### SNIPPET #### - 5
+        runBlocking {
+            ...
+        }
+
+//----#### SNIPPET #### - 6
+        runBlocking {
+            val ctx:CoroutineContext = 
+                  coroutineContext
+            ...
+        }
+
+//----#### SNIPPET #### - 7
+    openScope {
+        // Scope now automatically available
+        ...
+    }
+
+//----#### SNIPPET #### - 8
+fun <T> runBlocking(context: CoroutineContext = 
+              EmptyCoroutineContext, 
+        block: suspend CoroutineScope.() -> T): T 
+{
+    // code to run block in a blocking thread
+    ...
+}
+
+//----#### SNIPPET #### - 9
+    public fun CoroutineScope.launch(
+      context: CoroutineContext = EmptyCoroutineContext,
+      start: CoroutineStart = CoroutineStart.DEFAULT,
+      block: suspend CoroutineScope.() -> Unit
+    ): Job
+
+//----#### SNIPPET #### - 10
+    launch(context = coroutineContext +
+                     CoroutineName("CoRou1")) {
+        ....
+    )
+
+//----#### SNIPPET #### - 11
+    runBlocking {
+        // This starts in the current thread.
+        // We are now inside a coroutine scope. This means
+        // we have a
+        //     val coroutineContext:CoroutineContext
+        // for the context. The runBlocking() ends
+        // after all work is done.
+        Log.d("LOG", "1. Started inside runBlocking()")
+
+        coroutineScope {
+            Log.d("LOG", "2. coroutineScope()")
+            delay(500L)
+            Log.d("LOG", "3. coroutineScope()")
+
+            coroutineScope {
+                Log.d("LOG", "4. coroutineScope() II")
+                // If you add this, both coroutineScope()
+                // fail and runBlocking() prematurely ends:
+                // throw CancellationException("4.")
+
+                // Also, because runBlocking transports the
+                // exception to the outside world, (15.)
+                // below will not be reached.
+            }
+            Log.d("LOG", "5. inner done")
+        }
+
+        val job1 = launch {
+            // This runs in the background, so
+            // (8.) happens before (7.)
+            Log.d("LOG", "6. inside launch()")
+            delay(500)
+            Log.d("LOG", "7. done with launch()")
+        }
+        Log.d("LOG", "8. returned from launch()")
+
+        val deferr1 = async {
+            // This runs in the background as well, but it
+            // returns something
+            Log.d("LOG", "9. inside async()")
+            delay(500)
+            Log.d("LOG", "10. done with async()")
+            "Result"
+        }
+        Log.d("LOG", "11. returned from async()")
+
+        job1.join()
+        Log.d("LOG", "12. launch finish")
+
+        val res1 = deferr1.await()
+        Log.d("LOG", "13. async finish")
+
+        Log.d("LOG", "14. End of runBlocking()")
+    }
+    Log.d("LOG", "15. Returned from runBlocking()")
+
+//----#### SNIPPET #### - 12
+  withContext(context: CoroutineContext) { 
+      ... 
+  }
+
+//----#### SNIPPET #### - 13
+  ... we are inside a coroutine scope
+
+  withContext(context = coroutineContext + 
+            CoroutineName("TmpName")) { 
+      ... here we have a scope with a tweaked context
+  }
+
+//----#### SNIPPET #### - 14
+  runBlocking {
+      ...
+      launch {
+          ...
+      } 
+  }
+
+//----#### SNIPPET #### - 15
+  runBlocking {
+      ...
+      doLaunch()
+  }
+
+  suspend fun doLaunch() {
+     launch {
+          ...
+      } 
+  }
+
+//----#### SNIPPET #### - 16
+  val job = launch { ... }
+  val deferr = async { ... }
+
+  job.join() // suspend until job finished
+  deferr.join() // suspend until deferr finished
+
+//----#### SNIPPET #### - 17
+  val deferr1 = async { ... }
+  val deferr2 = async { ... }
+
+  val deferr1Res = deferr1.await()
+  val deferr2Res = deferr2.await()
+
+//----#### SNIPPET #### - 18
+  val deferr1Res = deferr1.getCompleted()
+
+//----#### SNIPPET #### - 19
+  runBlocking {
+      val job1 = launch {
+      }
+      job1.join() // unnecessary!
+  }
+
+//----#### SNIPPET #### - 20
+  val job = launch { ... }
+  val deferr = async { ... }
+  ...
+  job.cancel() // or deferr.cancel()
+
+//----#### SNIPPET #### - 21
+  val job = launch { ... }
+  ...
+  job.cancel()
+  job.join()
+
+//----#### SNIPPET #### - 22
+  val job = launch { ... }
+  ...
+  job.cancelAndJoin()
+
+//----#### SNIPPET #### - 23
+  withTimeout(1000L) { // milliseconds
+      ...
+  }
+
+//----#### SNIPPET #### - 24
+  val res = withTimeoutOrNull(1000L) { // milliseconds
+      ...
+      [result expression]
+  }
+
+//----#### SNIPPET #### - 25
+  withTimeoutOrNull(1000L) { // milliseconds
+      ...
+      "OK"
+  } ?: throw Exception("Timeout Exception")
+
+//----#### SNIPPET #### - 26
+    coroutineContext[ContinuationInterceptor]
+
+//----#### SNIPPET #### - 27
+    val myDispatcher = ...
+    runBlocking {
+        val job = launch(coroutineContext + myDispatcher) {
+            ...
+        }
+        job.join()
+    }
+
+//----#### SNIPPET #### - 28
+            class MyClass : 
+                CoroutineScope by MainScope() 
+            {
+                ...
+            }
+
+//----#### SNIPPET #### - 29
+        var l1:Job? = null
+        var l11:Job? = null
+        var l111:Job? = null
+        runBlocking {
+            Log.d("LOG", "A")
+            l1 = launch {
+                Log.d("LOG", "B")
+                l11 = launch {
+                    Log.d("LOG", "C")
+                    delay(1000L)
+                    Log.d("LOG", "D")
+                    l111 = launch {
+                        Log.d("LOG", "E")
+                        delay(1000L)
+                        Log.d("LOG", "F")
+                        delay(1000L)
+                        Log.d("LOG", "G")
+                    }
+                    delay(2500L)
+                    Log.d("LOG", "H")
+                }
+                delay(1000L)
+                Log.d("LOG", "I")
+            }
+
+            Log.d("LOG", "X1")
+            delay(1500L)
+            Log.d("LOG", "X2")
+            l111?.cancel()
+            Log.d("LOG", "X3")
+        }
+
+//----#### SNIPPET #### - 30
+    ...
+    withContext(NonCancellable) { 
+        // uncancellable code here
+        ...
+    }
+    ...
+
+//----#### SNIPPET #### - 31
+    val handler = CoroutineExceptionHandler { 
+        _, exception ->
+        Log.e("LOG", "Caught $exception")
+    }
+
+    runBlocking(handler) {
+        ...
+    }
+
+//----#### SNIPPET #### - 32
+    val handler = ...
+    runBlocking {
+        ...
+        launch(coroutineContext + handler) {
+            ...
+        }
+    }
+
+//----#### SNIPPET #### - 33
+    // we are inside a coroutine scope
+
+    val supervisor = SupervisorJob()
+    withContext(coroutineContext + supervisor) {
+        // the coroutines hierarchy here
+        ...
+    }
+
+//----#### SNIPPET #### - 34
+    // we are inside a coroutine scope
+
+    supervisorScope {
+        // the coroutines hierarchy here
+        ...
+    }

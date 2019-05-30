@@ -1,0 +1,363 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 09: 
+////      Data Containers
+//// Section: 12. A Statistics Class For The NumberGuess App
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+  <activity
+        android:name=...
+        android:theme="@style/AppTheme.NoActionBar">
+
+//----#### SNIPPET #### - 2
+<resources>
+  ...
+  <style name="AppTheme.NoActionBar">
+      <item name="windowActionBar">false</item>
+      <item name="windowNoTitle">true</item>
+  </style>
+  <style name="AppTheme.AppBarOverlay" 
+      parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+  <style name="AppTheme.PopupOverlay" 
+      parent="ThemeOverlay.AppCompat.Light"/>
+</resources>
+
+//----#### SNIPPET #### - 3
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+  xmlns:android=
+        "http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".MainActivity">
+
+  <android.support.design.widget.AppBarLayout
+      android:layout_height="wrap_content"
+      android:layout_width="match_parent"
+      android:theme="@style/AppTheme.AppBarOverlay">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+    />
+  </android.support.design.widget.AppBarLayout>
+
+  <include layout="@layout/content_main"/>
+</android.support.design.widget.CoordinatorLayout>
+
+//----#### SNIPPET #### - 4
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android=
+          "http://schemas.android.com/apk/res/android"
+        xmlns:app=
+          "http://schemas.android.com/apk/res-auto"
+        xmlns:tools=
+          "http://schemas.android.com/tools"
+        android:layout_width=
+          "match_parent"
+        android:layout_height=
+          "match_parent"
+        app:layout_behavior=
+          "@string/appbar_scrolling_view_behavior"
+        tools:showIn=
+          "@layout/activity_main"
+        tools:context=
+          ".MainActivity">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="30dp"
+    tools:showIn="@layout/activity_main"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title.numberguess"
+        android:textSize="30sp"/>
+
+    <Button
+        android:id="@+id/startBtn"
+        android:onClick="start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn.start"/>
+
+    <Space android:layout_width="match_parent" 
+        android:layout_height="5dp"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+          <TextView 
+             android:text="@string/label.guess"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>
+          <EditText
+             android:id="@+id/num"
+             android:hint="@string/edit.number"
+             android:layout_width="80sp"
+             android:layout_height="wrap_content"
+             android:inputType="number"
+             tools:ignore="Autofill"/>
+          <Button
+             android:id="@+id/doGuess"
+             android:onClick="guess"
+             android:text="@string/btn.do.guess"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <Space android:layout_width="match_parent" 
+        android:layout_height="5dp"/>
+
+    <TextView
+            android:id="@+id/status"
+            android:text="@string/status.start.info"
+            android:textColor="#FF000000"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <Space android:layout_width="match_parent" 
+        android:layout_height="5dp"/>
+
+    <TextView android:text="@string/label.log"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    <kotlinforandroid.book.numberguess.gui.Console
+            android:id="@+id/console"
+            android:layout_height="100sp"
+            android:layout_width="match_parent"/>
+
+</LinearLayout>
+</android.support.constraint.ConstraintLayout>
+
+//----#### SNIPPET #### - 5
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
+
+//----#### SNIPPET #### - 6
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_main)
+    setSupportActionBar(toolbar) // NEW
+
+    fetchSavedInstanceData(savedInstanceState)
+    doGuess.setEnabled(started)
+}
+
+//----#### SNIPPET #### - 7
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android=
+        "http://schemas.android.com/apk/res/android"
+      xmlns:app=
+        "http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/statistics"
+          android:icon=
+            "@android:drawable/ic_menu_info_details"
+          android:title=
+            "@string/statistics.menu_title"
+          app:showAsAction="ifRoom"/>
+</menu>
+
+//----#### SNIPPET #### - 8
+<string name="statistics.menu_title">
+      Statistics</string>
+
+//----#### SNIPPET #### - 9
+    override 
+    fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_options, menu)
+        return true
+    }
+
+    private fun openStatistics() {
+        val intent: Intent = Intent(this, 
+              StatisticsActivity::class.java)
+        startActivity(intent)
+    }
+
+//----#### SNIPPET #### - 10
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android=
+      "http://schemas.android.com/apk/res/android"
+  xmlns:tools=
+      "http://schemas.android.com/tools"
+  xmlns:app=
+      "http://schemas.android.com/apk/res-auto"
+  android:id="@+id/statisticsContainer"
+  android:layout_width="match_parent"
+  android:orientation="vertical"
+  android:layout_height="match_parent"
+  tools:context=".StatisticsActivity">
+</LinearLayout>
+
+//----#### SNIPPET #### - 11
+
+package kotlinforandroid.book.numberguess
+
+import android.support.v7.app.AppCompatActivity
+import android.os.Bundle
+import android.view.ViewGroup
+import android.widget.TextView
+import kotlinforandroid.book.numberguess.
+       statistics.Statistics
+
+class StatisticsActivity : AppCompatActivity() {
+
+    override 
+    fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_statistics)
+
+        showData(Statistics.getStatistics())
+    }
+
+    fun showData(s:List<String>) {
+        val container = findViewById<ViewGroup>(
+            R.id.statisticsContainer)
+        container.removeAllViews()
+        s.forEach {line ->
+            container.addView(TextView(this).apply {
+                text = line
+            })
+        }
+    }
+}
+
+//----#### SNIPPET #### - 12
+package kotlinforandroid.book.numberguess.statistics
+
+object Statistics {
+    fun getStatistics(): List<String> {
+        return emptyList()
+    }
+}
+
+//----#### SNIPPET #### - 13
+package kotlinforandroid.book.numberguess.statistics
+
+object Statistics {
+    data class GameSessionRecord(val numberToGuess:Int, 
+          val tries:Int) : Serializable
+    val data: ArrayList<GameSessionRecord> = ArrayList()
+
+    fun getStatistics(): List<String> {
+        return emptyList()
+    }
+}
+
+//----#### SNIPPET #### - 14
+    override 
+    fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_statistics)
+
+        restoreData(savedInstanceState) // new!
+        showData(Statistics.getStatistics())
+    }
+
+//----#### SNIPPET #### - 15
+    fun restoreData(savedInstanceState: Bundle?) {
+        savedInstanceState?.run {
+            getSerializable("statistics.data")?.run {
+                Statistics.data.clear()
+                Statistics.data.addAll( this as 
+                   ArrayList<Statistics.GameSessionRecord>)
+            }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putSerializable("statistics.data", 
+              Statistics.data)
+    }
+
+//----#### SNIPPET #### - 16
+    object Statistics {
+        ...
+        fun register(numberToGuess:Int, tries:Int) {
+            data.add(GameSessionRecord(numberToGuess, 
+                     tries))
+        }
+    }
+
+//----#### SNIPPET #### - 17
+    fun guess(v:View) {
+        ...
+        if (g < number) {
+            ...
+        } else if (g > number) {
+            ...
+        } else {
+            Statistics.register(number, tries)
+            ...
+        }
+        ...
+    }
+
+//----#### SNIPPET #### - 18
+    private fun numberOfSessions() : Int =
+        data.size
+
+//----#### SNIPPET #### - 19
+    private fun averageTriesNeeded() : Double =
+        if(data.size > 0) data.map { rec -> rec.tries }
+            .sum().toDouble() / data.size ; 
+        else 0.0
+
+//----#### SNIPPET #### - 20
+     private fun triesNeededStdDev() : Double {
+        if(data.size < 2) return 0.0
+        val avg = averageTriesNeeded()
+        return Math.sqrt(
+           data.map { 
+             rec -> Math.pow(rec.tries - avg, 2.0) 
+           }.sum() / (data.size - 1))
+    }
+
+//----#### SNIPPET #### - 21
+    private fun neededTriesDistrib() : Map<Int, Int> =
+        data.groupBy({rec -> rec.tries}).
+        mapValues { me -> me.value.size  }
+
+//----#### SNIPPET #### - 22
+    private 
+    fun triesByNumberToGuess() : Map<Int, Double> =
+        data.groupBy({rec -> rec.numberToGuess})
+            .mapValues { me -> 
+                me.value.map{it.tries}.sum().toDouble() 
+                / me.value.size  }
+
+//----#### SNIPPET #### - 23
+   fun getStatistics(): List<String> {
+        val twoDigits = DecimalFormat().
+              apply{ maximumFractionDigits = 2 }
+        val triesDistrib = neededTriesDistrib().
+              toSortedMap().toString()
+        val triesByNumber = triesByNumberToGuess().
+              toSortedMap().mapValues { 
+                  me -> twoDigits.format(me.value) }
+              .toString()
+        return listOf(
+            "Sessions: ${numberOfSessions()}",
+            "Average Tries: ${averageTriesNeeded()}",
+            "Tries Standard Dev: ${triesNeededStdDev()}",
+            "Tries Distrib: ${triesDistrib}",
+            "Tries by Number: ${triesByNumber}"
+        )
+    }

@@ -1,0 +1,55 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 04: 
+////      Classes And  Objects: Extended  Features
+//// Section: 6. Enumerations
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    enum class EnumerationName {
+        VALUE1, VALUE2, VALUE3, ...
+    }
+
+//----#### SNIPPET #### - 2
+    val e1: EnumerationName = ...
+    var e2: EnumerationName = ...
+
+//----#### SNIPPET #### - 3
+    enum class Fruit {
+        BANANA, APPLE, PINEAPPLE, GRAPE
+    }
+
+    val f1 = Fruit.BANANA
+    val f2 = Fruit.BANANA
+    val f3 = Fruit.APPLE
+    var fx:Fruit? = null
+
+    // you can check for equality:
+    val b1:Boolean = f1 == f2  // -> true
+    val b2:Boolean = f1 == f3  // -> false
+
+    // you can reassign vars:
+    fx = Fruit.APPLE
+    fx = Fruit.BANANA
+
+    // toString() gives the textual value name
+    val s = fx.toString() // -> "BANANA"
+
+//----#### SNIPPET #### - 4
+    enum class Fruit(val fruitName:String) {
+        BANANA("banana"), 
+        APPLE("apple"), 
+        PINEAPPLE("pineapple"), 
+        GRAPE("grape")
+    }
+
+//----#### SNIPPET #### - 5
+    val f1 = Fruit.BANANA
+    var internalVal = f1.fruitName // -> "banana"
+
+//----#### SNIPPET #### - 6
+    val f1 = Fruit.valueOf("BANANA") 
+    //     <- same as Fruit.BANANA
+
+//----#### SNIPPET #### - 7
+    EnumerationName.values()

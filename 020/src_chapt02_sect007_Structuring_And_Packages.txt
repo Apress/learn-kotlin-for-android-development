@@ -1,0 +1,47 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 02: 
+////      Classes And  Objects: Object  Orientation  Philosophy
+//// Section: 7. Structuring And Packages
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    package the.hierarchical.position
+    ...
+
+//----#### SNIPPET #### - 2
+    package kotlinforandroid.book.numberguess.random.impl
+    
+    class RandomRandom {
+        ...
+    }
+
+//----#### SNIPPET #### - 3
+    package kotlinforandroid.book.numberguess
+
+    import kotlinforandroid.book.numberguess.gui.Console
+    
+    class Activity {
+        ...
+    }
+
+//----#### SNIPPET #### - 4
+    package kotlinforandroid.book.numberguess
+
+    import kotlinforandroid.book.numberguess.gui.Console
+    import kotlinforandroid.book.numberguess.common.
+           Constants
+    
+    class Activity {
+        ...
+    }
+
+//----#### SNIPPET #### - 5
+    package kotlinforandroid.book.numberguess
+
+    import kotlinforandroid.book.numberguess.
+           random.impl.*
+    
+    class Activity {
+        ...
+    }

@@ -1,0 +1,52 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 12: 
+////      Back to Math:newline Functionalnewline Programming
+//// Section: 1. Kotlin And Functional Programming
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+  ([parameters]) -> [result-type]
+
+//----#### SNIPPET #### - 2
+  val f : (Int,String) -> String = ...
+
+//----#### SNIPPET #### - 3
+  val f1 = { -> Log.d("LOG", "Hello Kotlin") }
+  val f2 = { i:Int, s:String -> "${i}: ${s}" }
+  ...
+  fun ff(fun1: (Int,String) -> String):String {
+      return fun1(7, "Hello") 
+  }
+  ff(f2)
+  ff( { i:Int,s:String -> "${i}- ${s}" } )
+
+//----#### SNIPPET #### - 4
+  val f = { i:Int, s:String -> 
+            i.toString() + ": " + s }
+  fun fun1(p: (Int,String) -> String) {
+      p(42, "Hello")
+  } 
+  fun1 { i:Int, s:String -> i.toString() + ": " + s }
+
+//----#### SNIPPET #### - 5
+  object X { 
+    fun add(a:Int, b:Int): Int = a + b
+  } 
+  ...
+  val f : (Int,Int) -> Int = X::add
+
+//----#### SNIPPET #### - 6
+  class X { 
+    fun add(a:Int, b:Int): Int = a + b
+  } 
+  ...
+  val f : X.(Int,Int) -> Int = X::add
+
+//----#### SNIPPET #### - 7
+  class X { 
+    fun add(a:Int, b:Int): Int = a + b
+  } 
+  ...
+  val x1 = X()
+  val f : (Int,Int) -> Int = x1::add

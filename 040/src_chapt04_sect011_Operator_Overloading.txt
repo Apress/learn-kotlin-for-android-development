@@ -1,0 +1,28 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 04: 
+////      Classes And  Objects: Extended  Features
+//// Section: 11. Operator Overloading
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    data class Point(val x:Double, val y:Double) 
+    data class Vector(val dx:Double, val dy:Double) 
+
+//----#### SNIPPET #### - 2
+    val p1 = Point(1.0, 1.0) 
+    val p2 = Point(4.0, -2.0) 
+    val v:Vector = p2 - p1 
+
+//----#### SNIPPET #### - 3
+    data class Point(val x:Double, val y:Double) {
+      operator fun minus(p2:Point) = 
+          Vector(p2.x-this.x, p2.y-this.y)
+    }
+
+//----#### SNIPPET #### - 4
+    operator fun unaryMinus() = Vector(-this.dx, -this.dy)
+
+//----#### SNIPPET #### - 5
+    operator fun Point.minus(p2:Point) = 
+        Vector(p2.x-this.x, p2.y-this.y)

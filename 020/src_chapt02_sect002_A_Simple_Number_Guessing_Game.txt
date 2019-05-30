@@ -1,0 +1,232 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 02: 
+////      Classes And  Objects: Object  Orientation  Philosophy
+//// Section: 2. A Simple Number Guessing Game
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+  <resources xmlns:tools="http://schemas.android.com/tools" 
+        tools:ignore="ExtraTranslation">
+    <string name="app_name">
+        NumberGuess</string>
+    <string name="title.numberguess">
+        NumberGuess</string>
+    <string name="btn.start">
+        Start</string>
+    <string name="label.guess">
+        Guess a number:</string>
+    <string name="btn.do.guess">
+        Do guess!</string>
+    <string name="edit.number">
+        Number</string>
+    <string name="status.start.info">
+        Press START to start a game</string>
+    <string name="label.log">
+        Log:</string>
+    <string name="guess.hint">
+        Guess a number between %1$d and %2$d</string>
+    <string name="status.too.low">
+        Sorry, too low.</string>
+    <string name="status.too.high">
+        Sorry, too high.</string>
+    <string name="status.hit">
+        You got it after %1$d tries! 
+        Press START for a new game.</string>
+  </resources>
+
+//----#### SNIPPET #### - 2
+  <?xml version="1.0" encoding="utf-8"?>
+  <LinearLayout
+        xmlns:android=
+          "http://schemas.android.com/apk/res/android"
+        xmlns:tools=
+          "http://schemas.android.com/tools"
+        xmlns:app=
+          "http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="30dp"
+        tools:context=
+          "kotlinforandroid.book.numberguess.MainActivity">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title.numberguess"
+            android:textSize="30sp" />
+
+    <Button
+            android:id="@+id/startBtn"
+            android:onClick="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn.start"/>
+
+    <Space android:layout_width="match_parent" 
+        android:layout_height="5dp"/>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TextView android:text="@string/label.guess"
+                android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"/>
+        <EditText
+                android:id="@+id/num"
+                android:hint="@string/edit.number"
+                android:layout_width="80sp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                tools:ignore="Autofill"/>
+        <Button
+                android:id="@+id/doGuess"
+                android:onClick="guess"
+                android:text="@string/btn.do.guess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <Space android:layout_width="match_parent" 
+        android:layout_height="5dp"/>
+
+    <TextView
+            android:id="@+id/status"
+            android:text="@string/status.start.info"
+            android:textColor="#FF000000"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <Space android:layout_width="match_parent" 
+        android:layout_height="5dp"/>
+
+    <TextView android:text="@string/label.log"
+              android:textStyle="bold"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"/>
+    <kotlinforandroid.book.numberguess.Console
+            android:id="@+id/console"
+            android:layout_height="100sp"
+            android:layout_width="match_parent" />
+
+  </LinearLayout>
+
+//----#### SNIPPET #### - 3
+package kotlinforandroid.book.numberguess
+
+import android.content.Context
+import android.support.v7.app.AppCompatActivity
+import android.os.Bundle
+import android.util.AttributeSet
+import android.util.Log
+import android.view.View
+import android.widget.ScrollView
+import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_main.*
+
+class MainActivity : AppCompatActivity() {
+    var started = false
+    var number = 0
+    var tries = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        fetchSavedInstanceData(savedInstanceState)
+        doGuess.setEnabled(started)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        putInstanceData(outState)
+    }
+
+    fun start(v: View) {
+        log("Game started")
+        num.setText("")
+        started = true
+        doGuess.setEnabled(true)
+        status.text = getString(R.string.guess_hint, 1, 7)
+
+        number = 1 + Math.floor(Math.random()*7).toInt()
+        tries = 0
+    }
+
+    fun guess(v:View) {
+        if(num.text.toString() == "") return
+        tries++
+        log("Guessed ${num.text} (tries:${tries})")
+        val g = num.text.toString().toInt()
+        if(g < number) {
+            status.setText(R.string.status_too_low)
+            num.setText("")
+        } else if(g > number){
+            status.setText(R.string.status_too_high)
+            num.setText("")
+        } else {
+            status.text = getString(R.string.status_hit, 
+                tries)
+            started = false
+            doGuess.setEnabled(false)
+        }
+    }
+
+    ///////////////////////////////////////////////////
+    ///////////////////////////////////////////////////
+
+    private fun putInstanceData(outState: Bundle?) {
+        if (outState != null) with(outState) {
+            putBoolean("started", started)
+            putInt("number", number)
+            putInt("tries", tries)
+            putString("statusMsg", status.text.toString())
+            putStringArrayList("logs", 
+                ArrayList(console.text.split("\n")))
+        }
+    }
+
+    private fun fetchSavedInstanceData(
+          savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) 
+        with(savedInstanceState) {
+            started = getBoolean("started")
+            number = getInt("number")
+            tries = getInt("tries")
+            status.text = getString("statusMsg")
+            console.text = getStringArrayList("logs")!!.
+                  joinToString("\n")
+        }
+    }
+
+    private fun log(msg:String) {
+        Log.d("LOG", msg)
+        console.log(msg)
+    }
+}
+
+class Console(ctx:Context, aset:AttributeSet? = null) 
+      : ScrollView(ctx, aset) {
+    val tv = TextView(ctx)
+    var text:String
+        get() = tv.text.toString()
+        set(value) { tv.setText(value) }
+    init {
+        setBackgroundColor(0x40FFFF00)
+        addView(tv)
+    }
+    fun log(msg:String) {
+        val l = tv.text.let { 
+            if(it == "") listOf() else it.split("\n") 
+        }.takeLast(100) + msg
+        tv.text = l.joinToString("\n")
+        post(object : Runnable {
+            override fun run() { 
+                fullScroll(ScrollView.FOCUS_DOWN) 
+            }
+        })
+    }
+}

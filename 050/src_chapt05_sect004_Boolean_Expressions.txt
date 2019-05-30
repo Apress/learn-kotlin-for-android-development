@@ -1,0 +1,10 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 05: 
+////      Expressions: Operations on Data
+//// Section: 4. Boolean Expressions
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    val b1 = a == 7 && b == 3 || c == 4
+    val b2 = a == 7 && (b == 3 || c == 4)

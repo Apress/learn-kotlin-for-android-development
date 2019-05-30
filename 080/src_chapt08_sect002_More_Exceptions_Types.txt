@@ -1,0 +1,32 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 08: 
+////      Exceptions: Ifnewline  Something Goesnewline Wrong
+//// Section: 2. More Exceptions Types
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    try {
+        // ... statements
+    } catch(e:ExceptionType1) {
+        // do something...
+    } catch(e:ExceptionType2) {
+        // do something...
+    ... possibly more catch statements
+    } finally {
+        // do this by any means: ...
+    }
+
+//----#### SNIPPET #### - 2
+    try {
+        // ... file access
+        // ... array access
+    } catch(e:IOException) {
+        // do something...
+    } catch(e:ArrayIndexOutOfBoundsException) {
+        // do something...
+    } catch(e:Exception) {
+        // do something...
+    } finally {
+        // do this by any means: ...
+    }

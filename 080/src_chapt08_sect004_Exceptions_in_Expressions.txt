@@ -1,0 +1,14 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 08: 
+////      Exceptions: Ifnewline  Something Goesnewline Wrong
+//// Section: 4. Exceptions in Expressions
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    val x = try{ arr[ind] } 
+          catch(e:ArrayIndexOutOfBoundsException) { -1 }
+
+//----#### SNIPPET #### - 2
+    val v = map[someKey] ?: 
+          throw Exception("no such key in the map")

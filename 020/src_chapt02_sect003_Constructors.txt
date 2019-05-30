@@ -1,0 +1,127 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 02: 
+////      Classes And  Objects: Object  Orientation  Philosophy
+//// Section: 3. Constructors
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    class ClassName(Parameter-Declaration1,
+            Parameter-Declaration2, ...) {
+        [Class-Body]
+    } 
+
+//----#### SNIPPET #### - 2
+    Variable-Name:Variable-Type
+
+//----#### SNIPPET #### - 3
+    val Variable-Name:Variable-Type
+
+//----#### SNIPPET #### - 4
+    var Variable-Name:Variable-Type 
+
+//----#### SNIPPET #### - 5
+    class ClassName [modifiers] constructor(
+            Parameter-Declaration1,
+            Parameter-Declaration2, ...) 
+    {
+        [Class-Body]
+    } 
+
+//----#### SNIPPET #### - 6
+    class GameUser(val firstName:String,
+          val lastName:String,
+          val birthday:String,
+          val userName:String,
+          val registrationNumber:Int,
+          val userRank:Double) {
+    } 
+
+//----#### SNIPPET #### - 7
+    ...
+    val firstUser = GameUser("Richard", "Smith", 
+        "2008-10-23", "rsmith", 123, 0.0)
+
+//----#### SNIPPET #### - 8
+    val instance = TheClass(
+        parameterName1 = [some value],
+        parameterName2 = [some value],
+        ...)
+
+//----#### SNIPPET #### - 9
+    ...
+    val user = GameUser(
+        lastName = "Smith",
+        firstName = "Richard",
+        birthday = "2098-10-23",
+        userName = "rsmith",
+        registrationNumber = 765,
+        userRank = 0.5) 
+
+//----#### SNIPPET #### - 10
+    class GameUser(val firstName:String,
+          val lastName:String,
+          val userName:String,
+          val registrationNumber:Int,
+          val birthday:String = "1900-01-01",
+          val userRank:Double = 0.0) {
+    } 
+
+//----#### SNIPPET #### - 11
+    ...
+    val firstUser = GameUser("Richard", "Smith", 
+        "rsmith", 123, "2008-10-23", 0.4)
+
+//----#### SNIPPET #### - 12
+    ...
+    val firstUser = GameUser("Richard", "Smith", 
+        "rsmith", 123, "2008-10-23")
+
+//----#### SNIPPET #### - 13
+    ...
+    val firstUser = GameUser("Richard", "Smith", 
+        "rsmith", 123)
+
+//----#### SNIPPET #### - 14
+    ...
+    val firstUser = GameUser(firstName = "Richard", 
+        lastName = "Smith", 
+        userName = "rsmith", 
+        registrationNumber = 123)
+
+//----#### SNIPPET #### - 15
+    constructor(param1:ParamType1, 
+                param2:ParamType2, ...) 
+    {
+        // do some things...
+    }
+
+//----#### SNIPPET #### - 16
+    constructor(param1:ParamType1, 
+                param2:ParamType2, ...) : this(...) {
+        // do some things...
+    }
+
+//----#### SNIPPET #### - 17
+    constructor(firstName:String, 
+                lastName:String, 
+                userName:String,
+                registrationNumber:Int) :
+          this(firstName = firstName, 
+               lastName = lastName,
+               userName = userName,
+               registrationNumber = registrationNumber,
+               birthday = "",
+               userRank = 0.0
+          ) 
+    {
+        // constructor body
+        // do some things...
+    }
+
+//----#### SNIPPET #### - 18
+    ...
+   val firstUser = GameUser(firstName = "Richard", 
+        lastName = "Smith", 
+        userName = "rsmith", 
+        registrationNumber = 123)

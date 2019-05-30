@@ -1,0 +1,46 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 04: 
+////      Classes And  Objects: Extended  Features
+//// Section: 12. Delegation
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    interface TheInterface {
+        fun someMethod(i:Int):Int
+        ...more functions
+    }
+
+    class Implementor0 : SomeInterface {
+        override fun someMethod(i:Int):Int = i*2
+        ...implement the other functions
+    }
+
+    class Implementor : TheInterface {
+        val delegate = Implementor0()
+        override fun someMethod(i:Int):Int = delegate(i)
+        ...do the same for the other functions
+    }
+
+//----#### SNIPPET #### - 2
+    override fun someMethod(i:Int):Int = delegate(i-1) + 1
+
+//----#### SNIPPET #### - 3
+    class Implementor : TheInterface by Implementor0()
+    // or
+    val impl0 = Implementor0()
+    class Implementor : TheInterface by impl0
+
+//----#### SNIPPET #### - 4
+    class Implementor : TheInterface by Implementor0() {
+        override fun someMethod(i:Int):Int = i * 42
+    }
+
+//----#### SNIPPET #### - 5
+    val b = Implementor0()
+    class Implementor(val b:TheInterface) : 
+            TheInterface by b {
+        override 
+        fun someMethod(i:Int):Int = b.someMethod(i-1) + 1
+    }
+    val instance = Implementor(b)

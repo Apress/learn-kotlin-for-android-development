@@ -1,0 +1,11 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 05: 
+////      Expressions: Operations on Data
+//// Section: 7. Other Operators
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    val c:Int? = ...    // an int or null
+    val b = c!!         // b is non-nullable!
+    // the same: val b:Int = c!!

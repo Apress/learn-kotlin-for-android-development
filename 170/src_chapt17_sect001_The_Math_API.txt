@@ -1,0 +1,20 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 17: 
+////      More APIs
+//// Section: 1. The Math API
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+  import java.lang.Math
+
+//----#### SNIPPET #### - 2
+  import kotlin.math.sin
+  ...
+  val x = sin(1.562)
+
+//----#### SNIPPET #### - 3
+  import kotlin.math.absoluteValue
+  ...
+  val x:Double = -3.5
+  val y = x.absoluteValue // -> 3.5

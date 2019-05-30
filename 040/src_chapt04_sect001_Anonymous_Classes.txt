@@ -1,0 +1,47 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 04: 
+////      Classes And  Objects: Extended  Features
+//// Section: 1. Anonymous Classes
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    class A : SomeInterface {
+        // implement interface functions...
+    }
+    val inst:SomeInterface = A()
+    // use inst...
+
+//----#### SNIPPET #### - 2
+    open class A : SomeBaseClass() {
+        // override functions...
+    }
+    val inst:SomeBaseClass = A()
+    // use inst...
+
+//----#### SNIPPET #### - 3
+    val inst:SomeInterface = object : SomeInterface {
+        // implement interface functions...
+    }
+    // use inst...
+
+//----#### SNIPPET #### - 4
+    val inst:SomeBaseClass = object : SomeBaseClass() {
+        // override functions...
+    }
+    // use inst...
+
+//----#### SNIPPET #### - 5
+    interface X {
+        fun doSomething()
+    }
+    class A {
+        fun meth() {
+            val x = object : X {
+                override doSomething() {
+                    println(this)
+                    println(this@A)
+                }
+            }
+        }
+    }

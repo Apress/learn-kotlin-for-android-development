@@ -1,0 +1,14 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 09: 
+////      Data Containers
+//// Section: 10. The Spread Operator
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    function xyz(a:Int, vararg x:String) {
+        ...
+    }
+
+    val arr = arrayOf("1", "2", "3", "4", "5")
+    xyz(42, *arr)

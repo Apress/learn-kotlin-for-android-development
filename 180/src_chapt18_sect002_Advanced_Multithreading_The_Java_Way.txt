@@ -1,0 +1,178 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 18: 
+////      Working in Parallel: Multithreading
+//// Section: 2. Advanced Multithreading The Java Way
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    val obj = ...
+    thread {
+        synchronized(obj) {
+          ... synchronized code
+        }
+    }
+
+//----#### SNIPPET #### - 2
+    import java.util.concurrent.lock.*
+    ...
+    val lock:Lock = ...
+    ...
+    lock.lock()
+    try {
+          ... synchronized code
+    } finally {
+        lock.unlock()
+    }
+
+//----#### SNIPPET #### - 3
+    val lock:Lock = ReentrantLock()
+
+//----#### SNIPPET #### - 4
+    val lock:Lock = ReentrantLock()
+    ...
+    try {
+        lock.lockInterruptibly()
+    } catch(e: InterruptedException) {
+        ... do things if we were interrupted
+        return
+    }
+
+    try {
+          ... synchronized code
+    } finally {
+        lock.unlock()
+    }
+
+//----#### SNIPPET #### - 5
+    val lock:Lock = ReentrantLock()
+    ...
+    if(lock.tryLock()) {
+        try {
+            ... synchronized code
+        } finally {
+            lock.unlock()
+        }
+    } else {
+        ... no lock acquired
+        ... do other things
+    }
+
+//----#### SNIPPET #### - 6
+    ...
+    if(lock.tryLock(time:Long, unit:TimeUnit)) {
+        // lock was acquired within that time span
+        ...
+    } else {
+        ... 
+    }
+
+//----#### SNIPPET #### - 7
+    class Counter {
+        var c = 0
+        fun increment() { c++ }
+        fun decrement() { c-- }
+    }
+
+//----#### SNIPPET #### - 8
+    class Counter {
+        var c = 0
+        fun increment() { synchronized(c){ c++ } }
+        fun decrement() { synchronized(c){ c-- } }
+    }
+
+//----#### SNIPPET #### - 9
+    import java.util.concurrent.atomic.*
+    ...
+    class Counter {
+        var c:AtomicInteger = AtomicInteger(0)
+        fun increment() { c.incrementAndGet() }
+        fun decrement() { c.decrementAndGet() }
+    }
+
+//----#### SNIPPET #### - 10
+class MainActivity : AppCompatActivity() {
+    var points = 0L
+    var insideCircle = 0L
+    var totalIters = 0L
+
+    override 
+    fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        savedInstanceState?.run {
+            points = getLong("points")
+            insideCircle = getLong("insideCircle")
+            totalIters = getLong("totalIter")
+        }
+
+        val cores = Runtime.getRuntime().
+            availableProcessors()
+        procs.setText(cores.toString())
+    }
+
+    override 
+    fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.run {
+            putLong("points",points)
+            putLong("insideCircle",insideCircle)
+            putLong("totalIter", totalIters)
+            report()
+        }
+    }
+
+    fun calc(v:View) {
+        val t1 = System.currentTimeMillis()
+        val nThreads = threads.text.toString().
+              takeIf { it != "" }?.toInt()?:1
+        val itersNum = iters.text.toString().
+              takeIf { it != "" }?.toInt()?:10000
+        val itersPerThread = itersNum / nThreads
+        val srvc = Executors.newFixedThreadPool(nThreads)
+        val callables = (1..nThreads).map {
+            object : Callable<Pair<Int,Int>> {
+                override fun call(): Pair<Int, Int> {
+                    var i = 0
+                    var p = 0
+                    (1..itersPerThread).forEach {
+                        val x = Math.random()
+                        val y = Math.random()
+                        val r = x*x + y*y
+                        i++
+                        if(r < 1.0) p++
+                    }
+                    return Pair(i, p)
+                }
+            }
+        }
+        val futures = srvc.invokeAll(callables)
+        futures.forEach{ f ->
+            val p = f.get()
+            points += p.first
+            insideCircle += p.second
+        }
+
+        val t2 = System.currentTimeMillis()
+        calcTime.setText((t2-t1).toString())
+
+        report()
+    }
+
+    fun reset(v:View) {
+        points = 0
+        insideCircle = 0
+        report()
+    }
+
+    private fun report() {
+        cumulIters.setText(points.toString())
+        if(points > 0) {
+            val pipi = 1.0 * insideCircle / points * 4
+            pi.setText(pipi.toString())
+        } else {
+            pi.setText("")
+        }
+    }
+}

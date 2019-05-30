@@ -1,0 +1,18 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 09: 
+////      Data Containers
+//// Section: 1. Defining And Using Arrays
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    Array<ElementType>
+
+//----#### SNIPPET #### - 2
+    val someStringArray:Array<String> = ...
+    var someObjectArray:Array<Any> = ...
+
+//----#### SNIPPET #### - 3
+    val byteArr:ByteArray = ...
+    var intArr:IntArray = ...
+    ...

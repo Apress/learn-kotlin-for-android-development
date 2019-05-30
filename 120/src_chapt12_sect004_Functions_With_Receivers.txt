@@ -1,0 +1,25 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 12: 
+////      Back to Math:newline Functionalnewline Programming
+//// Section: 4. Functions With Receivers
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+  val f : ReceiverType.([parameters]) = ...
+
+//----#### SNIPPET #### - 2
+    class A {
+        var d:Double = 0.0
+        fun plus(x:Double) = d + x
+    }
+    val f : A.(Double) -> Double = 
+          { x:Double -> this.d - x }
+    fun A.minus(x:Double) = f
+
+//----#### SNIPPET #### - 3
+  class X { 
+    fun add(a:Int, b:Int): Int = a + b
+  } 
+  ...
+  val f : X.(Int,Int) -> Int = X::add

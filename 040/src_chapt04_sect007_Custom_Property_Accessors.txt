@@ -1,0 +1,34 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 04: 
+////      Classes And  Objects: Extended  Features
+//// Section: 7. Custom Property Accessors
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    var propertyName:PropertyType = [initial_value] 
+
+//----#### SNIPPET #### - 2
+    var propertyName:PropertyType = [initial_value] 
+        get() = [getting_expression]
+
+//----#### SNIPPET #### - 3
+    var propertyName:PropertyType = [initial_value] 
+        get() {
+            ...
+            return [expression]
+        }
+
+//----#### SNIPPET #### - 4
+    var propertyName:PropertyType = [initial_value] 
+        set(value) { ... }
+
+//----#### SNIPPET #### - 5
+    var propertyName:PropertyType = [initial_value] 
+        get() = [getting_expression]
+        set(value) { ... }
+
+//----#### SNIPPET #### - 6
+    [modifier] var propertyName:PropertyType = ... 
+        private get
+        private set

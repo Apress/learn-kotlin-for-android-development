@@ -1,0 +1,12 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 05: 
+////      Expressions: Operations on Data
+//// Section: 2. Expressions Ubiquity
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    fun a() {
+    }
+
+    val aa = a()

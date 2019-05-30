@@ -1,0 +1,60 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 14: 
+////      Adding Hints: Annotations
+//// Section: 7. Custom Annotations
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    @Target(...)     
+    @Retention(...)
+    @Repeatable
+    @MustBeDocumented
+    annotation class AnnotationName
+
+//----#### SNIPPET #### - 2
+    [possibly meta-annotations]
+    annotation class AnnotationName(val p1:Type1, 
+          val p2:Type2, ...)
+
+//----#### SNIPPET #### - 3
+    @Target(AnnotationTarget.VALUE_PARAMETER)
+    @Retention(AnnotationRetention.RUNTIME)
+    annotation class NotZero()
+
+//----#### SNIPPET #### - 4
+  class Calculator {
+    enum class Operator(val oper:String) {
+        MULTIPLY("multiply"),
+        DIVIDE("divide")
+    }
+
+    fun operator(oper:Operator, 
+                 vararg params:Double): Double {
+        val f = Calculator::class.declaredFunctions.
+              find { it.name == oper.oper }
+        f?.valueParameters?.forEachIndexed { ind, p ->
+            p.findAnnotation<NotZero>()?.run {
+                if (params[ind] == 0.0)
+                    throw RuntimeException(
+                    "Parameter ${ind} not unequal 0.0")
+            }
+        }
+        val ps = arrayOf(this@Calculator, 
+              *(params).toList().toTypedArray<Any>())
+        return (f?.call(*ps) as Double?) ?: 0.0
+    }
+
+    fun multiply(p1:Double, p2:Double) : Double {
+        return p1 * p2
+    }
+
+    fun divide(p1:Double, @NotZero p2:Double) : Double {
+        return p1 / p2
+    }
+  }
+
+//----#### SNIPPET #### - 5
+    Calculator().
+        operator(Calculator.Operator.DIVIDE, 
+                 1.0, 1.0)

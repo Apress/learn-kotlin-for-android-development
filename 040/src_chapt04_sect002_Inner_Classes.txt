@@ -1,0 +1,29 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 04: 
+////      Classes And  Objects: Extended  Features
+//// Section: 2. Inner Classes
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    class A {
+        class B { ... }
+        // B can now be instantiated from
+        // everywhere inside A
+        fun meth() {
+            ...
+            class C { ... }
+            // C can now be used until the end of 
+            // the function
+            ...
+        }
+    }
+
+//----#### SNIPPET #### - 2
+    class A {
+        class B { ... }
+    }
+    fun main(args:Array<String>) {
+        val ab = A.B()
+        // do something with it...
+    }

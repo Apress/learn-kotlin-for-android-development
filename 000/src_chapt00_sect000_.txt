@@ -1,0 +1,16 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 00: 
+////     Frontmatter
+//// Section: 0. 
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    arrayOf("Blue", "Green", "Yellow", "Gray").
+        filter { it.startsWith("G") }.
+        forEach { item ->
+          println(item)
+        }
+
+//----#### SNIPPET #### - 2
+   https://github.com/Apress/learn-kotlin-for-android-development

@@ -1,0 +1,123 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 18: 
+////      Working in Parallel: Multithreading
+//// Section: 1. Basic Multithreading The Java Way
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+fun thread(
+    start: Boolean = true,
+    isDaemon: Boolean = false,
+    contextClassLoader: ClassLoader? = null,
+    name: String? = null,
+    priority: Int = -1,
+    block: () -> Unit
+)
+
+//----#### SNIPPET #### - 2
+val thr:Thread = thread(start = true) {
+    ... do something ...
+}
+
+//----#### SNIPPET #### - 3
+    // inside an activity:
+    override fun onCreate(savedInstanceState: Bundle?) {
+        ...
+        thread {
+            while(true) {
+                Thread.sleep(1000L)
+                Log.e("LOG", Date().toString())
+            }
+        }
+    }
+
+//----#### SNIPPET #### - 4
+    val thr:Thread = thread {
+        while(true) {
+            Thread.sleep(1000L)
+            Log.e("LOG", Date().toString())
+        }
+    }
+
+//----#### SNIPPET #### - 5
+    val thr = thread(start = false) {
+        while(true) {
+            Thread.sleep(1000L)
+            Log.e("LOG", Date().toString())
+        }
+    }
+    ...
+    thr.start()
+
+//----#### SNIPPET #### - 6
+    val l = mutableListOf(1,2,3)
+    var i = 0
+    thread {
+        while(true) {
+            Thread.sleep(10L)
+            i++
+            if(i % 2 == 0) { l.add(i) } 
+                  else { l.remove(l.first()) }
+        }
+    }
+    thread {
+        while(true) {
+            Thread.sleep(1000L)
+            Log.e("LOG", l.joinToString())
+        }
+    }
+
+//----#### SNIPPET #### - 7
+    val l = mutableListOf(1,2,3)
+    var i = 0
+    thread {
+        while(true) {
+            Thread.sleep(10L)
+            i++
+            synchronized(l) {
+              if(i % 2 == 0) { l.add(i) } 
+                    else { l.remove(l.first()) }
+            }
+        }
+    }
+    thread {
+        while(true) {
+            Thread.sleep(1000L)
+            synchronized(l) {
+              Log.e("LOG", l.joinToString())
+            }
+        }
+    }
+
+//----#### SNIPPET #### - 8
+    synchronized(l1, l2) {
+        ...
+    }
+
+//----#### SNIPPET #### - 9
+    val l = mutableListOf(1,2,3)
+    var i = 0
+    val thr1 = thread {
+        for(i in 1..100) {
+            l.add(i)
+            Thread.sleep(10)
+        }
+    }
+    thread {
+        // Here we want to wait until thread thr1 is done.
+        // How can this be achieved?
+        ...
+        Log.e("LOG", l.joinToString())
+    }
+
+//----#### SNIPPET #### - 10
+    val l = mutableListOf(1,2,3)
+    var i = 0
+    val thr1 = thread {
+        ...
+    }
+    thread {
+        thr1.join()
+        Log.e("LOG", l.joinToString())
+    }

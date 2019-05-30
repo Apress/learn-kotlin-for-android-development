@@ -1,0 +1,130 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 03: 
+////      Classes at Work: Properties And Functions
+//// Section: 5. Visibility of Classes And Class Members
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    class TheName { // or object or companion object
+        val prop1:Type1
+        var prop2:Type2
+        fun function() {
+            ...
+        }
+    }
+
+//----#### SNIPPET #### - 2
+    public [class or (companion) object] TheName {
+        public val prop1:Type1
+        public var prop2:Type2
+        public fun function() {
+            ...
+        }
+    }
+
+//----#### SNIPPET #### - 3
+    class Clock {
+        fun time(): String {
+            ...
+        }
+        fun setTime(time:String) {
+            ...
+        }
+    }
+
+//----#### SNIPPET #### - 4
+    class Clock {
+        var hourAngle:Double = 0
+        var minuteAngle:Double = 0
+        var secondsAngle:Double = 0
+        var timer:Timer = Timer()
+
+        init {
+            ...
+        }
+
+        fun time(): String {
+            ...
+        }
+
+        fun setTime(time:String) {
+            ...
+        }
+
+        fun adjustTime(minutes:Int) {
+            ...
+        }
+
+        fun tick() {
+            ...
+        }
+    }
+
+//----#### SNIPPET #### - 5
+    class Clock {
+        private var hourAngle:Double = 0
+        private var minuteAngle:Double = 0
+        private var secondsAngle:Double = 0
+        private var timer:Timer = Timer()
+
+        init {
+            ...
+        }
+
+        fun time(): String {
+            ...
+        }
+
+        fun setTime(time:String) {
+            ...
+        }
+
+        private fun adjustTime(minutes:Int) {
+            ...
+        }
+
+        private fun tick() {
+            ...
+        }
+    }
+
+//----#### SNIPPET #### - 6
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?)
+    override fun onSaveInstanceState(outState: Bundle?)
+    fun start(v: View)
+    fun guess(v:View)
+
+    ///////////////////////////////////////////////////
+    ///////////////////////////////////////////////////
+
+    private fun putInstanceData(outState: Bundle?)
+    private fun fetchSavedInstanceData(
+          savedInstanceState: Bundle?)
+    private fun log(msg:String)
+}
+
+//----#### SNIPPET #### - 7
+ class A {
+    private class B { 
+    ... }
+    fun function() {
+        val b = B()
+    }
+ }
+
+//----#### SNIPPET #### - 8
+ class A {
+    protected class B { 
+    ... }
+    fun function() {
+        val b = B()
+    }
+ }
+ class AA : A { 
+ // subclass of A
+    fun function() {
+        val b = B()
+    }
+ }

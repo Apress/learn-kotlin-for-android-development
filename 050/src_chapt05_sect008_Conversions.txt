@@ -1,0 +1,15 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 05: 
+////      Expressions: Operations on Data
+//// Section: 8. Conversions
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    7 + 10_000_000_000L -> Long
+    34 + 46.7           -> Double
+
+//----#### SNIPPET #### - 2
+    "Number is " + 7.3             ->  "Number is 7.3"
+    "Number is " + 7.3.toString()  ->  "Number is 7.3"
+    "Hell" + 'o'                   ->  "Hello"

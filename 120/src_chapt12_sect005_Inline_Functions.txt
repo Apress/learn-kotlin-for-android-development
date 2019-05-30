@@ -1,0 +1,73 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 12: 
+////      Back to Math:newline Functionalnewline Programming
+//// Section: 5. Inline Functions
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+  class A {
+    fun function1(i:Int, f:(Int) -> String): String {
+        return f(i)
+    }
+    fun function2() {
+        val a = 7
+        val s = function1(8) { 
+            i -> "8 + a = " + (i+a) }
+    }
+  }
+
+//----#### SNIPPET #### - 2
+public class A {
+    public String function1(int i, 
+          Function1<? super Integer, String> f) {
+        return f.invoke(i);
+    }
+
+    public void function2() {
+        int a = 7;
+        String s2 = this.function1(8, 
+              new Function1<Integer, String>(a){
+            final int $a;
+            public String invoke(int i) {
+                return "8 + a = " + (i + this.$a);
+            }
+            {
+                this.$a = n;
+                super(1);
+            }
+        });
+    }
+}
+
+//----#### SNIPPET #### - 3
+  class A {
+    inline fun function1(i:Int, f:(Int) -> String): String {
+        return f(i)
+    }
+    fun function2() {
+        val a = 7
+        val s = function1(8) { 
+            i -> "8 + a = " + (i+a) }
+    }
+  }
+
+//----#### SNIPPET #### - 4
+  public class A {
+    public String function1(int i, 
+          Function1<? super Integer, String> f) {
+        return f.invoke(i);
+    }
+
+    public void function2() {
+        int a = 7;
+        int i$iv;
+        int i = i$iv = 8;
+        String s2 = "8 + a = " + (i + a);
+    }
+  }
+
+//----#### SNIPPET #### - 5
+    int i$iv;
+    int i = i$iv = 8;
+    String s2 = "8 + a = " + (i + a);

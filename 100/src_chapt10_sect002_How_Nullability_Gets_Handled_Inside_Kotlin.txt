@@ -1,0 +1,68 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 10: 
+////      True, False Andnewline Undecided:newline Nullability
+//// Section: 2. How Nullability Gets Handled Inside Kotlin
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+  var p:SomeType = ...
+  ...
+  p = null
+
+//----#### SNIPPET #### - 2
+  class A(var p:SomeType) ...
+  A(null) // does not compile
+
+  fun f(p:SomeType) { ... }
+  f(null) // does not compile
+
+//----#### SNIPPET #### - 3
+  var p:SomeType? = ...
+  p = null // OK
+
+  class A(var p:SomeType?) ...
+  A(null) // OK
+
+  fun f(p:SomeType?) { ... }
+  f(null) // OK
+
+//----#### SNIPPET #### - 4
+  var p:SomeType? = ...
+  ...
+  p.property   // does not compile
+  p.function() // does not compile
+
+//----#### SNIPPET #### - 5
+  var p:SomeType? = ...
+  ...
+  p?.property   // OK
+  p?.function() // OK
+
+//----#### SNIPPET #### - 6
+  var p:SomeType? = null
+
+  val res:TypeOfProperty? = p?.property   // -> null
+
+  val res2:TypeOfFunct? = p?.function()   // -> null
+  // ... and function() not invoked
+
+//----#### SNIPPET #### - 7
+  var p:String? = "Hello"
+  var s1 = p?:"default" // -> "Hello"
+  p = null
+  var s2 = p?:"default" // -> "default"
+
+//----#### SNIPPET #### - 8
+  var p:String? = ...
+  // for whatever reason we know that p cannot be null
+
+  val len = p!!.length
+  // valid, because the !! tells it cannot be null
+  // If it accidentally _is_ null, we'll crash here. 
+
+//----#### SNIPPET #### - 9
+  var p:String? = ...
+
+  val len = p!!.length
+  val intVal = p.toInt()

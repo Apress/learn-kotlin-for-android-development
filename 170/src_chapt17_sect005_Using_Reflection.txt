@@ -1,0 +1,124 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 17: 
+////      More APIs
+//// Section: 5. Using Reflection
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    import android.util.Log
+
+    open class MyBase(val baseProp:Int) 
+    class MyClass(var prop1:Int) : 
+          java.io.Serializable, MyBase(13) {
+        var prop2:String
+            get() = "Hi"
+            set(value) { /* ignore */ }
+
+        init {
+            Log.d("LOG", "Hello from init")
+        }
+
+        fun function(i:Int):Int {
+            return prop1 * i
+        }
+    }
+
+    val instance = MyClass(42)
+
+//----#### SNIPPET #### - 2
+    val clazz = MyClass::class
+
+    // We can also get it from instances:
+    val clazz = instance::class
+
+//----#### SNIPPET #### - 3
+    import android.util.Log
+    import kotlin.reflect.*
+    import kotlin.reflect.full.*
+
+    Log.d("LOG", "**** constructors")
+    clazz.constructors.forEach { c ->
+        Log.d("LOG", c.toString())
+    }
+
+    // show only our own properties
+    Log.d("LOG", "**** declaredMemberProperties")
+    clazz.declaredMemberProperties.forEach { p ->
+        Log.d("LOG", p.toString())
+    }
+
+    // show also inherited properties
+    Log.d("LOG", "**** memberProperties")
+    clazz.memberProperties.forEach { p ->
+        Log.d("LOG", p.toString())
+    }
+
+    // show only our own functions
+    Log.d("LOG", "**** declaredFunctions")
+    clazz.declaredFunctions.forEach { f ->
+        Log.d("LOG", f.toString())
+    }
+
+    // show also inherited functions
+    Log.d("LOG", "**** functions")
+    clazz.functions.forEach { f ->
+        Log.d("LOG", f.toString())
+    }
+
+//----#### SNIPPET #### - 4
+    val p1: KProperty1<out MyClass, Any?> = 
+        clazz.declaredMemberProperties.find { 
+              it.name == "prop1" }!!
+    val f1: KFunction<*> = 
+        clazz.declaredFunctions.find { 
+              it.name == "function" }!!
+
+//----#### SNIPPET #### - 5
+    ...
+    val instance = MyClass(42)
+
+    val p1: KProperty1<out MyClass, Any?>? = 
+        clazz.declaredMemberProperties.find { 
+            it.name == "prop1" }!!
+    val p1Mutable: KMutableProperty1<out MyClass, Any?> = 
+        p1 as KMutableProperty1
+
+    // getting
+    val prop1Val = p1.getter.call(instance)
+    
+    // setting
+    p1Mutable.setter.call(instance, 55)
+
+    // invoking
+    val f1: KFunction<*> = 
+        clazz.declaredFunctions.find { 
+              it.name == "function" }!!
+    val res = f1.call(instance, 44) as Int
+
+//----#### SNIPPET #### - 6
+    // Only directly declared superclasses and interfaces
+    clazz.superclasses.forEach { sc ->
+        Log.d("LOG", sc.toString())
+    }
+
+    // All superclasses and interfaces
+    clazz.allSuperclasses.forEach { sc ->
+        Log.d("LOG", sc.toString())
+    }
+
+//----#### SNIPPET #### - 7
+    val clazz : KClass = ...
+ 
+    // If we have a no-arg primary constructor
+    val instance1 = clazz.createInstance()
+
+    // Otherwise for the primary constructor
+    val instance2 = clazz.primaryConstructor?.call(
+        [parameters]
+    )
+
+    // Otherwise
+    val instance3 = clazz.constructors.
+          find { [criterion] }!!.
+        call( [parameters] )

@@ -1,0 +1,24 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 13: 
+////      About Type Safety: Generics
+//// Section: 1. Simple Generics
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    class TheClass<[type-list]> {
+        [class-body]
+    }
+    interface TheInterface<[type-list]> {
+        [interface-body]
+    }
+
+//----#### SNIPPET #### - 2
+    class TheClass<A, B>(val p1: A, val p2: B?) {
+        constructor(p1:A) : this(p1, null)
+        init {
+            var x:A = p1
+            ... 
+        }
+        fun function(p: A) : B? = p2
+    }

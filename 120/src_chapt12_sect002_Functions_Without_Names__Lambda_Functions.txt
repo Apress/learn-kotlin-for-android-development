@@ -1,0 +1,44 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 12: 
+////      Back to Math:newline Functionalnewline Programming
+//// Section: 2. Functions Without Names: Lambda Functions
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+  fun functionName([parameters]): ReturnType { 
+    ...
+  }
+
+//----#### SNIPPET #### - 2
+  fun functionName([parameters]): ReturnType = ...
+
+//----#### SNIPPET #### - 3
+  val varName = 37
+
+//----#### SNIPPET #### - 4
+  val f = { i:Int, s:String -> 
+            i.toString() + ": " + s }
+
+//----#### SNIPPET #### - 5
+  ff( { i:Int,s:String -> "${i}- ${s}" } )
+
+//----#### SNIPPET #### - 6
+  [lambda_function].invoke([parameters])
+  [lambda_function]([parameters])
+
+//----#### SNIPPET #### - 7
+  val f = { i:Int, s:String -> 
+            i.toString() + ": " + s }
+
+//----#### SNIPPET #### - 8
+  { par -> 
+      ... // do something with 'par' }
+  {
+      ... // do something with 'it' }
+
+//----#### SNIPPET #### - 9
+    val f : (String, Int) -> String = { s:String, _ -> 
+        // the Int parameter is not used
+        s + "!" 
+    }

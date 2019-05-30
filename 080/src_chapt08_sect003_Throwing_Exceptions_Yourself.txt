@@ -1,0 +1,27 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 08: 
+////      Exceptions: Ifnewline  Something Goesnewline Wrong
+//// Section: 3. Throwing Exceptions Yourself
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    throw exceptionInstance
+
+//----#### SNIPPET #### - 2
+    val exc = Exception("The exception message")
+    throw exc
+
+//----#### SNIPPET #### - 3
+    throw Exception("The exception message")
+
+//----#### SNIPPET #### - 4
+    class MyException(msg:String) : Exception(msg)
+    ...
+    try {
+        ...
+        throw MyException("an error occurred")
+        ...
+    } catch(e:MyException) {
+        ...
+    }

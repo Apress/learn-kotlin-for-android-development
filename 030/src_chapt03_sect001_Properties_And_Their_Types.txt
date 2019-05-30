@@ -1,0 +1,159 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 03: 
+////      Classes at Work: Properties And Functions
+//// Section: 1. Properties And Their Types
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    [visibility] [modifiers] val propertyName:PropertyType 
+          = initial_value
+    [visibility] [modifiers] var propertyName:PropertyType 
+          = initial_value
+
+//----#### SNIPPET #### - 2
+    val propertyName:PropertyType = initial_value
+    var propertyName:PropertyType = initial_value
+
+//----#### SNIPPET #### - 3
+    class GameUser(val firstName:String,
+               val lastName:String,
+               val userName:String,
+               val registrationNumber:Int,
+               val birthday:String = "",
+               val userRank:Double = 0.0) {
+        val fullName:String
+        val initials:String
+        init {
+            fullName = firstName + " " + lastName
+            initials = firstName.toUpperCase() +
+                       lastName.toUpperCase()
+        }
+    }
+
+//----#### SNIPPET #### - 4
+    val user = GameUser("Peter", "Smith", "psmith",
+            123, "1988-10-03", 0.79)
+    val firstName = user.firstName
+    val fullName = user.fullName    
+
+//----#### SNIPPET #### - 5
+    class GameUser(var firstName:String,
+               var lastName:String,
+               var userName:String,
+               var registrationNumber:Int,
+               var birthday:String = "",
+               var userRank:Double = 0.0) {
+        var fullName:String
+        var initials:String
+        init {
+            fullName = firstName + " " + lastName
+            initials = firstName.toUpperCase() +
+                       lastName.toUpperCase()
+        }
+    }
+
+    // somewhere inside a function in class MainActivity
+    val user = GameUser("Peter", "Smith", "psmith",
+            123, "1988-10-03", 0.79)
+    user.firstName = "Linda"
+    console.log(user.fullName)    
+
+//----#### SNIPPET #### - 6
+    class TheClassName {
+        val propertyName1:PropertyType1 = initial_value
+        var propertyName2:PropertyType2 = initial_value
+        ...
+    }
+
+    object SingletonObjectName {
+        val propertyName1:PropertyType1 = initial_value
+        var propertyName2:PropertyType2 = initial_value
+        ...
+    }
+
+    class TheClassName {
+        companion object {
+            val propertyName1:PropertyType1 = initial_value
+            var propertyName2:PropertyType2 = initial_value
+            ...
+        }
+    }
+
+//----#### SNIPPET #### - 7
+    // we are inside a class, a singleton object, or 
+    // a companion object
+    init {
+        propertyName1 = initial_value
+        propertyName2 = initial_value
+        ...
+    }
+
+//----#### SNIPPET #### - 8
+    // we are inside a class, a singleton object, or 
+    // a companion object
+    val propertyName1:PropertyType1
+    var propertyName2:PropertyType2
+    init {
+        propertyName1 = initial_value
+        propertyName2 = initial_value
+        ...
+    }
+
+//----#### SNIPPET #### - 9
+    // we are inside a class, a singleton object, or 
+    // a companion object
+    var propertyName1:PropertyType1 = initial_value
+    ...
+    fun someFunction() {
+        propertyName1 = new_value
+        ...
+    }
+
+//----#### SNIPPET #### - 10
+    instanceName.propertyName = new_value
+    ObjectName.propertyName = new_value 
+
+//----#### SNIPPET #### - 11
+    val anInteger = 42
+    val anotherInteger = anInteger + 7
+    val aThirdInteger = 0xFF473
+    val aLongInteger = 700_000_000_000L
+    val aFloatingPoint = 37.103
+    val anotherFloatingPoint = -37e-12
+    val aSinglePrecisionFloat = 1.3f
+    val aChar = 'A'
+    val aString = "Hello World"
+    val aMultiLineString = """First Line
+        Second Line"""
+
+//----#### SNIPPET #### - 12
+    var propertyName:PropertyType? = null
+
+//----#### SNIPPET #### - 13
+    var anInteger:Int? = null
+    var anInstance:SomeClass? = null
+
+//----#### SNIPPET #### - 14
+    var anInteger:Int? = 42
+    anInteger = null
+
+//----#### SNIPPET #### - 15
+    var s:String? = "Hello"
+    val l1 = s?.length() // -> 5
+    s = null
+    val l2 = s?.length() // -> null
+
+//----#### SNIPPET #### - 16
+    const val name = ...
+
+//----#### SNIPPET #### - 17
+    lateinit var name:Type
+
+//----#### SNIPPET #### - 18
+    class TheClass {
+        lateinit var name:String
+        fun someFunction() {
+            val stringSize = name.length
+        }
+    }

@@ -1,0 +1,161 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 17: 
+////      More APIs
+//// Section: 6. Regular Expressions
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    val patStr = "^\\w{3}$"      // exactly 3 word chars
+    val patStr2 = """^\w{3}$"""  // the same
+
+//----#### SNIPPET #### - 2
+    val re = Regex("^\\w{3}$")     // exactly 3 word chars
+
+    val matches1 = "Hello".matches(re) // -> false
+    val matches2 = "abc".matches(re)   // -> true
+
+
+//----#### SNIPPET #### - 3
+    Regex(pattern:String, option:RegexOption)
+    Regex(pattern:String, options:Set<RegexOption>)
+
+//----#### SNIPPET #### - 4
+    val re1 = Regex("^A(/|_)\\d{4}$")
+
+    // This is the same:
+    val ENDS = "$"
+    val re2 = Regex("""
+        ^       # begins with
+        A       # an "A"
+        (/|_)   # a "/" or a "_"
+        \d{4}   # 4 digits
+        $ENDS   # ends here
+    """, RegexOption.COMMENTS)
+
+//----#### SNIPPET #### - 5
+    val re = Regex("\\|")  
+    // <- use "\" escape to get a "|" as a literal
+
+    val s = "ABC|12345|_0_1"
+    val split: List<String> = s.split(re)
+    // -> "ABC", "12345", "_0_1"
+
+    // limit to at most 37 splits
+    val split37 = s.split(re, limit = 37)
+
+//----#### SNIPPET #### - 6
+    // a number pattern
+    val re = Regex("""
+        -?  # possibly a "-"
+        \d+ # one or more digits
+        (
+          \.   # a dot
+          \d+  # one or more digits
+        )?     # possibly 
+     """, RegexOption.COMMENTS)  
+
+    val s = "x = 37.5, y = 3.14, z = -100.0"
+
+    val firstNumber:MatchResult? = re.find(s)
+    // start at a certain index instead:
+    // val firstNumber = re.find(s, 5)
+
+    val notFound = firstNumber == null
+    firstNumber?.run {
+        val num = groupValues[0]
+        // do something with num...
+    }
+
+    val allNumbers:Sequence<MatchResult> = re.findAll(s)
+    allNumbers.forEach { mr ->
+        val num = mr.groupValues[0]
+        // do something with num...
+    }
+
+//----#### SNIPPET #### - 7
+    val re = Regex("""
+        (
+          (
+            -?  # possibly a "-"
+            \d+ # one or more digits
+          )
+          (
+            \.   # a dot
+            (
+              \d+  # one or more digits
+            )
+          )?     # possibly
+        ) 
+     """, RegexOption.COMMENTS)  
+
+//----#### SNIPPET #### - 8
+    // The pattern from the last listing compressed
+    val re = Regex("""((-?\d+)(\.(\d+))?)""")  
+
+    val s = "x = 37.5, y = 3.14, z = -100.0"
+
+    val firstNumber:MatchResult? = re.find(s)
+
+    val notFound = firstNumber == null
+    firstNumber?.run {
+        val (num, nf, f1, f2) = destructured
+        // <- "37.5", "37", ".5", "5"
+        // the same:
+        //   val num = groupValues[1]
+        //   val nf = groupValues[2]
+        //   val f1 = groupValues[3]
+        //   val f2 = groupValues[4]
+        val wholeMatch = groupValues[0]  // 37.5
+        // ...
+    }
+
+    val allNumbers:Sequence<MatchResult> = re.findAll(s)
+    allNumbers.forEach { mr ->
+        val (num, nf, f1, f2) = mr.destructured
+        // the same:
+        //   val num = mr.groupValues[1]
+        //   val nf = mr.groupValues[2]
+        //   val f1 = mr.groupValues[3]
+        //   val f2 = mr.groupValues[4]
+        val wholeMatch = mr.groupValues[0] 
+        // ... wholeMatch is: 37.5, 3.14 or -100.0
+        // ... num is: 37.5, 3.14 or -100.0
+        // ... nf is: 37, 3, -100
+        // ... f1 is: .5, .14, .0
+        // ... f2 is 5, 14, 0
+    }
+
+//----#### SNIPPET #### - 9
+    // again the number pattern:
+    val re = Regex("""((-?\d+)(\.(\d+))?)""")  
+
+    val s = "x = 37.5, y = 3.14, z = -100.0"
+
+    // replace the first number by 22.22
+    val s2 = re.replaceFirst(s, "22.22")
+    // -> "x = 22.22, y = 3.14, z = -100.0"
+
+    // replace all numbers by 22.22
+    val s3 = re.replace(s, "22.22")
+    // -> "x = 22.22, y = 22.22, z = 22.22"
+
+//----#### SNIPPET #### - 10
+    // again the number pattern:
+    val re = Regex("""((-?\d+)(\.(\d+))?)""")  
+
+    val s = "x = 37.5, y = 3.14, z = -100.0"
+
+    // double all numbers
+    val s2 = re.replace(s, { mr:MatchResult ->
+        val theNum = mr.groupValues[1].toDouble()
+        (theNum * 2).toString() // <- replacement
+    })
+    // -> "x = 75.0, y = 6.28, z = -200.0" 
+
+    // zero all fractions
+    val s3 = re.replace(s, { mr:MatchResult ->
+        val (num, nf, f1, f2) = mr.destructured
+        nf + ".0" // <- replacement
+    })
+    // -> "x = 37.0, y = 3.0, z = -100.0"

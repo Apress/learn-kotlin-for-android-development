@@ -1,0 +1,17 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 14: 
+////      Adding Hints: Annotations
+//// Section: 4. Annotations With Array Parameter
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    annotation class Annot(vararg val params:String)
+    ...
+    @Annot("A", "B", "C", ...) val prop:Int = ...
+
+//----#### SNIPPET #### - 2
+    @field:JavaAnnot("A", "B", "C", ...) val prop:Int = ...
+
+//----#### SNIPPET #### - 3
+    @Annot(param1 = 37, arrParam = [37, 42, 6], ...)

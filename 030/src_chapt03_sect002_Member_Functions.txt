@@ -1,0 +1,164 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 03: 
+////      Classes at Work: Properties And Functions
+//// Section: 2. Member Functions
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    [modifiers] 
+    fun functionName([parameters]) {
+        [Function Body]
+    }
+
+//----#### SNIPPET #### - 2
+    fun printAdded(param1:Int, param2:Int]) {
+        console.log(param1 + param2)
+    }
+    fun printHello() {
+        console.log("Hello")
+    }
+
+//----#### SNIPPET #### - 3
+    fun functionName([parameters])
+
+//----#### SNIPPET #### - 4
+    [modifiers] 
+    fun functionName([parameters]): ReturnType {
+        [Function Body]
+        return [expression]
+    }
+
+//----#### SNIPPET #### - 5
+    fun add37(param:Int): Int {
+        val retVal = param + 37
+        return retVal
+    }
+
+//----#### SNIPPET #### - 6
+    [modifiers] 
+    fun functionName([parameters]): ReturnType = [expression]
+
+//----#### SNIPPET #### - 7
+    fun add37(param:Int) = param + 37
+
+//----#### SNIPPET #### - 8
+    fun functionName([parameters]): ReturnType
+
+//----#### SNIPPET #### - 9
+    class A {
+        val xyz:Int = 7
+        fun meth1(xyz:Int) {
+            [Function-Body]
+        }
+    }
+
+//----#### SNIPPET #### - 10
+    class A {
+        val xyz:Int = 7
+        fun meth1(xyz:Int) {
+            val q1 = xyz // parameter
+            val q2 = this.xyz // property
+            ...
+        }
+    }
+
+//----#### SNIPPET #### - 11
+    instance.functionName([parameters]) // outside the class
+    functionName([parameters]) // inside the class
+    Object.functionName([parameters]) // outside the object
+    functionName([parameters]) // inside the object
+
+//----#### SNIPPET #### - 12
+    instance.function(par1 = [value1], par2 = [value2], ...)
+
+//----#### SNIPPET #### - 13
+    function(par1 = [value1], par2 = [value2], ...)
+
+//----#### SNIPPET #### - 14
+    parameterName:ParameterType = [default value]
+
+//----#### SNIPPET #### - 15
+    fun functionName(
+        param1:ParamType1,
+        param2:ParamType2,
+        ...
+        paramM:ParamTypeM = [default1],
+        paramM+1:ParamTypeM+1 = [default2],
+        ...) { ... }
+
+//----#### SNIPPET #### - 16
+    fun functionName(
+        param1:ParamType1,
+        param2:ParamType2,
+        ...
+        paramN:ParamTypeN,
+        vararg paramV:ParamTypeV) { ... }
+
+//----#### SNIPPET #### - 17
+    fun functionName(varargs paramV:ParamTypeV) { 
+        ... 
+    }
+
+//----#### SNIPPET #### - 18
+    functionName(param1, param2, ..., paramN,
+        vararg1, vararg2, ...)
+
+//----#### SNIPPET #### - 19
+    fun meth(date:String, vararg names:String) { 
+        ... 
+    }
+
+//----#### SNIPPET #### - 20
+    meth("2018-01-23")
+    meth("2018-01-23", "Gina Eleniak")
+    meth("2018-01-23", "Gina Eleniak", 
+          "John Smith")
+    meth("2018-01-23", "Gina Eleniak", 
+          "John Smith", "Brad Cold")
+
+//----#### SNIPPET #### - 21
+    meth("2018-01-23", "Gina Eleniak", 
+          "John Smith", "Brad Cold")
+
+//----#### SNIPPET #### - 22
+    abstract class TheAbstractClass {
+        abstract fun function([parameters])
+        ... more functions ...
+    }
+
+//----#### SNIPPET #### - 23
+    abstract class TheAbstractClass {
+        abstract fun function([parameters])
+        ... more functions ...
+    }
+
+    // A subclass of TheAbstractClass ->
+    class TheClass : TheAbstractClass() {
+        override fun function([parameters]) {
+            // do something...
+        }
+    }
+
+//----#### SNIPPET #### - 24
+    class Calculator {
+        fun add(a:Int) { 
+            ...
+        }
+        fun add(a:Double) { 
+            ...
+        }
+        fun add(a:String) { 
+            ...
+        }
+    }
+
+//----#### SNIPPET #### - 25
+    fun a() {
+        fun b() {
+            ...
+        }
+        ...
+        b()
+        ...
+    }

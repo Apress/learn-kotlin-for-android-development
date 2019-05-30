@@ -1,0 +1,251 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 20: 
+////      XML And JSON
+//// Section: 2. JSON Processing
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    val json = """{
+       "id":27,
+       "name":"Roger Rabbit",
+       "permanent":true,
+       "address":{
+           "street":"El Camino Real",
+           "city":"New York",
+           "zipcode":95014
+       },
+       "phoneNumbers":[9945678, 123456781],
+       "role":"President"
+    }"""
+
+//----#### SNIPPET #### - 2
+import com.fasterxml.jackson.core.JsonFactory
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.node.*
+import java.io.ByteArrayOutputStream
+import java.math.BigInteger
+
+operator fun JsonNode.invoke(s:String) = this.get(s)
+operator fun JsonNode.invoke(vararg s:String) = 
+    s.fold(this, { acc, s -> acc(s) })
+fun JsonNode.remove(name:String) {
+    val on = (this as? ObjectNode)?: 
+        throw Exception("This is not an object node")
+    on.remove(name) }
+fun JsonNode.forEach(iter: (JsonNode) -> Unit ) {
+    when(this) {
+        is ArrayNode -> this.forEach(iter)
+        is ObjectNode -> this.forEach(iter)
+        else -> throw Exception("Cannot iterate over " + 
+              this::class)
+    }
+}
+
+//----#### SNIPPET #### - 3
+fun JsonNode.text() = this.asText()
+
+//----#### SNIPPET #### - 4
+fun JsonNode.forEach(iter: (String, JsonNode) -> Unit ) {
+    if(this !is ObjectNode)
+        throw Exception(
+        "Cannot iterate (key,val) over " + this::class)
+    this.fields().forEach{ 
+        (name, value) -> iter(name, value) }
+}
+
+//----#### SNIPPET #### - 5
+// Works only if the node is an ObjectNode!
+fun JsonNode.put(name:String, value:Any?) : JsonNode {
+    if(this !is ObjectNode)
+        throw Exception("Cannot put() on none-object node")
+    when(value) {
+        null -> this.putNull(name)
+        is Int -> this.put(name, value)
+        is Long -> this.put(name, value)
+        is Short -> this.put(name, value)
+        is Float -> this.put(name, value)
+        is Double -> this.put(name, value)
+        is Boolean -> this.put(name, value)
+        is String -> this.put(name, value)
+        is JsonNode -> this.put(name, value)
+        else -> throw Exception(
+            "Illegal value type: ${value::class}")
+    }
+    return this
+}
+
+//----#### SNIPPET #### - 6
+// Add a value to an array, works only if this is an 
+// ArrayNode
+fun JsonNode.add(value:Any?) : JsonNode {
+    if(this !is ArrayNode)
+        throw Exception("Cannot add() on none-array node")
+    when(value) {
+        null -> this.addNull()
+        is Int -> this.add(value)
+        is Long -> this.add(value)
+        is Float -> this.add(value)
+        is Double -> this.add(value)
+        is Boolean -> this.add(value)
+        is String -> this.add(value)
+        is JsonNode -> this.add(value)
+        else -> throw Exception(
+            "Illegal value type: ${value::class}")
+    }
+    return this
+}
+
+//----#### SNIPPET #### - 7
+// Node creators
+fun createJsonTextNode(text:String) = 
+    TextNode.valueOf(text)
+fun createJsonIntNode(i:Int) = IntNode.valueOf(i)
+fun createJsonLongNode(l:Long) = LongNode.valueOf(l)
+fun createJsonShortNode(s:Short) = ShortNode.valueOf(s)
+fun createJsonFloatNode(f:Float) = FloatNode.valueOf(f)
+fun createJsonDoubleNode(d:Double) = DoubleNode.valueOf(d)
+fun createJsonBooleanNode(b:Boolean) = 
+    BooleanNode.valueOf(b)
+fun createJsonBigIntegerNode(b: BigInteger) = 
+    BigIntegerNode.valueOf(b)
+fun createJsonNullNode() = NullNode.instance
+
+fun jsonObjectNodeOf(
+      children: Map<String,JsonNode> = HashMap()) : 
+      ObjectNode {
+    return ObjectNode(JsonNodeFactory.instance, children)
+}
+fun jsonObjectNodeOf(
+      vararg children: Pair<String,Any?>) : 
+      ObjectNode {
+    return children.fold(
+          ObjectNode(JsonNodeFactory.instance), { acc, v ->
+        acc.put(v.first, v.second)
+        acc
+    })
+}
+fun jsonArrayNodeOf(elements: Array<JsonNode> = 
+      emptyArray()) : ArrayNode {
+    return ArrayNode(JsonNodeFactory.instance, 
+                     elements.asList())
+}
+fun jsonArrayNodeOf(elements: List<JsonNode> = 
+      emptyList()) : ArrayNode {
+    return ArrayNode(JsonNodeFactory.instance, 
+                     elements)
+}
+fun jsonEmptyArrayNode() : ArrayNode {
+    return ArrayNode(JsonNodeFactory.instance)
+}
+fun jsonArrayNodeOf(vararg elements: Any?) : ArrayNode {
+    return elements.fold(
+          ArrayNode(JsonNodeFactory.instance), { acc, v ->
+        acc.add(v)
+        acc
+    })
+}
+
+//----#### SNIPPET #### - 8
+// JSON output as pretty string
+fun JsonNode.toPrettyString(
+        prettyPrinter:PrettyPrinter? = 
+        DefaultPrettyPrinter()) : String {
+    var res:String? = null
+    ByteArrayOutputStream().use { os ->
+        val gen = JsonFactory().createGenerator(os).apply {
+            if(prettyPrinter != null) this.prettyPrinter = prettyPrinter
+        }
+        val mapper = ObjectMapper()
+        mapper.writeTree(gen, this)
+        res = String(os.toByteArray())
+    }
+    return res!!
+}
+
+// JSON output as simple string
+fun JsonNode.toJsonString() : String =
+      toPrettyString(prettyPrinter = null)
+
+//----#### SNIPPET #### - 9
+    val json = ... // see section beginning
+    val mapper = ObjectMapper()
+    val root = mapper.readTree(json)
+
+//----#### SNIPPET #### - 10
+    try {
+        val json = ... // see section beginning
+        val mapper = ObjectMapper()
+        val root = mapper.readTree(json)
+
+        // see what we got
+        Log.d("LOG", root.toPrettyString())
+
+        // type of the node
+        Log.d("LOG", root.nodeType.toString()) 
+        // <- OBJECT
+        // is it a container?
+        Log.d("LOG", root.isContainerNode.toString()) 
+        // <- true
+
+        root.forEach { k,v ->
+           Log.d("LOG", 
+             "Key:${k} -> val:${v} (${v.nodeType})")
+           Log.d("LOG", 
+             "    <- " + v::class.toString())
+        }
+
+        val phones = root("phoneNumbers")
+        phones.forEach { ph ->
+            Log.d("LOG", "Phone: " + ph.text())
+        }
+        Log.d("LOG", "Phone[0]: " + phones[0].text())
+
+        val street = root("address")("street").text()
+        Log.d("LOG", "Street: " + 
+            street)
+        Log.d("LOG", "Zip: " + 
+            root("address", "zipcode").asInt())
+
+    }catch(e:Exception) {
+        Log.e("LOG", "JSON error", e)
+    }
+
+//----#### SNIPPET #### - 11
+    // add it to the "try" statements from the 
+    // last listing
+
+    // remove an entry
+    root("address").remove("zipcode")
+    Log.d("LOG", root.toPrettyString())
+
+    // update an entry
+    root("address").put("street", "Fake Street 42")
+    Log.d("LOG", root.toPrettyString())
+
+    root("address").put("country", createJsonTextNode("Argentina"))
+    Log.d("LOG", root.toPrettyString())
+
+    // create a new object node
+    root.put("obj", jsonObjectNodeOf(
+             "abc1" to 23,
+             "abc2" to "Hallo",
+             "someNull" to null
+    ))
+    Log.d("LOG", root.toPrettyString())
+
+    // create a new array node
+    root.put("arr", jsonArrayNodeOf(
+             23,
+             null,
+             "Hallo"
+    ))
+    Log.d("LOG", root.toPrettyString())
+
+    // write without spaces or line breaks
+    Log.d("LOG", root.toJsonString())
+
+//----#### SNIPPET #### - 12
+    val root = jsonObjectNodeOf()

@@ -1,0 +1,30 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 12: 
+////      Back to Math:newline Functionalnewline Programming
+//// Section: 3. Loops Once Again
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+  val arr = arrayOf("Joe", "Isabel", "John" }
+  arr.forEach { name ->
+      Log.d("A name: ${name}")
+  }
+  arr.forEachIndexed { i,s ->
+      Log.d("Name #${i}: ${name}")
+  }
+
+//----#### SNIPPET #### - 2
+  public inline fun <T> Array<out T>.forEach( 
+          action: (T) -> Unit): Unit {
+      for (element in this) action(element)
+  }
+
+//----#### SNIPPET #### - 3
+  originalCollection.
+        filter([filter_function]).
+        map([mapping_function]).
+        take(37).
+        forEach { elem ->
+            ...
+        } 

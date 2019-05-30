@@ -1,0 +1,226 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 02: 
+////      Classes And  Objects: Object  Orientation  Philosophy
+//// Section: 1. Kotlin And Object Oriented Programming
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    class ClassName(Parameter-Declaration1,
+            Parameter-Declaration2, ...) {
+        [Class-Body]
+    } 
+
+//----#### SNIPPET #### - 2
+    val Variable-Name:Variable-Type = value 
+
+//----#### SNIPPET #### - 3
+    var Variable-Name:Variable-Type = value 
+
+//----#### SNIPPET #### - 4
+    class ClassName(Parameter-Declaration1,
+            Parameter-Declaration2, ...) {
+        ...
+        val propertyName:PropertyType = [init-value]
+        var propertyName:PropertyType = [init-value]
+        ...
+    } 
+
+//----#### SNIPPET #### - 5
+    class ClassName(Parameter-Declaration1,
+            Parameter-Declaration2, ...) {
+        ...
+        init {
+            // initialization actions...
+        }
+    } 
+
+//----#### SNIPPET #### - 6
+    class ClassName(Parameter-Declaration1,
+            Parameter-Declaration2, ...) {
+        val someProperty:PropertyType
+        ...
+        init {
+            someProperty = [some value]
+            // more initialization actions...
+        }
+    } 
+
+//----#### SNIPPET #### - 7
+    class ClassName {
+        var someProperty:PropertyType = [init-value]
+        ...
+        init {
+            ...
+            someProperty = [some new value]
+            ...
+        }
+    } 
+
+//----#### SNIPPET #### - 8
+    class Invoice(val buyerFirstName:String,
+          val buyerLastName:String,
+          val date:String,
+          val goodName:String,
+          val amount:Int,
+          val pricePerItem:Double) {
+    } 
+
+//----#### SNIPPET #### - 9
+    class Invoice(val buyerFirstName:String,
+          val buyerLastName:String,
+          val date:String,
+          val goodName:String,
+          val amount:Int,
+          val pricePerItem:Double) 
+    {
+        val buyerFullName:String
+        val totalPrice:Double
+    } 
+
+//----#### SNIPPET #### - 10
+    class Invoice(val buyerFirstName:String,
+          val buyerLastName:String,
+          val date:String,
+          val goodName:String,
+          val amount:Int,
+          val pricePerItem:Double) 
+    {
+        val buyerFullName:String
+        val totalPrice:Double
+        init {
+            buyerFullName = buyerFirstName + " " +
+                buyerLastName
+            totalPrice = amount * pricePerItem
+        }
+    } 
+
+//----#### SNIPPET #### - 11
+    ...
+    val buyerFullName:String = buyerFirstName + " " +
+                buyerLastName
+    val totalPrice:Double = amount * pricePerItem
+    ... 
+
+//----#### SNIPPET #### - 12
+    val firstInvoice = Invoice("Richard", "Smith", 
+          "2018-10-23", "Peas", 5, 2.99)
+
+//----#### SNIPPET #### - 13
+    class Invoice(val buyerFirstName:String,
+          val buyerLastName:String,
+          val date:String,
+          val goodName:String,
+          val amount:Int,
+          val pricePerItem:Double) 
+    {
+        val buyerFullName:String
+        val totalPrice:Double
+        init {
+            buyerFullName = buyerFirstName + " " +
+                buyerLastName
+            totalPrice = amount * pricePerItem
+        }
+    } 
+
+    fun main(args:Array<String>) {
+        val firstInvoice = Invoice("Richard", "Smith", 
+          "2018-10-23", "Peas", 5, 2.99)
+        // do something with it...
+    }
+
+//----#### SNIPPET #### - 14
+    ...
+    val firstInvoice = Invoice("Richard", "Smith", 
+        "2018-10-23", "Peas", 5, 2.99)
+    val fullName = firstInvoice.buyerFullName
+
+//----#### SNIPPET #### - 15
+    ...
+    val firstInvoice = Invoice("Richard", "Smith", 
+        "2018-10-23", "Peas", 5, 2.99)
+    firstInvoice.buyerLastName = "Doubtfire"
+
+//----#### SNIPPET #### - 16
+    class Invoice( [constructor parameters] ) {
+        val buyerFullName:String
+        val totalPrice:Double
+        init { [initializer code] } 
+
+        fun getState(): String {
+            return "First name: ${firstName}\n" +
+                    "Last name: ${lastName}\n" +
+                    "Full name: ${buyerFullName}\n" +
+                    "Date: ${date}\n" +
+                    "Good: ${goodName}\n" +
+                    "Amount: ${amount}\n" +
+                    "Price per item: ${pricePerItem}\n" +
+                    "Total price: ${totalPrice}"
+        }        
+    } 
+
+//----#### SNIPPET #### - 17
+    objectName.functionName(parameter1, parameter2, ...)
+
+//----#### SNIPPET #### - 18
+    ...
+    val firstInvoice = Invoice("Richard", "Smith", 
+        "2018-10-23", "Peas", 5, 2.99)
+    val state:String = firstInvoice.getState()
+
+//----#### SNIPPET #### - 19
+    ...
+    // we are inside the Invoice class
+    val state:String = getState()
+
+//----#### SNIPPET #### - 20
+    fun tax(taxRate:Double):Double {
+        return taxRate * amount * pricePerItem
+    }        
+
+//----#### SNIPPET #### - 21
+    ...
+    val firstInvoice = Invoice("Richard", "Smith", 
+        "2018-10-23", "Peas", 5, 2.99)
+    val tax:Double = firstInvoice.tax(0.11)
+
+//----#### SNIPPET #### - 22
+    class Invoice(val buyerFirstName:String,
+          val buyerLastName:String,
+          val date:String,
+          val goodName:String,
+          val amount:Int,
+          val pricePerItem:Double) 
+    {
+        val buyerFullName:String
+        val totalPrice:Double
+
+        init {
+            buyerFullName = buyerFirstName + " " +
+                buyerLastName
+            totalPrice = amount * pricePerItem
+        }
+
+        fun getState():String {
+            return "First name: ${buyerFirstName}\n" +
+                    "Last name: ${buyerLastName}\n" +
+                    "Full name: ${buyerFullName}\n" +
+                    "Date: ${date}\n" +
+                    "Good: ${goodName}\n" +
+                    "Amount: ${amount}\n" +
+                    "Price per item: ${pricePerItem}\n" +
+                    "Total price: ${totalPrice}"
+        }        
+
+        fun tax(taxRate:Double):Double {
+            return taxRate * amount * pricePerItem
+        }        
+    } 
+
+    fun main(args:Array<String>) {
+        val firstInvoice = Invoice("Richard", "Smith", 
+              "2018-10-23", "Peas", 5, 2.99)
+        val state:String = firstInvoice.getState()
+        val tax:Double = firstInvoice.tax(0.11)
+        // do more things with it...
+    }

@@ -1,0 +1,30 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 13: 
+////      About Type Safety: Generics
+//// Section: 6. Generic Functions
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    fun <A> fun1(par1:A, par2:Int) {
+        ...
+    }
+
+    fun <A, B> fun2(par1:A, par2:B) {
+        ...
+    }
+
+    fun <A> fun3(par1:String) : A {
+        ...
+    }
+
+    fun <A> fun4(par1:String) : List<A> {
+        ...
+    }
+
+//----#### SNIPPET #### - 2
+    fun1<String>("Hello", 37)
+
+    fun2<Int, String>(37, "World")
+
+    val s:String = fun3<String>("A")

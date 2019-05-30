@@ -1,0 +1,62 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 13: 
+////      About Type Safety: Generics
+//// Section: 7. Generic Constraints
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    <T : SpecificType>
+
+//----#### SNIPPET #### - 2
+    class <T : Number> { ... }
+
+//----#### SNIPPET #### - 3
+    class Adder<T> {
+        var v:Double = 0.0
+        fun add(value:T) {
+            v += value.toDouble()
+        }
+    }
+
+//----#### SNIPPET #### - 4
+    class Adder<T : Number> {
+        var v:Double = 0.0
+        fun add(value:T) {
+            // T is a Number, so it _has_ a toDouble()
+            v += value.toDouble()
+        }
+    }
+
+//----#### SNIPPET #### - 5
+    class Adder {
+        var v:Double = 0.0
+        fun <T:Number> add(value:T) {
+            v += value.toDouble()
+        }
+    }
+
+//----#### SNIPPET #### - 6
+    val adder = Adder()
+    adder.add(37)
+    adder.add(3.14)
+    adder.add(1.0f)
+
+//----#### SNIPPET #### - 7
+    class TheClass<T> where T : UpperBound1,
+                       T : UpperBound2, ... 
+    {
+        ...
+    }
+
+//----#### SNIPPET #### - 8
+    fun <T> functionName(...) where T : UpperBound1,
+                       T : UpperBound2, ... 
+    {
+        ...
+    }
+
+//----#### SNIPPET #### - 9
+    class TheClass <T : Comparable<T>> { 
+        ...
+    }

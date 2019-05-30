@@ -1,0 +1,42 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 14: 
+////      Adding Hints: Annotations
+//// Section: 5. Reading Annotations
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+      TheName::class.annotations
+
+//----#### SNIPPET #### - 2
+      property::class.annotations
+
+//----#### SNIPPET #### - 3
+      val annot = TheName::class.
+            findAnnotation<AnnotationType>()
+
+//----#### SNIPPET #### - 4
+      val prop = ClassName::propertyName
+      val annots = prop.annotations
+      val annot = prop.
+            findAnnotation<AnnotationType>()
+
+//----#### SNIPPET #### - 5
+      val prop = ClassName::propertyName
+      val field = prop.javaField
+      val annotations = field?.annotations
+
+//----#### SNIPPET #### - 6
+    val funName = "functionName"  
+        // <- choose your own
+    val pars = listOf(Int::class) 
+        // <- choose your own
+    val function = 
+        TheClass::class.
+        declaredFunctions.filter { 
+            it.name == funName }
+        ?.find { f ->
+          val types = f.valueParameters.map{
+              it.type.jvmErasure}
+          types == pars
+        }

@@ -1,0 +1,78 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 14: 
+////      Adding Hints: Annotations
+//// Section: 3. Applying Annotations
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    class Xyz {
+        @MyAnnot var d1:Double = 1.0
+    }
+
+//----#### SNIPPET #### - 2
+      @file:JvmName("Foo")
+      package com.xyz.project
+      ...
+
+//----#### SNIPPET #### - 3
+  // An annotation applying to a file (the implicit 
+  // internal class generated)
+  @file:Annot
+  package com.xyz.project
+  ...
+
+  // An annotation applying to a class, a singleton 
+  // object or an interface
+  @Annot class TheName ...
+  @Annot object TheName ...
+  @Annot interface TheName ...
+
+  // An annotation applying to a function
+  @Annot fun theName() { ... }
+
+  // An annotation applying to a property
+  @property:Annot val theName = ... 
+  @Annot var theName = ...
+  class SomeClass(@property:Annot var param:Type, ...) ...
+
+  // An annotation applying to a function parameter
+  f(@Annot p:Int, ...) { ... }
+
+  // An annotation applying to a constructor
+  class TheName @annot constructor(...) ...
+
+  // An annotation applying to a constructor parameter
+  class SomeClass(@param:Annot val param:Type, ...) ...
+
+  // An annotation applying to a lambda function
+  val f = @annot { par:Int -> ... }
+
+  // An annotation applying to the datum field
+  // behind a property
+  @field:Annot val theName = ...
+  class SomeClass(@field:Annot val param:Type, ...) ...
+
+  // An annotation applying to a property setter
+  @set:Annot var theName = ...
+  var theName = 37 @Annot set(...) { ... }
+  class SomeClass(@set:Annot var param:Type, ...) ...
+
+  // An annotation applying to a property getter
+  @get:Annot var theName = ...
+  var theName = 37 @Annot get() = ...
+  class SomeClass(@get:Annot var param:Type, ...) ...
+
+  // An annotation applying to a property setter
+  // parameter
+  var theName:Int = 37
+      set(@setparam:Annot p:String) { })
+
+  // An annotation applying to a receiver
+  @receiver:Annot fun String.xyz() { }
+
+  // An annotation applying to a delegate
+  class Derived(@delegate:Annot b: Base) : Base by b
+
+//----#### SNIPPET #### - 4
+    @Annot(AnotherAnnot)

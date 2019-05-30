@@ -1,0 +1,35 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 10: 
+////      True, False Andnewline Undecided:newline Nullability
+//// Section: 1. What NULL is
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+  val b:Boolean = ... // some condition
+  if(b) {
+      ... // do something
+  } else {
+      ... // do something else
+  }
+
+//----#### SNIPPET #### - 2
+  val instance = ... // some object
+  val b:Boolean = ... // some condition
+  if(instance == null) {
+      ... // do something
+  } else if(b) {
+      ... // do something else
+  } else {
+      ... // do something else
+  }
+
+//----#### SNIPPET #### - 3
+  val b:Boolean = ... // some three-valued condition
+  ifundecided(b) {
+      ... // do something
+  } if(b) {
+      ... // do something else
+  } else {
+      ... // do something else
+  }

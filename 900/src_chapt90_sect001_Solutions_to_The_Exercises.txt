@@ -1,0 +1,1024 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 90: 
+////     Appendix
+//// Section: 1. Solutions to The Exercises
+//// ------------------------------------------------------
+
+
+
+
+//----######################################################----
+//----#### Exercises Chapter 2
+
+//----#### SNIPPET #### - 1
+    class Invoice(val buyerFirstName:String,
+          val buyerLastName:String,
+          val date:String,
+          val goodName:String,
+          val amount:Int,
+          val pricePerItem:Double) 
+    {
+        val buyerFullName:String =
+            buyerFirstName + " " + buyerLastName 
+        val totalPrice:Double =
+            amount * pricePerItem
+    } 
+
+//----#### SNIPPET #### - 2
+    fun goodInfo():String {
+        return amount.toString() + " pieces of " 
+              + goodName
+    }
+
+//----#### SNIPPET #### - 3
+    fun goodInfo():String = 
+        amount.toString() + " pieces of " + goodName    
+
+//----#### SNIPPET #### - 4
+    fun goodInfo():String = 
+        "${amount} pieces of ${goodName}"    
+
+//----#### SNIPPET #### - 5
+    class Person(var firstName:String, 
+                 var lastName:String, 
+                 var ssn:String, 
+                 var dateOfBirth:String, 
+                 var gender:Char)
+
+//----#### SNIPPET #### - 6
+    val person1 = Person("John", "Smith", 
+          "0123456789", "1997-10-23", 'M')
+
+//----#### SNIPPET #### - 7
+    class GameUser(val firstName:String,
+          val lastName:String,
+          val birthday:String,
+          val userName:String,
+          val registrationNumber:Int,
+          val userRank:Double) {
+    } 
+
+//----#### SNIPPET #### - 8
+    package kotlinforandroid.book.numberguess
+
+    class GameUser(val firstName:String,
+          val lastName:String,
+          val birthday:String,
+          val userName:String,
+          val registrationNumber:Int,
+          val userRank:Double) {
+    } 
+
+//----#### SNIPPET #### - 9
+    val person1 = Person("firstName = John", 
+          lastName = "Smith", 
+          ssn = "0123456789", 
+          dateOfBirth = "1997-10-23",
+          gender = 'M')
+
+//----#### SNIPPET #### - 10
+    var gameUser = GameUser(lastName = "Doe", 
+        firstName = "John", 
+        userName = "jdoe", 
+        birthday = "1900-01-01", 
+        registrationNumber = 0, 
+        userRank = 0.0 )
+
+//----#### SNIPPET #### - 11
+    class Person(var firstName:String, 
+                 var lastName:String, 
+                 var ssn:String = "", 
+                 var dateOfBirth:String, 
+                 var gender:Char)
+
+//----#### SNIPPET #### - 12
+    val person1 = Person("firstName = John", 
+          lastName = "Smith", 
+          dateOfBirth = "1997-10-23",
+          gender = 'M')
+
+//----#### SNIPPET #### - 13
+class GameUser(val firstName:String,
+               val lastName:String,
+               val userName:String,
+               val registrationNumber:Int,
+               val birthday:String = "",
+               val userRank:Double = 0.0) {
+}
+
+//----#### SNIPPET #### - 14
+    class Person(var firstName:String, 
+                 var lastName:String, 
+                 var ssn:String, 
+                 var dateOfBirth:String, 
+                 var gender:Char) 
+    {
+        constructor(firstName:String, 
+            lastName:String, 
+            ssn:String, 
+            gender:Char) : this(firstName, 
+                lastName, ssn, "000-00-00", gender)
+    }
+
+//----#### SNIPPET #### - 15
+    val person1 = Person("John", "Smith", 
+          "0123456789", 'M')
+
+//----#### SNIPPET #### - 16
+    val person1 = Person(firstName = "John", 
+          lastName = "Smith", 
+          ssn = "0123456789", 
+          gender = 'M')
+
+//----#### SNIPPET #### - 17
+    object Constants {
+        val numberOfTabs = 5
+        val windowTitle = "Astaria"
+        val prefsFile = "prefs.properties"
+    }
+
+//----#### SNIPPET #### - 18
+    fun main(args:Array<String>) {
+        println(
+            "Number of tabs: " + 
+                Constants.numberOfTabs +
+            "\nWindow title: " + 
+                Constants.windowTitle +
+            "\nPrefs file: " + 
+                Constants.prefsFile
+        ) 
+    }
+
+//----#### SNIPPET #### - 19
+    class Triangle() {
+        companion object {
+            val NUMBER_OF_CORNERS = 3
+        }
+        fun info() {
+            println("Number of corners: " +
+                NUMBER_OF_CORNERS)
+        }
+    }
+
+//----#### SNIPPET #### - 20
+    fun main(args:Array<String>) {
+        val triangle = Triangle()
+        val numberOfCorners =
+            Triangle.NUMBER_OF_CORNERS
+    }
+
+//----#### SNIPPET #### - 21
+    interface ElementaryParticle {
+        fun mass():Double
+        fun charge():Double
+        fun spin():Double
+    }
+
+    class Electron : ElementaryParticle {
+        override fun mass() = 9.11e-31
+        override fun charge() = -1.0
+        override fun spin() = 0.5
+    }
+
+    class Proton : ElementaryParticle {
+        override fun mass() = 1.67e-27
+        override fun charge() = 1.0
+        override fun spin() = 0.5
+    }
+
+//----#### SNIPPET #### - 22
+    interface RandomNumberGenerator {
+        fun rnd(minInt:Int, maxInt:Int)
+    }
+    class StdRandom : RandomNumberGenerator {
+        override fun rnd(minInt: Int, maxInt: Int):Int {
+            val span = maxInt - minInt + 1
+            return minInt + Math.floor(Math.random()*span).toInt()
+        }
+    }
+    class RandomRandom : RandomNumberGenerator {
+        val rnd:Random = Random()
+        override fun rnd(minInt: Int, maxInt: Int):Int {
+            val span = maxInt - minInt + 1
+            return minInt + rnd.nextInt(span)
+        }
+    }
+
+//----#### SNIPPET #### - 23
+    val rnd:RandomNumberGenerator = StdRandom()
+    // or ... = RandomRandom() 
+
+//----#### SNIPPET #### - 24
+    number = rnd.rnd(Constants.LOWER_BOUND, Constants.UPPER_BOUND)
+
+//----#### SNIPPET #### - 25
+package kotlinforandroid.book.numberguess
+
+import android.content.Context
+import android.support.v7.app.AppCompatActivity
+import android.os.Bundle
+import android.util.AttributeSet
+import android.util.Log
+import android.view.View
+import android.widget.ScrollView
+import android.widget.TextView
+import kotlinforandroid.book.numberguess.common.
+       Constants
+import kotlinforandroid.book.numberguess.model.
+       GameUser
+import kotlinforandroid.book.numberguess.random.
+       RandomNumberGenerator
+import kotlinforandroid.book.numberguess.random.impl.
+       StdRandom
+import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
+
+class MainActivity : AppCompatActivity() {
+    val rnd: RandomNumberGenerator = StdRandom() 
+    // or ... = RandomRandom()
+    var started = false
+    var number = 0
+    var tries = 0
+    var gameUser = GameUser(
+        lastName = "Doe",
+        firstName = "John",
+        userName = "jdoe",
+        birthday = "1900-01-01",
+        registrationNumber = 0,
+        userRank = 0.0
+    )
+
+    override 
+    fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        fetchSavedInstanceData(savedInstanceState)
+        doGuess.setEnabled(started)
+    }
+
+    override  
+    fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        putInstanceData(outState)
+    }
+
+    fun start(v: View) {
+        log("Game started")
+        num.setText("")
+        started = true
+        doGuess.setEnabled(true)
+        status.text = getString(R.string.guess_hint, 
+              Constants.LOWER_BOUND, 
+              Constants.UPPER_BOUND)
+
+        number = rnd.rnd(Constants.LOWER_BOUND, 
+              Constants.UPPER_BOUND)
+        tries = 0
+        val r = Random()
+        r.nextInt(7)
+    }
+
+    fun guess(v:View) {
+        if(num.text.toString() == "") return
+        tries++
+        log("Guessed " + num.text + 
+              " (tries:" + tries + ")")
+        val g = num.text.toString().toInt()
+        if(g < number) {
+            status.setText(R.string.status_too_low)
+            num.setText("")
+        } else if(g > number){
+            status.setText(R.string.status_too_high)
+            num.setText("")
+        } else {
+            status.text = getString(
+                  R.string.status_hit, 
+                  tries)
+            started = false
+            doGuess.setEnabled(false)
+        }
+    }
+
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
+    private 
+    fun putInstanceData(outState: Bundle?) {
+        if (outState != null) with(outState) {
+            putBoolean("started", started)
+            putInt("number", number)
+            putInt("tries", tries)
+            putString("statusMsg", 
+                  status.text.toString())
+            putStringArrayList("logs", 
+                  ArrayList(console.text.split("\n")))
+        }
+    }
+
+    private 
+    fun fetchSavedInstanceData(
+          savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) 
+        with(savedInstanceState) {
+            started = getBoolean("started")
+            number = getInt("number")
+            tries = getInt("tries")
+            status.text = getString("statusMsg")
+            console.text = 
+                  getStringArrayList("logs")!!.
+                  joinToString("\n")
+        }
+    }
+
+    private fun log(msg:String) {
+        Log.d("LOG", msg)
+        console.log(msg)
+    }
+}
+
+//----#### SNIPPET #### - 26
+package kotlinforandroid.book.numberguess.common
+
+object Constants {
+    val LOWER_BOUND = 1
+    val UPPER_BOUND = 7
+}
+
+//----#### SNIPPET #### - 27
+package kotlinforandroid.book.numberguess.gui
+
+import android.content.Context
+import android.util.AttributeSet
+import android.widget.ScrollView
+import android.widget.TextView
+
+class Console(ctx: Context, 
+              aset: AttributeSet? = null) : 
+      ScrollView(ctx, aset) {
+    companion object {
+        val BACKGROUND_COLOR = 0x40FFFF00
+        val MAX_LINES = 100
+    }
+    val tv = TextView(ctx)
+    var text:String
+        get() = tv.text.toString()
+        set(value) { tv.setText(value) }
+    init {
+        setBackgroundColor(BACKGROUND_COLOR)
+        addView(tv)
+    }
+    fun log(msg:String) {
+        val l = tv.text.let { 
+            if(it == "") listOf() else it.split("\n") 
+        }.takeLast(MAX_LINES) + msg
+        tv.text = l.joinToString("\n")
+        post(object : Runnable {
+            override fun run() { 
+                  fullScroll(ScrollView.FOCUS_DOWN) 
+            }
+        })
+    }
+}
+
+//----#### SNIPPET #### - 28
+    ...
+    <kotlinforandroid.book.numberguess.gui.Console
+            android:id="@+id/console"
+            android:layout_height="100sp"
+            android:layout_width="match_parent" />
+    ...
+
+//----#### SNIPPET #### - 29
+package kotlinforandroid.book.numberguess.model
+
+class GameUser(val firstName:String,
+               val lastName:String,
+               val userName:String,
+               val registrationNumber:Int,
+               val birthday:String = "",
+               val userRank:Double = 0.0) {
+}
+
+//----#### SNIPPET #### - 30
+package kotlinforandroid.book.numberguess.random
+
+interface RandomNumberGenerator {
+    fun rnd(minInt:Int, maxInt:Int):Int
+}
+
+//----#### SNIPPET #### - 31
+package kotlinforandroid.book.numberguess.random.impl
+
+import kotlinforandroid.book.numberguess.random.
+       RandomNumberGenerator
+import java.util.*
+
+class RandomRandom : RandomNumberGenerator {
+    val rnd: Random = Random()
+    override fun rnd(minInt: Int, maxInt: Int):Int {
+        val span = maxInt - minInt + 1
+        return minInt + rnd.nextInt(span)
+    }
+}
+
+//----#### SNIPPET #### - 32
+package kotlinforandroid.book.numberguess.random.impl
+
+import kotlinforandroid.book.numberguess.random.
+       RandomNumberGenerator
+
+class StdRandom : RandomNumberGenerator {
+    override fun rnd(minInt: Int, maxInt: Int):Int {
+        val span = maxInt - minInt + 1
+        return minInt + 
+              Math.floor(Math.random()*span).toInt()
+    }
+}
+
+
+
+//----######################################################----
+//----#### Exercises Chapter 3
+
+//----#### SNIPPET #### - 33
+    class Triangle(var color: String) {
+        fun changeColor(newColor:String) {
+            color = newColor
+        }
+    } 
+
+//----#### SNIPPET #### - 34
+    class A {
+        var a:Int = 1 // A
+        init {
+            a = 2     // B
+        }
+        fun b() {
+            a = 3     // C
+        }
+    } 
+    fun main(args:Array<String>) {
+        val a = A()
+        a.a = 4       // D
+    }
+
+//----#### SNIPPET #### - 35
+    val a = 42
+    val s = "If we add 4 to a we get ${a+4}"
+
+//----#### SNIPPET #### - 36
+    class A(val a:Int) {
+        fun add(b:Int) = a + b
+        fun mult(b:Int) = a * b
+    }
+
+//----#### SNIPPET #### - 37
+    interface AInterface {
+        fun add(b:Int):Int
+        fun mult(b:Int):Int
+    }
+
+//----#### SNIPPET #### - 38
+    println(A.x(42))
+
+//----#### SNIPPET #### - 39
+    val p = Person()
+    p.setName(lName = "Doe", fName = "John")
+    // or
+    p.setName(fName = "John", lName = "Doe")
+
+//----#### SNIPPET #### - 40
+    fun set(lastName:String = "",
+        firstName:String = "",
+        birthDay?:String = null,
+        ssn:String? = null) { ... }
+
+//----#### SNIPPET #### - 41
+    set(lastName = "Smith", ssn = "1234567890")
+
+//----#### SNIPPET #### - 42
+    set(ssn = "1234567890", lastName = "Smith")
+
+//----#### SNIPPET #### - 43
+    class Club {
+        fun addMembers(vararg names:String) {
+            println(names.size)
+            println(names.joinToString(" : "))
+        }
+    }
+
+    fun main(args:Array<String>) {
+        var club = Club()
+        club.addMembers("Hughes, John", 
+              "Smith, Alina", 
+              "Curtis, Solange")
+    }	
+
+//----#### SNIPPET #### - 44
+    open class A() {
+        open var g:Int = 99
+        fun x() {
+            println("A.x() : g = ${g}")
+        }
+        fun q() {
+            println("A.q() : g = ${g}")		
+        }
+    }
+
+    class B : A() {
+        override var g:Int = 8
+        fun y() {
+            println("B.y() : g = ${g}")
+            q()
+        }	
+    }
+
+    fun main(args:Array<String>) {
+        val b = B()
+        b.x()
+        b.y()
+    }
+
+
+
+//----######################################################----
+//----#### Exercises Chapter 4
+
+//----#### SNIPPET #### - 45
+    package com.example.util
+    
+    fun add10(a:Int) = a + 10
+    fun add100(a:Int) = a + 100
+
+//----#### SNIPPET #### - 46
+    package com.example
+
+    import com.example.util.*
+    
+    class A(q:Int) {
+        val x10:Int = add10(q)
+        val x100:Int = add100(q)
+    }
+
+//----#### SNIPPET #### - 47
+    package com.example
+    import java.lang.Math.log
+    class A {
+      fun calc(a:Double) = log(a)
+    }
+
+//----#### SNIPPET #### - 48
+data class GameUser(val firstName:String,
+               val lastName:String,
+               val userName:String,
+               val registrationNumber:Int,
+               val gender:Gender = Gender.X,
+               val birthday:String = "",
+               val userRank:Double = 0.0) {
+    enum class Gender{F,M,X}
+
+    val fullName:String
+    val initials:String
+    init {
+        fullName = firstName + " " + lastName
+        initials = firstName.toUpperCase() + 
+              lastName.toUpperCase()
+    }
+}
+
+//----#### SNIPPET #### - 49
+val str:String get() = toString()
+
+//----#### SNIPPET #### - 50
+val str get() = toString()
+
+//----#### SNIPPET #### - 51
+  data class GameUser(var firstName:String,
+               var lastName:String,
+               var userName:String,
+               var registrationNumber:Int,
+               var gender:Gender = Gender.X,
+               var birthday:String = "",
+               var userRank:Double = 0.0) {
+      enum class Gender{F,M,X}
+
+      val fullName:String 
+          get() = firstName + " " + lastName
+
+      val initials:String
+          get() = firstName.toUpperCase() + 
+                   lastName.toUpperCase()
+  }
+
+//----#### SNIPPET #### - 52
+    data class Point(val x:Double, val y:double) {
+      operator fun minus(p2:Point) = 
+          Vector(p2.x-this.x, p2.y-this.y)
+    }
+
+    data class Vector(val dx:Double, val dy:Double) {
+      operator fun plus(v2:Vector) =
+          Vector(this.dx + v2.dx, this.dy + v2.dy)
+      operator fun minus(v2:Vector) =
+          Vector(this.dx - v2.dx, this.dy - v2.dy)
+    }
+
+
+
+//----######################################################----
+//----#### Exercises Chapter 5
+
+//----#### SNIPPET #### - 53
+  Math.sqrt(
+      ( a + (b-x)/2 ) / ( b*b - 7*x )
+  )
+
+//----#### SNIPPET #### - 54
+  class Concatenator {
+    var string:String = ""
+    fun add(s:String) { string += s }
+    operator fun contains(other:String) =
+        string.contains(other)
+  } 
+
+
+
+//----######################################################----
+//----#### Exercises Chapter 8
+
+//----#### SNIPPET #### - 55
+  package kotlinforandroid.book.numberguess.common
+
+  class GameException(msg:String) : Exception(msg)
+
+//----#### SNIPPET #### - 56
+  fun guess(v:View) {
+      if(num.text.toString() == "") return
+
+      try {
+        if (num.text.toString().toInt() < 
+              Constants.LOWER_BOUND)
+            throw GameException(
+              "Must guess a number >= " +
+              "${Constants.LOWER_BOUND}")
+        if (num.text.toString().toInt() > 
+              Constants.UPPER_BOUND)
+            throw GameException(
+              "Must guess a number <= " +
+              "${Constants.UPPER_BOUND}")
+
+        // rest of the original function...
+      } catch(e:GameException) {
+          Toast.makeText(this, 
+            "Guessable numbers: " +
+            "${Constants.LOWER_BOUND} to " +
+            "${Constants.UPPER_BOUND} ", 
+            Toast.LENGTH_LONG).show()
+      }
+  }
+
+
+
+//----######################################################----
+//----#### Exercises Chapter 9
+
+//----#### SNIPPET #### - 57
+    val arr = IntArray(101, { i -> 100 - i })
+
+//----#### SNIPPET #### - 58
+    booleanArrayOf(true, false, true)
+
+//----#### SNIPPET #### - 59
+    val fruits = mutableSetOf("Apple", "Banana", 
+        "Grape", "Engine")
+    fruits.remove("Engine")
+    fruits.add("Cherry")
+    val fruits5 = fruits.filter { 
+        element -> element.length == 5 
+    }
+
+//----#### SNIPPET #### - 60
+    val sorted = gul.sortedWith(
+        compareBy(GameUser::lastName) 
+            then 
+        compareBy(GameUser::firstName))
+
+//----#### SNIPPET #### - 61
+    val sorted = gul.sortedWith(
+        compareBy(GameUser::lastName, 
+                  GameUser::firstName))
+
+//----#### SNIPPET #### - 62
+    gul.sortWith(
+        compareBy(GameUser::lastName) 
+            then 
+        compareBy(GameUser::firstName))
+
+//----#### SNIPPET #### - 63
+    gul.sortWith(
+        compareBy(GameUser::lastName, 
+                  GameUser::firstName))
+
+//----#### SNIPPET #### - 64
+    val groupedByManufacturer = cars.groupBy { 
+          car -> car.vin.substring(0,3) 
+    }
+    val wxxCars = groupedByManufacturer["WXX"]
+
+//----#### SNIPPET #### - 65
+    (1..100).toList().reduce{ acc,v -> acc*v }
+
+//----#### SNIPPET #### - 66
+    (1..100).reduce{ acc,v -> acc*v }
+
+//----#### SNIPPET #### - 67
+    val fruits = listOf("Bananas", "apples", 
+          "Oranges")
+    val prices = listOf(1.69, 2.19, 2.79)
+    data class Fruit(
+          val name:String, val price:Double)
+    val zipped = fruits.zip(prices,
+            { a, b -> Fruit(a, b) })
+
+
+
+//----######################################################----
+//----#### Exercises Chapter 12
+
+//----#### SNIPPET #### - 68
+    val f : (String, Int) -> String = 
+        { s:String, num:Int -> 
+          (1..num).map { s }.joinToString { it } }
+
+//----#### SNIPPET #### - 69
+    val f : (String) -> String = { it + "!" }
+
+//----#### SNIPPET #### - 70
+    val startsWithL = employees.filter {
+        it.firstName.startsWith("L") }.toList()
+
+
+
+//----######################################################----
+//----#### Exercises Chapter 13
+
+//----#### SNIPPET #### - 71
+    class Quadruple<A,B,C,D>(
+        var p1:A, var p2:B, var p3:C, var p4:D)
+    val q1 = Quadruple(1, 2, 3.14, "Hello")
+
+//----#### SNIPPET #### - 72
+    class Quadruple<A,B,C,D>(
+        var p1:A, var p2:B, var p3:C, var p4:D)
+    val q1:Quadruple<Int, Int, Double, String> = 
+        Quadruple<Int, Int, Double, String>(
+        1, 2, 3.14, "Hello")
+
+//----#### SNIPPET #### - 73
+class Sorter<T : Comparable<T>> {
+    val list: MutableList<T> = mutableListOf()
+    fun add(value:T) {
+        list.add(value)
+        list.sort()
+    }
+}
+
+
+
+//----######################################################----
+//----#### Exercises Chapter 14
+
+//----#### SNIPPET #### - 74
+    @Target(AnnotationTarget.VALUE_PARAMETER)
+    @Retention(AnnotationRetention.RUNTIME)
+    annotation class NotNegative()
+
+//----#### SNIPPET #### - 75
+    p.findAnnotation<NotNegative>()?.run {
+        if (params[ind] < 0.0)
+            throw RuntimeException(
+            "Parameter ${ind} must be positive")
+    }
+
+//----#### SNIPPET #### - 76
+    fun sqrt(@NotNegative p:Double) : Double {
+        return Math.sqrt(p)
+    }
+
+
+
+//----######################################################----
+//----#### Exercises Chapter 16
+
+//----#### SNIPPET #### - 77
+    val sorted = l.sortedBy { empl -> empl.ssn }
+
+//----#### SNIPPET #### - 78
+    val sorted = l.sortedBy { it.ssn }
+
+//----#### SNIPPET #### - 79
+    val map = l.associateBy { empl -> empl.ssn }
+
+//----#### SNIPPET #### - 80
+    val map = l.associateBy { Employee::ssn }
+
+//----#### SNIPPET #### - 81
+    val filtered = l.filter { it.ssn.startsWith("0") }
+
+//----#### SNIPPET #### - 82
+    val l = listOf(1, 2, 3, 4)
+    val allGreaterThanZero = l.all { it > 0 }
+
+//----#### SNIPPET #### - 83
+  l.find{ it == 42 }?.run{ 
+        throw Exception("42 found!") }
+
+//----#### SNIPPET #### - 84
+  l.contains(42).takeIf { it }?.run { 
+        throw Exception("42 found!") }
+
+//----#### SNIPPET #### - 85
+  l.sumByDouble { it.weight }
+
+
+
+//----######################################################----
+//----#### Exercises Chapter 17
+
+//----#### SNIPPET #### - 86
+class  ClockTwiceAsFast : Clock() {
+    val myStartInstant : Instant
+    init {
+      myStartInstant = Clock.systemUTC().instant()
+    }
+
+    override 
+    fun withZone(zone: ZoneId?): Clock = this
+    override 
+    fun getZone(): ZoneId = ZoneId.of("Z")
+
+    override fun instant(): Instant {
+      val dur2 = Duration.between(myStartInstant, 
+        Clock.systemUTC().instant()).multipliedBy(2L)
+      return myStartInstant.plus(dur2)
+    }
+}
+
+//----#### SNIPPET #### - 87
+  operator fun String.rem(regex:String) = this.matches(Regex(regex))
+
+
+
+//----######################################################----
+//----#### Exercises Chapter 18
+
+//----#### SNIPPET #### - 88
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android=
+          "http://schemas.android.com/apk/res/android"
+        xmlns:tools=
+          "http://schemas.android.com/tools"
+        xmlns:app=
+          "http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior=
+          "@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_main"
+        tools:context=".MainActivity">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Multithreaded PI"
+            android:textSize="25sp"/>
+
+    <LinearLayout android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+        <TextView android:layout_width="100dp"
+              android:layout_height="wrap_content"
+              android:text="Processors"/>
+        <TextView android:id="@+id/procs" 
+              android:layout_width="wrap_content" 
+              android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+        <TextView android:layout_width="100dp"
+                  android:layout_height="wrap_content"
+                  android:text="Iterations"/>
+        <EditText android:id="@+id/iters" 
+              android:text="1000000" 
+              android:inputType="number" 
+              android:layout_width="wrap_content" 
+              android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+        <TextView android:layout_width="100dp"
+              android:layout_height="wrap_content"
+              android:text="Threads"/>
+        <EditText android:id="@+id/threads" 
+              android:text="4" 
+              android:inputType="number" 
+              android:layout_width="wrap_content" 
+              android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+        <TextView android:layout_width="100dp"
+              android:layout_height="wrap_content"
+              android:text="Cumul Iters"/>
+        <TextView android:id="@+id/cumulIters" 
+              android:layout_width="wrap_content" 
+              android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+        <TextView android:layout_width="100dp"
+              android:layout_height="wrap_content"
+              android:text="Current Pi"/>
+        <TextView android:id="@+id/pi" 
+              android:layout_width="wrap_content" 
+              android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+        <TextView android:layout_width="100dp"
+              android:layout_height="wrap_content"
+              android:text="Calc Time"/>
+        <TextView android:id="@+id/calcTime" 
+              android:layout_width="wrap_content" 
+              android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <Button android:text="CALC"
+            android:onClick="calc"
+            android:layout_width="match_parent" 
+            android:layout_height="wrap_content"/>
+    <Button android:text="RESET"
+            android:onClick="reset"
+            android:layout_width="match_parent" 
+            android:layout_height="wrap_content"/>
+</LinearLayout>
+
+//----#### SNIPPET #### - 89
+    ...
+    l111 = launch {
+        Log.d("LOG", "E")
+        withTimeout(500L) {
+            delay(1000L)
+        }
+        Log.d("LOG", "F")
+        delay(1000L)
+        Log.d("LOG", "G")
+    }
+    ...
+
+
+
+//----######################################################----
+//----#### Exercises Chapter 20
+
+//----#### SNIPPET #### - 90
+  fun createXmlDocument(): Document =
+         DocumentBuilderFactory.newInstance().
+         newDocumentBuilder().newDocument()
+
+//----#### SNIPPET #### - 91
+  val root = jsonObjectNodeOf()
+  with(root) {
+      put("firstName", "Arthur")
+      put("lastName", "Doyle")
+      put("dateOfBirth", "03/04/1997")
+      put("address",
+          jsonObjectNodeOf(
+              "streetAddress" to "21 3rd Street",
+              "city" to "New York",
+              "state" to "NY",
+              "postalCode" to "10021-1234"))
+      put("phoneNumbers",
+          jsonArrayNodeOf(
+              jsonObjectNodeOf("type" to "home", 
+                  "number" to "212 555-1234"),
+              jsonObjectNodeOf("type" to "mobile", 
+                  "number" to "123 456-7890")
+          ))
+      put("children", jsonEmptyArrayNode())
+      putNull("spouse")
+  }
+  Log.d("LOG", root.toPrettyString())

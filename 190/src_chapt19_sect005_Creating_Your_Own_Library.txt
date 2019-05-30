@@ -1,0 +1,25 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 19: 
+////      Using External Libraries
+//// Section: 5. Creating Your Own Library
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    val s = "The big brown fox jumps over the creek."
+    val containsOnlyLetters = s % "[A-Za-z ]*"
+    // -> false because of the "."
+
+//----#### SNIPPET #### - 2
+    package org.foo.stringregex
+
+    operator fun String.rem(re:String):Boolean = 
+          this.matches(Regex(re))
+
+//----#### SNIPPET #### - 3
+  import org.foo.stringregex.rem
+  
+  ...
+  val s = "The big brown fox jumps over the creek."
+  val containsOnlyLetters = s % "[A-Za-z ]*"
+  // -> false because of the "."

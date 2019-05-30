@@ -1,0 +1,46 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 12: 
+////      Back to Math:newline Functionalnewline Programming
+//// Section: 6. Filters
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+  data class Employee(val firstName:String, 
+        val lastName:String, 
+        val ssn:String, 
+        val yearHired:Int)
+  val employees = listOf(
+      Employee("John", "Smith", "123-12-0001", 
+            1987),
+      Employee("Linda", "Thundergaard", "123-12-0002", 
+            1987),
+      Employee("Lewis", "Black", "123-12-0003", 
+            1977),
+      Employee("Evans", "Brightsmith", "123-12-0004", 
+            1991)
+  )
+  val before1990 = mutableListOf<Employee>()
+  for(empl in employees) {
+      if(empl.yearHired < 1990) before1990.add(empl)
+  }
+  ... // do something with before1990
+
+//----#### SNIPPET #### - 2
+  data class Employee(val firstName:String, 
+        val lastName:String, 
+        val ssn:String, 
+        val yearHired:Int)
+  val employees = listOf(
+      Employee("John", "Smith", "123-12-0001", 
+            1987),
+      Employee("Linda", "Thundergaard", "123-12-0002", 
+            1987),
+      Employee("Lewis", "Black", "123-12-0003", 
+            1977),
+      Employee("Evans", "Brightsmith", "123-12-0004", 
+            1991)
+  )
+  val before1990 = employees.filter {
+      it.yearHired < 1990 }.toList()      
+  ... // do something with before1990

@@ -1,0 +1,70 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 04: 
+////      Classes And  Objects: Extended  Features
+//// Section: 8. Kotlin Extensions
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    package the.ext.pckg
+
+    fun String.hasLength(len:Int) = this.length == len
+
+//----#### SNIPPET #### - 2
+    import the.ext.pckg.*
+
+    // anywhere inside a function...
+    val hasLen10:Boolean = someString.hasLength(10)
+
+//----#### SNIPPET #### - 3
+    package the.ext.pckg
+
+    val String.l get() = this.length
+
+//----#### SNIPPET #### - 4
+    import the.ext.pckg.*
+
+    // anywhere inside a function...
+    val len1 = someString.length
+    val len2 = someString.l // this is the same
+
+//----#### SNIPPET #### - 5
+    fun SomeClass?.newFunction(...) { ... }
+
+//----#### SNIPPET #### - 6
+    class SomeClass {
+        fun SomeOtherClass.meth() {
+            ...
+        }
+    }
+
+//----#### SNIPPET #### - 7
+    class SomeClass {
+        fun String.hasLength(len:Int) = this.length == len
+        fun function() {
+            ...
+            // we can use hasLength() here
+            val len10:Boolean = someString.hasLength(10)
+            ...
+        }
+    }
+
+    class SomeClass2 {
+        // we can't use String.hasLength() here
+    }
+
+//----#### SNIPPET #### - 8
+    class SomeClass {
+        val SomeOtherClass.prop get() = ...
+    }
+
+//----#### SNIPPET #### - 9
+    class SomeClass {
+        val String.l get() = this.length
+        fun function() {
+            ...
+            // we can use .l here
+            val len = someString.l
+            ...
+        }
+    }

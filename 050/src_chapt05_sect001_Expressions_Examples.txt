@@ -1,0 +1,27 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 05: 
+////      Expressions: Operations on Data
+//// Section: 1. Expressions Examples
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    4 * 5      // multiplication
+    3 + 7      // addition
+    6 - 1      // subtraction
+    "a" + "b"  // concatenation
+    ( 1 + 2 )  // grouping
+    -5         // negation 
+    a && b     // boolean a AND b
+    "Hello"    // constant (String)
+    78         // another constant (Int)
+    3.14       // another constant (Double)
+    'A'        // another constant (Char)
+    arr[43]    // index access
+    funct(...) // function invocation
+    Clazz()    // instantiation
+    Obj        // singleton instance access
+    q.a        // dereferencing
+    q.f()      // another dereferencing
+    if(){ }    // language construct
+    when(){ }  // another language construct

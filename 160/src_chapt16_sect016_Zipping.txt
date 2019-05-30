@@ -1,0 +1,47 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 16: 
+////      The Collectionsnewline API
+//// Section: 16. Zipping
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    class Employee {
+        ...
+        fun setSalary(year:Int, salary:Double) {}
+    }
+
+    val employees = ... // list
+    val newSalaries = ... // list 
+    val newYear = 2018
+    val newEmployees = mutableListOf<Employee>()
+    for(ind in employees.indices) {
+       val e = employees[ind]
+       val sal = newSalaries[ind]
+       e.setSalary(newYear, sal)
+       newEmployees.add(e)
+    }
+
+//----#### SNIPPET #### - 2
+    <E, R> Iterable<E>.zip(
+        other: Iterable<R>
+    ): List<Pair<E, R>>
+
+//----#### SNIPPET #### - 3
+    val employees = ... // list
+    val newSalaries = ... // list
+    val newYear = 2018 
+    val newEmployees = employees.zip(newSalaries).
+        map{ p ->
+          p.first.setSalary(newYear, p.second)
+          p.first
+        }
+
+//----#### SNIPPET #### - 4
+    <E, R> Iterable<Pair<E, R>>.unzip(): 
+          Pair<List<E>, List<R>>
+
+//----#### SNIPPET #### - 5
+    list.map { item ->
+        Pair(item.something, item.somethingElse)
+    }.unzip()

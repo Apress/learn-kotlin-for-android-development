@@ -1,0 +1,42 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 08: 
+////      Exceptions: Ifnewline  Something Goesnewline Wrong
+//// Section: 1. Kotlin And Exceptions
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    try {
+        // ... statements
+    } catch(e:Exception) {
+        // do something
+    }
+
+//----#### SNIPPET #### - 2
+    try {
+        // ... statements
+    } catch(e:Exception) {
+        // do something...
+    } finally {
+        // do this by any means: ...
+    }
+
+//----#### SNIPPET #### - 3
+    import android.util.Log
+    ...
+    try {
+        // ... statements
+    } catch(e:Exception) {
+        Log.e("LOG", "Some exception occurred", e)
+    }
+
+//----#### SNIPPET #### - 4
+    import android.util.Log
+    ...
+    try {
+        // ... statements
+    } catch(e:Exception) {
+        Log.e("LOG", "Some exception occurred", e)
+        Toast.makeText(this,"Error Code 36A", 
+              Toast.LENGTH_LONG).show()
+    }

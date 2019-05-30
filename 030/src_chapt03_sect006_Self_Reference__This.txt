@@ -1,0 +1,21 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 03: 
+////      Classes at Work: Properties And Functions
+//// Section: 6. Self-Reference: This
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    functionName()   -the same as-   this.functionName()
+    propertyName     -the same as-   this.propertyName
+
+//----#### SNIPPET #### - 2
+    var firstName:String = ""
+    var lastName:String = ""
+    var socialSecurityNumber:String = ""
+    ...
+    fun set(fName:String, lName:String, ssn:String) {
+        this.lastName = lName
+        this.firstName = fName
+        this.socialSecurityNumber = ssn
+    }

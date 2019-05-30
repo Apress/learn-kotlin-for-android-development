@@ -1,0 +1,54 @@
+//// ------------------------------------------------------
+//// Snippets from chapter 09: 
+////      Data Containers
+//// Section: 8. Grouping, Folding, Reducing And Zipping
+//// ------------------------------------------------------
+
+
+//----#### SNIPPET #### - 1
+    data class Car(id:Int,make:Int,name:String,vin:String)
+    val cars = listOf(
+        Car(1, 1994, "Sirus",     "WXX 130 007-1J-582943"),
+        Car(2, 1997, "Sirus",     "WXX 130 008-1J-582957"),
+        Car(3, 2010, "Casto 4.0", "WXQ 456 088-4K-005614"),
+        Car(4, 2010, "Babo MX",   "WYY 518 004-55-171598"),
+        Car(5, 1994, "Casto 4.0", "WXQ 456 005-4K-005658"),
+        Car(6, 2011, "Quasto",    "WA0 100 036-00-012378")
+    )
+
+//----#### SNIPPET #### - 2
+    data class Car(id:Int,make:Int,name:String,vin:String)
+    val cars = listOf( ... )
+    val groupedByMake = cars.groupBy(Car::make)
+    ...
+    val group1997:List<Car> = groupedByMake[1997]
+
+//----#### SNIPPET #### - 3
+    val groupedByMake = cars.groupBy { car -> car.make }
+
+//----#### SNIPPET #### - 4
+    val someObject = ...
+    list.forEach { elem ->
+        // update someObj using elem
+        ...
+    }
+
+//----#### SNIPPET #### - 5
+    array.zip(otherArray) 
+        -or- array zip otherArray
+    array.zip(list)
+        -or- array zip list
+    collection.zip(array)
+        -or- collection zip array
+    collection.zip(otherCollection)
+        -or- collection zip otherCollection
+
+//----#### SNIPPET #### - 6
+    val fruits = listOf("Bananas", "apples", "Oranges")
+    val prices = listOf(1.69, 2.19, 2.79)
+    val fruitsAndPrices = fruits zip prices
+    // or fruits.zip(prices)
+    ...
+    fruitsAndPrices.forEach { p ->
+        // p = Pair("Bananas", 1.69) aso.
+    }
